@@ -46,7 +46,13 @@
             <groupId>org.openmrs.module</groupId>
             <artifactId>webservices.rest-omod</artifactId>
             <scope>provided</scope>
-            <version>2.16</version>
+        </dependency>
+        
+        <!-- https://mvnrepository.com/artifact/org.ict4h.openmrs/openmrs-atomfeed-omod -->
+        <dependency>
+            <groupId>org.ict4h.openmrs</groupId>
+            <artifactId>openmrs-atomfeed-omod</artifactId>
+            <scope>provided</scope>
         </dependency>
         
 
