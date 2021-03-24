@@ -45,6 +45,11 @@
 		<class>@MODULE_PACKAGE@.advice.DuplicateFormAdvisor</class>
 	</advice>
 	 /AOP -->
+         
+         <advice>
+            <point>org.openmrs.module.savicsgmao.api.GmaoService</point>
+            <class>org.openmrs.module.savicsgmao.atomfeed.AgentAdvice</class>
+        </advice>
 	
 	
 	<!-- Required Privileges 

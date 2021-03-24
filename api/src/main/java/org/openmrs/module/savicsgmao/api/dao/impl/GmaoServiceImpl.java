@@ -7,88 +7,56 @@ package org.openmrs.module.savicsgmao.api.dao.impl;
 
 import java.io.Serializable;
 import java.util.List;
-import org.hibernate.Criteria;
-import org.hibernate.criterion.Restrictions;
-import org.openmrs.api.APIException;
-import org.openmrs.api.db.hibernate.DbSession;
-import org.openmrs.api.db.hibernate.DbSessionFactory;
 import org.openmrs.api.impl.BaseOpenmrsService;
 import org.openmrs.module.savicsgmao.api.GmaoService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.openmrs.module.savicsgmao.api.dao.SavicsGmaoModuleDao;
 
 public class GmaoServiceImpl<T extends Serializable> extends BaseOpenmrsService implements GmaoService {
 	
-	@Autowired
-	DbSessionFactory sessionFactory;
+	SavicsGmaoModuleDao dao;
+	
+	/**
+	 * Injected in moduleApplicationContext.xml
+	 * 
+	 * @param dao
+	 */
+	public void setDao(SavicsGmaoModuleDao dao) {
+		this.dao = dao;
+	}
 	
 	@Override
 	public List getAll(Class t) {
-		List entityList = sessionFactory.getCurrentSession().createCriteria(t).list();
+		List entityList = this.dao.getAll(t);
 		return entityList;
 	}
 	
 	@Override
 	public List getAll(Class t, Integer limit, Integer offset) {
-		//TODO adapt this
-		List entityList = sessionFactory.getCurrentSession().createCriteria(t).list();
-		
-		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(t);
-		
-		if (limit != null) {
-			criteria.setMaxResults(limit);
-			if (offset != null) {
-				criteria.setFirstResult(offset);
-			}
-		}
-		return criteria.list();
+		return this.dao.getAll(t, limit, offset);
 	}
 	
 	@Override
 	public List doSearch(Class t, String key, String value, Integer limit, Integer offset) {
-		sessionFactory.getCurrentSession().createCriteria(t).list();
-		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(t);
-		criteria.add(Restrictions.eq(key, value));
-		return criteria.list();
+		return this.dao.doSearch(t, key, value, limit, offset);
 	}
 	
 	@Override
 	public T getEntity(Class t, Object id) {
-		DbSession session = sessionFactory.getCurrentSession();
-		Criteria criteria = session.createCriteria(t);
-		criteria.add(Restrictions.eq("id", id));
-		return (T) criteria.uniqueResult();
+		return (T) this.dao.getEntity(t, id);
 	}
 	
 	@Override
 	public T getEntityByUuid(Class t, String uuid) {
-		DbSession session = sessionFactory.getCurrentSession();
-		Criteria criteria = session.createCriteria(t);
-		criteria.add(Restrictions.eq("uuid", uuid));
-		return (T) criteria.uniqueResult();
+		return (T) this.dao.getEntityByUuid(t, uuid);
 	}
 	
 	@Override
 	public Serializable upsert(Serializable entity) {
-		DbSession session = this.sessionFactory.getCurrentSession();
-		session.saveOrUpdate(entity);
-		session.flush();
-		return entity;
+		return this.dao.upsert(entity);
 	}
 	
 	@Override
 	public void delete(Serializable entity) {
-		DbSession session = this.sessionFactory.getCurrentSession();
-		session.delete(entity);
+		this.dao.delete(entity);
 	}
-	
-	@Override
-	public void onStartup() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-	}
-	
-	@Override
-	public void onShutdown() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-	}
-	
 }

@@ -32,13 +32,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping(value = "module/${rootArtifactid}/${rootArtifactid}.form")
 public class SavicsGmaoModuleController {
 	
-	/** Logger for this class and subclasses */
+	/**
+	 * Logger for this class and subclasses
+	 */
 	protected final Log log = LogFactory.getLog(getClass());
 	
 	@Autowired
 	UserService userService;
 	
-	/** Success form view name */
+	/**
+	 * Success form view name
+	 */
 	private final String VIEW = "/module/${rootArtifactid}/${rootArtifactid}";
 	
 	/**
@@ -74,6 +78,9 @@ public class SavicsGmaoModuleController {
 	 * This class returns the form backing object. This can be a string, a boolean, or a normal java
 	 * pojo. The bean name defined in the ModelAttribute annotation and the type can be just defined
 	 * by the return type of this method
+	 * 
+	 * @return
+	 * @throws java.lang.Exception
 	 */
 	@ModelAttribute("users")
 	protected List<User> getUsers() throws Exception {

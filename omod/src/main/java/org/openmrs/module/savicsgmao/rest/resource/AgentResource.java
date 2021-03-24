@@ -19,8 +19,7 @@ import java.util.List;
 import org.openmrs.module.savicsgmao.api.GmaoService;
 import org.openmrs.module.savicsgmao.api.entity.Agent;
 
-@Resource(name = RestConstants.VERSION_1 + "/agent", supportedClass = Agent.class, supportedOpenmrsVersions = { "1.9.*",
-        "1.10.*", "1.11.*", "1.12.*", "2.0.*", "2.1.*", "2.2.*" })
+@Resource(name = RestConstants.VERSION_1 + "/agent", supportedClass = Agent.class, supportedOpenmrsVersions = { "2.*.*" })
 public class AgentResource extends DelegatingCrudResource<Agent> {
 	
 	@Override
@@ -131,6 +130,11 @@ public class AgentResource extends DelegatingCrudResource<Agent> {
 		}
 		
 		return agent;
+	}
+	
+	@Override
+	public String getUri(Object instance) {
+		return RestConstants.URI_PREFIX + "/agent";
 	}
 	
 }

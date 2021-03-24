@@ -24,6 +24,8 @@ public class SavicsGmaoModuleServiceImpl extends BaseOpenmrsService implements S
 	
 	/**
 	 * Injected in moduleApplicationContext.xml
+	 * 
+	 * @param dao
 	 */
 	public void setDao(SavicsGmaoModuleDao dao) {
 		this.dao = dao;

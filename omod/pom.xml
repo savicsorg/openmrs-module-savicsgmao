@@ -42,9 +42,18 @@
                 <artifactId>library-name</artifactId> 
         </dependency> 
         -->
+        
         <dependency>
             <groupId>org.openmrs.module</groupId>
             <artifactId>webservices.rest-omod</artifactId>
+            <scope>provided</scope>
+            <version>${webservicesRestModuleVersion}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.openmrs.module</groupId>
+            <artifactId>webservices.rest-omod-common</artifactId>
+            <version>${webservicesRestModuleVersion}</version>
             <scope>provided</scope>
         </dependency>
         
@@ -87,7 +96,6 @@
             <artifactId>openmrs-api</artifactId>
             <type>test-jar</type>
             <scope>test</scope>
-            <version>2.0.4</version>
         </dependency>
 
         <dependency>
@@ -95,7 +103,6 @@
             <artifactId>openmrs-web</artifactId>
             <type>test-jar</type>
             <scope>test</scope>
-            <version>2.0.4</version>
         </dependency>
 
         <dependency>
@@ -117,7 +124,6 @@
         <dependency>
             <groupId>org.openmrs.module</groupId>
             <artifactId>legacyui-omod</artifactId>
-            <version>1.0</version>
             <scope>provided</scope>
         </dependency>
 
