@@ -44,7 +44,8 @@ public class AgentController {
 	@ResponseBody
 	public String getAllAgents() throws IOException {
 		ObjectMapperRepository objectMapperRepository = new ObjectMapperRepository();
-		return objectMapperRepository.writeValueAsString(userService.getAllUsers());
+		GmaoService gmaoService = Context.getService(GmaoService.class);
+		return objectMapperRepository.writeValueAsString(gmaoService.getAll(Agent.class));
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/rest/" + RestConstants.VERSION_1 + GmaoRest.GMAO_NAMESPACE
@@ -52,7 +53,16 @@ public class AgentController {
 	@ResponseBody
 	public String testit() throws IOException {
 		ObjectMapperRepository objectMapperRepository = new ObjectMapperRepository();
-		List<String> cohortnames = new ArrayList<String>();
+		GmaoService gmaoService = Context.getService(GmaoService.class);
+		List<Agent> list1 = gmaoService.getAll(Agent.class);
+		return objectMapperRepository.writeValueAsString(list1);
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, value = "/rest/" + RestConstants.VERSION_1 + GmaoRest.GMAO_NAMESPACE
+	        + "/agent/test")
+	@ResponseBody
+	public String upsert() throws IOException {
+		ObjectMapperRepository objectMapperRepository = new ObjectMapperRepository();
 		GmaoService gmaoService = Context.getService(GmaoService.class);
 		List<Agent> list1 = gmaoService.getAll(Agent.class);
 		return objectMapperRepository.writeValueAsString(list1);

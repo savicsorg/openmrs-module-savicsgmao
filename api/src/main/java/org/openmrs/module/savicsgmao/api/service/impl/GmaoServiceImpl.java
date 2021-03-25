@@ -41,7 +41,12 @@ public class GmaoServiceImpl<T extends Serializable> extends BaseOpenmrsService 
 	
 	@Override
 	public List getAll(Class t, Integer limit, Integer offset) {
-		return this.dao.getAll(t, limit, offset);
+		System.out.println("--------- GmaoServiceImpl getAll 2, class = " + t);
+		List entityList = this.dao.getAll(t, limit, offset);
+		System.out.println("--------- GmaoServiceImpl getAll 2  = " + entityList);
+		
+		return entityList;
+		
 	}
 	
 	@Override

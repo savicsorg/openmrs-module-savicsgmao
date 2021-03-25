@@ -67,18 +67,9 @@ public class GmaoDaoImpl<T extends Serializable> implements GmaoDao<T> {
 		return entityList;
 	}
 	
-	public List getAll2(Class t) {
-		
-		List l = getSession().createQuery("from Agent where 1").list();
-		System.out.println(">>>>> List= " + l);
-		return l;
-	}
-	
 	@Override
 	public List getAll(Class t, Integer limit, Integer offset) {
 		//TODO adapt this
-		List entityList = getSession().createCriteria(t).list();
-		
 		Criteria criteria = getSession().createCriteria(t);
 		
 		if (limit != null) {
@@ -87,6 +78,8 @@ public class GmaoDaoImpl<T extends Serializable> implements GmaoDao<T> {
 				criteria.setFirstResult(offset);
 			}
 		}
+		List entityList = criteria.list();
+		System.out.println(">>>>> List 2= " + entityList);
 		return criteria.list();
 	}
 	
