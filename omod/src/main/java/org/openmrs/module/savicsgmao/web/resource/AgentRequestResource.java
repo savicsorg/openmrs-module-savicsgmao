@@ -66,8 +66,8 @@ public class AgentRequestResource extends DelegatingCrudResource<Agent> {
 
     @Override
     protected PageableResult doSearch(RequestContext context) {
-        String value = context.getParameter("name");
-        List<Agent> agentList = Context.getService(GmaoService.class).doSearch(Agent.class, "name", value,
+        String value = context.getParameter("fullName");
+        List<Agent> agentList = Context.getService(GmaoService.class).doSearch(Agent.class, "fullName", value,
                 context.getLimit(), context.getStartIndex());
         return new AlreadyPaged<Agent>(context, agentList, false);
     }
