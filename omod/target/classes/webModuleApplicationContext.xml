@@ -24,4 +24,7 @@
     <!-- Annotation based controllers -->
     <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>
     <context:component-scan base-package="org.openmrs.module.savicsgmao.web.controller" />
+    <bean id="gmaoDao" class="org.openmrs.module.savicsgmao.api.dao.impl.GmaoDaoImpl">
+        <property name="dbSessionFactory" ref="dbSessionFactory"></property>
+    </bean>
 </beans>
