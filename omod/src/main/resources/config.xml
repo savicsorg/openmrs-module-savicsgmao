@@ -47,14 +47,14 @@
 	 /AOP -->
          
          <advice>
-            <point>org.openmrs.module.savicsgmao.api.GmaoService</point>
+            <point>org.openmrs.module.savicsgmao.api.service.GmaoService</point>
             <class>org.openmrs.module.savicsgmao.atomfeed.AgentAdvice</class>
         </advice>
         
-        <!-- Maps hibernate file's, if present -->
-	<packagesWithMappedClasses>
-		org.openmrs.module.savicsgmao.api.entity
-	</packagesWithMappedClasses>
+	<!-- Maps hibernate file's, if present -->
+        <mappingFiles>
+            Agent.hbm.xml
+        </mappingFiles>
 	
 	
 	<!-- Required Privileges 

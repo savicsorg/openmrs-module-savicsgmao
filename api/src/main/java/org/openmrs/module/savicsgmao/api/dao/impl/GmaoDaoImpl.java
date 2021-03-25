@@ -13,24 +13,17 @@ import org.hibernate.criterion.Restrictions;
 import org.openmrs.api.db.hibernate.DbSession;
 import org.openmrs.api.db.hibernate.DbSessionFactory;
 import org.openmrs.module.savicsgmao.api.dao.GmaoDao;
-import org.openmrs.module.savicsgmao.api.entity.Item;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class GmaoDaoImpl<T extends Serializable> implements GmaoDao<T> {
 	
-	DbSessionFactory sessionFactory;
+	@Autowired
+	DbSessionFactory dbSessionFactory;
 	
-	/**
-	 * @param sessionFactory the sessionFactory to set
-	 */
-	public void setSessionFactory(DbSessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
-	}
-	
-	/**
-	 * @return the sessionFactory
-	 */
-	public DbSessionFactory getSessionFactory() {
-		return sessionFactory;
+	public void setDbSessionFactory(DbSessionFactory dbSessionFactory) {
+		this.dbSessionFactory = dbSessionFactory;
 	}
 	
 	/**
@@ -40,16 +33,16 @@ public class GmaoDaoImpl<T extends Serializable> implements GmaoDao<T> {
 	 */
 	private DbSession getSession() {
 		try {
-			System.out.println(">>>>>> getSession = sessionFactory = " + sessionFactory);
+			System.out.println(">>>>>> getSession = sessionFactory = " + dbSessionFactory);
 			System.out.println(">>>>>> getSession = sessionFactory.getCurrentSession() = "
-			        + sessionFactory.getCurrentSession());
+			        + dbSessionFactory.getCurrentSession());
 			
-			return sessionFactory.getCurrentSession();
+			return dbSessionFactory.getCurrentSession();
 		}
 		catch (NoSuchMethodError ex) {
 			try {
-				Method method = sessionFactory.getClass().getMethod("getSession", null);
-				return (DbSession) method.invoke(sessionFactory, null);
+				Method method = dbSessionFactory.getClass().getMethod("getSession", null);
+				return (DbSession) method.invoke(dbSessionFactory, null);
 			}
 			catch (Exception e) {
 				throw new RuntimeException("Failed to get the current hibernate session", e);
@@ -57,13 +50,13 @@ public class GmaoDaoImpl<T extends Serializable> implements GmaoDao<T> {
 		}
 	}
 	
-	public Item getItemByUuid(String uuid) {
-		return (Item) getSession().createCriteria(Item.class).add(Restrictions.eq("uuid", uuid)).uniqueResult();
+	public T getByUuid(Class t, String uuid) {
+		return (T) getSession().createCriteria(t).add(Restrictions.eq("uuid", uuid)).uniqueResult();
 	}
 	
-	public Item saveItem(Item item) {
-		getSession().saveOrUpdate(item);
-		return item;
+	public T saveAgent(T t) {
+		getSession().saveOrUpdate(t);
+		return t;
 	}
 	
 	@Override
@@ -72,6 +65,13 @@ public class GmaoDaoImpl<T extends Serializable> implements GmaoDao<T> {
 		List entityList = getSession().createCriteria(t).list();
 		System.out.println(">>>>> List= " + entityList);
 		return entityList;
+	}
+	
+	public List getAll2(Class t) {
+		
+		List l = getSession().createQuery("from Agent where 1").list();
+		System.out.println(">>>>> List= " + l);
+		return l;
 	}
 	
 	@Override
@@ -100,7 +100,7 @@ public class GmaoDaoImpl<T extends Serializable> implements GmaoDao<T> {
 	
 	@Override
 	public T getEntity(Class t, Object id) {
-		DbSession session = sessionFactory.getCurrentSession();
+		DbSession session = dbSessionFactory.getCurrentSession();
 		Criteria criteria = session.createCriteria(t);
 		criteria.add(Restrictions.eq("id", id));
 		return (T) criteria.uniqueResult();
@@ -108,7 +108,7 @@ public class GmaoDaoImpl<T extends Serializable> implements GmaoDao<T> {
 	
 	@Override
 	public T getEntityByUuid(Class t, String uuid) {
-		DbSession session = sessionFactory.getCurrentSession();
+		DbSession session = dbSessionFactory.getCurrentSession();
 		Criteria criteria = session.createCriteria(t);
 		criteria.add(Restrictions.eq("uuid", uuid));
 		return (T) criteria.uniqueResult();
@@ -116,7 +116,7 @@ public class GmaoDaoImpl<T extends Serializable> implements GmaoDao<T> {
 	
 	@Override
 	public Serializable upsert(Serializable entity) {
-		DbSession session = this.sessionFactory.getCurrentSession();
+		DbSession session = this.dbSessionFactory.getCurrentSession();
 		session.saveOrUpdate(entity);
 		session.flush();
 		return entity;
@@ -124,7 +124,7 @@ public class GmaoDaoImpl<T extends Serializable> implements GmaoDao<T> {
 	
 	@Override
 	public void delete(Serializable entity) {
-		DbSession session = this.sessionFactory.getCurrentSession();
+		DbSession session = this.dbSessionFactory.getCurrentSession();
 		session.delete(entity);
 	}
 }
