@@ -24,65 +24,43 @@
   		    http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
     <context:component-scan base-package="org.openmrs.module.savicsgmao" />
-
-    <!-- Wraps SavicsGmaoModuleService methods in DB transactions and OpenMRS interceptors,
-    which set audit info like dateCreated, changedBy, etc.-->
-    <bean id="savicsgmao.SavicsGmaoModuleService"
-          class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+    
+    <bean id="gmaoDao" class="org.openmrs.module.savicsgmao.api.dao.impl.GmaoDaoImpl">
+        <property name="dbSessionFactory">
+            <ref bean="dbSessionFactory"/>
+        </property>
+    </bean> 
+    
+    <bean id="gmaoServiceImpl" class="org.openmrs.module.savicsgmao.api.service.impl.GmaoServiceImpl">
+        <property name="dao">
+            <ref bean="gmaoDao"/>
+        </property>
+        <property name="locationService">
+            <ref bean="locationService"/>
+        </property>
+    </bean>
+    
+    <bean id="gmaoService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
         <property name="transactionManager">
-            <ref bean="transactionManager" />
+            <ref bean="transactionManager"/>
         </property>
         <property name="target">
-            <bean class="org.openmrs.module.savicsgmao.api.dao.impl.SavicsGmaoModuleServiceImpl">
-                <property name="dao" ref="savicsgmao.SavicsGmaoModuleDao" />
-            </bean>
+            <ref bean="gmaoServiceImpl"/>
         </property>
         <property name="preInterceptors">
-            <ref bean="serviceInterceptors" />
+            <ref bean="serviceInterceptors"/>
         </property>
         <property name="transactionAttributeSource">
-            <ref bean="transactionAttributeSource" />
+            <ref bean="transactionAttributeSource"/>
         </property>
     </bean>
-
-    <!-- Adds SavicsGmaoModuleService to OpenMRS context so it can be accessed
-    calling Context.getService(SavicsGmaoModuleService.class) -->
+    
+    <!-- Services accessible via Context.getService() -->
     <bean parent="serviceContext">
         <property name="moduleService">
-            <list>
-                <value>org.openmrs.module.savicsgmao.api.SavicsGmaoModuleService</value>
-                <ref bean="savicsgmao.SavicsGmaoModuleService" />
-            </list>
-        </property>
-    </bean>
-
-    <!-- Wraps GmaoService methods in DB transactions and OpenMRS interceptors,
-    which set audit info like dateCreated, changedBy, etc.-->
-    <bean id="savicsgmao.GmaoService"
-          class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-        <property name="transactionManager">
-            <ref bean="transactionManager" />
-        </property>
-        <property name="target">
-            <bean class="org.openmrs.module.savicsgmao.api.dao.impl.GmaoServiceImpl">
-                <property name="dao" ref="savicsgmao.SavicsGmaoModuleDao" />
-            </bean>
-        </property>
-        <property name="preInterceptors">
-            <ref bean="serviceInterceptors" />
-        </property>
-        <property name="transactionAttributeSource">
-            <ref bean="transactionAttributeSource" />
-        </property>
-    </bean>
-
-    <!-- Adds GmaoService to OpenMRS context so it can be accessed
-    calling Context.getService(GmaoService.class) -->
-    <bean parent="serviceContext">
-        <property name="moduleService">
-            <list>
-                <value>org.openmrs.module.savicsgmao.api.GmaoService</value>
-                <ref bean="savicsgmao.GmaoService" />
+            <list merge="true">
+                <value>org.openmrs.module.savicsgmao.api.service.GmaoService</value>
+                <ref local="gmaoService"/>
             </list>
         </property>
     </bean>

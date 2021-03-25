@@ -10,49 +10,51 @@
 package org.openmrs.module.savicsgmao.web.controller;
 
 import java.io.IOException;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.openmrs.api.UserService;
-import org.openmrs.module.savicsgmao.web.serialization.ObjectMapperRepository;
-import org.openmrs.module.webservices.rest.web.RestConstants;
-import org.openmrs.module.webservices.rest.web.v1_0.controller.MainResourceController;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.openmrs.api.UserService;
+import org.openmrs.api.context.Context;
+import org.openmrs.module.savicsgmao.api.service.GmaoService;
+import org.openmrs.module.savicsgmao.api.entity.Agent;
+import org.openmrs.module.savicsgmao.rest.v1_0.resource.GmaoRest;
+import org.openmrs.module.savicsgmao.web.serialization.ObjectMapperRepository;
+import org.openmrs.module.webservices.rest.web.RestConstants;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * This class configured as controller using annotation and mapped with the URL of
- * 'module/${rootArtifactid}/${rootArtifactid}Link.form'.
+ * The main controller.
  */
 @Controller
-@RequestMapping("/rest/" + RestConstants.VERSION_1 + "/savicsgmao")
-public class AgentController extends MainResourceController {
+public class AgentController {
 	
-	/**
-	 * Logger for this class and subclasses
-	 */
 	protected final Log log = LogFactory.getLog(getClass());
 	
 	@Autowired
 	UserService userService;
 	
-	/**
-	 * @return @see
-	 *         org.openmrs.module.webservices.rest.web.v1_0.controller.BaseRestController#getNamespace
-	 *         ()
-	 */
-	@Override
-	public String getNamespace() {
-		return "v1/savicsgmao";
-	}
-	
-	@RequestMapping(method = RequestMethod.GET, value = "/rest/" + RestConstants.VERSION_1 + "/savicsgmao/agent")
+	@RequestMapping(method = RequestMethod.GET, value = "/rest/" + RestConstants.VERSION_1 + GmaoRest.GMAO_NAMESPACE
+	        + "/agent/all")
 	@ResponseBody
 	public String getAllAgents() throws IOException {
 		ObjectMapperRepository objectMapperRepository = new ObjectMapperRepository();
 		return objectMapperRepository.writeValueAsString(userService.getAllUsers());
 	}
 	
+	@RequestMapping(method = RequestMethod.GET, value = "/rest/" + RestConstants.VERSION_1 + GmaoRest.GMAO_NAMESPACE
+	        + "/agent/test")
+	@ResponseBody
+	public String testit() throws IOException {
+		ObjectMapperRepository objectMapperRepository = new ObjectMapperRepository();
+		List<String> cohortnames = new ArrayList<String>();
+		GmaoService gmaoService = Context.getService(GmaoService.class);
+		List<Agent> list1 = gmaoService.getAll(Agent.class);
+		return objectMapperRepository.writeValueAsString(list1);
+	}
 }

@@ -50,6 +50,11 @@
             <point>org.openmrs.module.savicsgmao.api.GmaoService</point>
             <class>org.openmrs.module.savicsgmao.atomfeed.AgentAdvice</class>
         </advice>
+        
+        <!-- Maps hibernate file's, if present -->
+	<packagesWithMappedClasses>
+		org.openmrs.module.savicsgmao.api.entity
+	</packagesWithMappedClasses>
 	
 	
 	<!-- Required Privileges 

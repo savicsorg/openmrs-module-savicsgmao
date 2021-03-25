@@ -24,7 +24,7 @@ import org.openmrs.BaseOpenmrsData;
 /**
  * @author anatoleabe
  */
-@Entity(name = "savicsgmao.Agent")
+@Entity
 @Table(name = "gmao_agent")
 public class Agent extends BaseOpenmrsData implements Serializable {
 	
