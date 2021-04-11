@@ -1,1 +1,8 @@
 /api/target/
+/api/nbproject/
+
+/omod/target/
+/omod/nbproject/
+
+/.idea/
+/.vscode/
