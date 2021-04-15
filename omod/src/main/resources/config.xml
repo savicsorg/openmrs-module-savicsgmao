@@ -48,12 +48,26 @@
          
          <advice>
             <point>org.openmrs.module.savicsgmao.api.service.GmaoService</point>
-            <class>org.openmrs.module.savicsgmao.atomfeed.AgentAdvice</class>
+            <class>org.openmrs.module.savicsgmao.atomfeed.GmaoAdvice</class>
         </advice>
         
 	<!-- Maps hibernate file's, if present -->
         <mappingFiles>
             Agent.hbm.xml
+            Department.hbm.xml
+            District.hbm.xml
+            EquipementType.hbm.xml
+            EquipmentOperation.hbm.xml
+            EquipmentOperationItem.hbm.xml
+            Maintenance.hbm.xml
+            MaintenanceReason.hbm.xml
+            MaintenanceRequest.hbm.xml
+            MaintenanceTask.hbm.xml
+            MaintenanceType.hbm.xml
+            Planification.hbm.xml
+            Region.hbm.xml
+            SiteLocation.hbm.xml
+            Task.hbm.xml
         </mappingFiles>
 	
 	

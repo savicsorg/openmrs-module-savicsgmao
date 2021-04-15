@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
     
-    <changeSet author="anatoleabe (generated)" id="1616249208432-1">
+    
+    <changeSet author="anatoleabe (generated)" id="1618332989197-1">
         <createTable tableName="gmao_agent">
             <column autoIncrement="true" name="agent_id" type="INT">
                 <constraints primaryKey="true"/>
+            </column>
+            <column name="uuid" type="CHAR(38)">
+                <constraints nullable="false"/>
             </column>
             <column name="full_name" type="VARCHAR(250)">
                 <constraints nullable="false"/>
@@ -23,10 +27,13 @@
             <column name="site_location_id" type="INT"/>
         </createTable>
     </changeSet>
-    <changeSet author="anatoleabe (generated)" id="1616249208432-2">
+    <changeSet author="anatoleabe (generated)" id="1618332989197-2">
         <createTable tableName="gmao_department">
             <column autoIncrement="true" name="department_id" type="INT">
                 <constraints primaryKey="true"/>
+            </column>
+            <column name="uuid" type="CHAR(38)">
+                <constraints nullable="false"/>
             </column>
             <column name="department_name" type="VARCHAR(250)">
                 <constraints nullable="false"/>
@@ -36,10 +43,13 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="anatoleabe (generated)" id="1616249208432-3">
+    <changeSet author="anatoleabe (generated)" id="1618332989197-3">
         <createTable tableName="gmao_district">
             <column autoIncrement="true" name="district_id" type="INT">
                 <constraints primaryKey="true"/>
+            </column>
+            <column name="uuid" type="CHAR(38)">
+                <constraints nullable="false"/>
             </column>
             <column name="district_name" type="VARCHAR(250)">
                 <constraints nullable="false"/>
@@ -52,59 +62,26 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="anatoleabe (generated)" id="1616249208432-4">
+    <changeSet author="anatoleabe (generated)" id="1618332989197-4">
         <createTable tableName="gmao_equipement_type">
             <column autoIncrement="true" name="equipment_type_id" type="INT">
                 <constraints primaryKey="true"/>
+            </column>
+            <column name="uuid" type="CHAR(38)">
+                <constraints nullable="false"/>
             </column>
             <column name="type_name" type="VARCHAR(250)">
                 <constraints nullable="false"/>
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="anatoleabe (generated)" id="1616249208432-5">
-        <createTable tableName="gmao_equipment">
-            <column autoIncrement="true" name="equipment_id" type="INT">
-                <constraints primaryKey="true"/>
-            </column>
-            <column name="equipment_type_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="serial_number" type="VARCHAR(250)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="acquisition_date" type="datetime"/>
-            <column name="equipment_status" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="designation" type="VARCHAR(250)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="localization" type="VARCHAR(250)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="department_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="last_modified_date" type="datetime"/>
-            <column name="equipment_weight" type="FLOAT(12)"/>
-            <column name="volume" type="FLOAT(12)"/>
-            <column name="tracking" type="INT"/>
-            <column name="in_service" type="TINYINT(3)"/>
-            <column name="operating_state" type="INT"/>
-            <column name="commisionning_year" type="INT"/>
-            <column name="comments" type="TEXT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="provider_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="anatoleabe (generated)" id="1616249208432-6">
+    <changeSet author="anatoleabe (generated)" id="1618332989197-5">
         <createTable tableName="gmao_equipment_operation">
             <column autoIncrement="true" name="equipment_operation_id" type="INT">
                 <constraints primaryKey="true"/>
+            </column>
+            <column name="uuid" type="CHAR(38)">
+                <constraints nullable="false"/>
             </column>
             <column name="operation_code" type="VARCHAR(250)">
                 <constraints nullable="false"/>
@@ -126,10 +103,13 @@
             <column name="central_approval_date" type="datetime"/>
         </createTable>
     </changeSet>
-    <changeSet author="anatoleabe (generated)" id="1616249208432-7">
+    <changeSet author="anatoleabe (generated)" id="1618332989197-6">
         <createTable tableName="gmao_equipment_operation_item">
             <column autoIncrement="true" name="equipment_operation_item_id" type="INT">
                 <constraints primaryKey="true"/>
+            </column>
+            <column name="uuid" type="CHAR(38)">
+                <constraints nullable="false"/>
             </column>
             <column name="equipment_id" type="INT">
                 <constraints nullable="false"/>
@@ -139,10 +119,13 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="anatoleabe (generated)" id="1616249208432-8">
+    <changeSet author="anatoleabe (generated)" id="1618332989197-7">
         <createTable tableName="gmao_maintenance">
             <column autoIncrement="true" name="maintenance_id" type="INT">
                 <constraints primaryKey="true"/>
+            </column>
+            <column name="uuid" type="CHAR(38)">
+                <constraints nullable="false"/>
             </column>
             <column name="maintenance_type_id" type="INT">
                 <constraints nullable="false"/>
@@ -165,10 +148,13 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="anatoleabe (generated)" id="1616249208432-9">
+    <changeSet author="anatoleabe (generated)" id="1618332989197-8">
         <createTable tableName="gmao_maintenance_reason">
             <column autoIncrement="true" name="maintenance_reason_id" type="INT">
                 <constraints primaryKey="true"/>
+            </column>
+            <column name="uuid" type="CHAR(38)">
+                <constraints nullable="false"/>
             </column>
             <column name="reason_code" type="VARCHAR(250)">
                 <constraints nullable="false"/>
@@ -181,15 +167,21 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="anatoleabe (generated)" id="1616249208432-10">
+    <changeSet author="anatoleabe (generated)" id="1618332989197-9">
         <createTable tableName="gmao_maintenance_request">
             <column autoIncrement="true" name="maintenance_request_id" type="INT">
                 <constraints primaryKey="true"/>
+            </column>
+            <column name="uuid" type="CHAR(38)">
+                <constraints nullable="false"/>
             </column>
             <column name="system_number" type="VARCHAR(250)">
                 <constraints nullable="false"/>
             </column>
             <column name="department_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="applicant_name" type="VARCHAR(250)">
                 <constraints nullable="false"/>
             </column>
             <column name="register_number" type="VARCHAR(250)">
@@ -213,10 +205,13 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="anatoleabe (generated)" id="1616249208432-11">
+    <changeSet author="anatoleabe (generated)" id="1618332989197-10">
         <createTable tableName="gmao_maintenance_task">
             <column autoIncrement="true" name="maintenance_task_id" type="INT">
                 <constraints primaryKey="true"/>
+            </column>
+            <column name="uuid" type="CHAR(38)">
+                <constraints nullable="false"/>
             </column>
             <column name="designation" type="VARCHAR(250)">
                 <constraints nullable="false"/>
@@ -239,10 +234,13 @@
             <column name="planification_id" type="INT"/>
         </createTable>
     </changeSet>
-    <changeSet author="anatoleabe (generated)" id="1616249208432-12">
+    <changeSet author="anatoleabe (generated)" id="1618332989197-11">
         <createTable tableName="gmao_maintenance_type">
             <column autoIncrement="true" name="maintenance_type_id" type="INT">
                 <constraints primaryKey="true"/>
+            </column>
+            <column name="uuid" type="CHAR(38)">
+                <constraints nullable="false"/>
             </column>
             <column name="type_code" type="VARCHAR(250)">
                 <constraints nullable="false"/>
@@ -252,10 +250,13 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="anatoleabe (generated)" id="1616249208432-13">
+    <changeSet author="anatoleabe (generated)" id="1618332989197-12">
         <createTable tableName="gmao_planification">
             <column autoIncrement="true" name="planification_id" type="INT">
                 <constraints primaryKey="true"/>
+            </column>
+            <column name="uuid" type="CHAR(38)">
+                <constraints nullable="false"/>
             </column>
             <column name="designation" type="VARCHAR(250)">
                 <constraints nullable="false"/>
@@ -271,10 +272,13 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="anatoleabe (generated)" id="1616249208432-14">
+    <changeSet author="anatoleabe (generated)" id="1618332989197-13">
         <createTable tableName="gmao_region">
             <column autoIncrement="true" name="region_id" type="INT">
                 <constraints primaryKey="true"/>
+            </column>
+            <column name="uuid" type="CHAR(38)">
+                <constraints nullable="false"/>
             </column>
             <column name="region_name" type="VARCHAR(250)">
                 <constraints nullable="false"/>
@@ -284,10 +288,13 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="anatoleabe (generated)" id="1616249208432-15">
+    <changeSet author="anatoleabe (generated)" id="1618332989197-14">
         <createTable tableName="gmao_site_location">
             <column autoIncrement="true" name="site_location_id" type="INT">
                 <constraints primaryKey="true"/>
+            </column>
+            <column name="uuid" type="CHAR(38)">
+                <constraints nullable="false"/>
             </column>
             <column name="location_name" type="VARCHAR(250)">
                 <constraints nullable="false"/>
@@ -300,10 +307,13 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="anatoleabe (generated)" id="1616249208432-16">
+    <changeSet author="anatoleabe (generated)" id="1618332989197-15">
         <createTable tableName="gmao_task">
             <column autoIncrement="true" name="task_id" type="INT">
                 <constraints primaryKey="true"/>
+            </column>
+            <column name="uuid" type="CHAR(38)">
+                <constraints nullable="false"/>
             </column>
             <column name="task_name" type="VARCHAR(250)">
                 <constraints nullable="false"/>
