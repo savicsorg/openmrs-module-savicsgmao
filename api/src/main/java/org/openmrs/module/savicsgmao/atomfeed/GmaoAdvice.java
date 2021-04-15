@@ -11,19 +11,11 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 import java.lang.reflect.Method;
 
-public class AgentAdvice implements AfterReturningAdvice {
-	
-	private static final String DEFAULT_AGENT_URL_PATTERN = "/openmrs/ws/rest/v1/agent/{uuid}";
-	
-	private static final String CATEGORY = "agent";
-	
-	private static final String TITLE = "Agent";
+public class GmaoAdvice implements AfterReturningAdvice {
 	
 	private static final String SAVE_METHOD = "save";
 	
 	private static final String DELETE_METHOD = "delete";
-	
-	private static final int AGENT_OBJECT_INDEX = 0;
 	
 	private static final int FIRST_TRANSACTION_MANAGER_INDEX = 0;
 	
@@ -33,7 +25,7 @@ public class AgentAdvice implements AfterReturningAdvice {
 	
 	private EventService eventService;
 	
-	public AgentAdvice() {
+	public GmaoAdvice() {
 		atomFeedSpringTransactionManager = new AtomFeedSpringTransactionManager(getSpringPlatformTransactionManager());
 		AllEventRecordsQueue allEventRecordsQueue = new AllEventRecordsQueueJdbcImpl(atomFeedSpringTransactionManager);
 		eventService = new EventServiceImpl(allEventRecordsQueue);
