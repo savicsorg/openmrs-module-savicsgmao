@@ -23,7 +23,7 @@ public class Planification implements java.io.Serializable {
 	private String observations;
 	
 	public Planification() {
-            uuid = UUID.randomUUID().toString();
+		uuid = UUID.randomUUID().toString();
 	}
 	
 	public Planification(String uuid, String designation, String planificationCode, Date planificationDate,

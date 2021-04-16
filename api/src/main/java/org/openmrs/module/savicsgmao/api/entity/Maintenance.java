@@ -29,7 +29,7 @@ public class Maintenance implements java.io.Serializable {
 	private int agentId;
 	
 	public Maintenance() {
-            uuid = UUID.randomUUID().toString();
+		uuid = UUID.randomUUID().toString();
 	}
 	
 	public Maintenance(String uuid, int maintenanceTypeId, String designation, Date startdate, String details,

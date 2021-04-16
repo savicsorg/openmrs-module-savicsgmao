@@ -35,7 +35,7 @@ public class EquipmentOperation implements java.io.Serializable {
 	private Date centralApprovalDate;
 	
 	public EquipmentOperation() {
-            uuid = UUID.randomUUID().toString();
+		uuid = UUID.randomUUID().toString();
 	}
 	
 	public EquipmentOperation(String uuid, String operationCode, int operationType, Date operationDate, String reason) {

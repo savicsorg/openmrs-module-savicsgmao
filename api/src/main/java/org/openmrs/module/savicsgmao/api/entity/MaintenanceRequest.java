@@ -35,7 +35,7 @@ public class MaintenanceRequest implements java.io.Serializable {
 	private int equipmentId;
 	
 	public MaintenanceRequest() {
-            uuid = UUID.randomUUID().toString();
+		uuid = UUID.randomUUID().toString();
 	}
 	
 	public MaintenanceRequest(String uuid, String systemNumber, int departmentId, String applicantName,
