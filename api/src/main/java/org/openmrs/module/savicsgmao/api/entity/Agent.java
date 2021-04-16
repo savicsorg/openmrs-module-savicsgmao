@@ -1,6 +1,7 @@
 package org.openmrs.module.savicsgmao.api.entity;
 
 // Generated Mar 25, 2021 1:50:49 PM by Hibernate Tools 4.3.1
+import java.util.UUID;
 import org.openmrs.BaseOpenmrsData;
 import org.openmrs.User;
 
@@ -28,6 +29,7 @@ public class Agent extends BaseOpenmrsData {
 	private Integer siteLocationId;
 	
 	public Agent() {
+		uuid = UUID.randomUUID().toString();
 	}
 	
 	public Agent(String fullName, String agentAddress, String phoneNumber, byte isExternal) {
