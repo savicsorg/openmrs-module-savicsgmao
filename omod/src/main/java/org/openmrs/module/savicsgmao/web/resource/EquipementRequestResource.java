@@ -1,5 +1,7 @@
 package org.openmrs.module.savicsgmao.web.resource;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.webservices.rest.SimpleObject;
 import org.openmrs.module.webservices.rest.web.ConversionUtil;
@@ -69,6 +71,7 @@ public class EquipementRequestResource extends DelegatingCrudResource<Equipement
 	
 	@Override
 	public Equipement save(Equipement equipement) {
+            equipement.LastModifiedDate = new Date();
 		return (Equipement) Context.getService(GmaoService.class).upsert(equipement);
 	}
 	

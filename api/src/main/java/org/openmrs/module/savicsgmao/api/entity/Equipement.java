@@ -1,10 +1,12 @@
 package org.openmrs.module.savicsgmao.api.entity;
 
 import java.util.Date;
+import java.util.UUID;
 
 public class Equipement implements java.io.Serializable {
 	
 	public Integer EquipmentId;
+        private String uuid;
 	
 	public int EquipmentTypeId;
 	
@@ -37,6 +39,31 @@ public class Equipement implements java.io.Serializable {
 	public String Comments;
 	
 	public Integer ProviderId;
+
+    public Equipement(int EquipmentTypeId, String SerialNumber, Date AcquisitionDate, Integer Status, String Designation, String Localization, Integer DepartmentId, Date LastModifiedDate, Float Weight, Float Volume, Integer Tracking, Integer InService, Integer OperatingState, Integer CommissioningYear, String Comments, Integer ProviderId) {
+        this.EquipmentTypeId = EquipmentTypeId;
+        this.SerialNumber = SerialNumber;
+        this.AcquisitionDate = AcquisitionDate;
+        this.Status = Status;
+        this.Designation = Designation;
+        this.Localization = Localization;
+        this.DepartmentId = DepartmentId;
+        this.LastModifiedDate = LastModifiedDate;
+        this.Weight = Weight;
+        this.Volume = Volume;
+        this.Tracking = Tracking;
+        this.InService = InService;
+        this.OperatingState = OperatingState;
+        this.CommissioningYear = CommissioningYear;
+        this.Comments = Comments;
+        this.ProviderId = ProviderId;
+    }
+
+    public Equipement() {
+        uuid = UUID.randomUUID().toString();
+    }
+        
+        
 
     public Integer getEquipmentId() {
         return EquipmentId;
