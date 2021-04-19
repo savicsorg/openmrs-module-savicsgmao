@@ -40,31 +40,38 @@ public class ProviderController {
 	UserService userService;
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/rest/" + RestConstants.VERSION_1 + GmaoRest.GMAO_NAMESPACE
-	        + "/agent/all")
+	        + "/provider/all")
 	@ResponseBody
-	public String getAllAgents() throws IOException {
+	public String getAll() throws IOException {
 		ObjectMapperRepository objectMapperRepository = new ObjectMapperRepository();
 		GmaoService gmaoService = Context.getService(GmaoService.class);
-		return objectMapperRepository.writeValueAsString(gmaoService.getAll(Agent.class));
+		return objectMapperRepository.writeValueAsString(gmaoService.getAll(Provider.class));
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/rest/" + RestConstants.VERSION_1 + GmaoRest.GMAO_NAMESPACE
-	        + "/agent/test")
+	        + "/provider/{id}")
 	@ResponseBody
-	public String testit() throws IOException {
+	public String get(@PathVariable("id") int id) throws IOException {
 		ObjectMapperRepository objectMapperRepository = new ObjectMapperRepository();
 		GmaoService gmaoService = Context.getService(GmaoService.class);
-		List<Agent> list1 = gmaoService.getAll(Agent.class);
-		return objectMapperRepository.writeValueAsString(list1);
+		return objectMapperRepository.writeValueAsString(gmaoService.getAll(Provider.class));
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/rest/" + RestConstants.VERSION_1 + GmaoRest.GMAO_NAMESPACE
-	        + "/agent/test")
+	        + "/provider")
 	@ResponseBody
-	public String upsert() throws IOException {
-		ObjectMapperRepository objectMapperRepository = new ObjectMapperRepository();
+	public Provider upsert(Provider o) throws IOException {
 		GmaoService gmaoService = Context.getService(GmaoService.class);
-		List<Agent> list1 = gmaoService.getAll(Agent.class);
-		return objectMapperRepository.writeValueAsString(list1);
+		gmaoService.upsert(o);
+		return o;
+	}
+	
+	@RequestMapping(method = RequestMethod.DELETE, value = "/rest/" + RestConstants.VERSION_1 + GmaoRest.GMAO_NAMESPACE
+	        + "/provider")
+	@ResponseBody
+	public Provider delete(Provider o) throws IOException {
+		GmaoService gmaoService = Context.getService(GmaoService.class);
+		gmaoService.delete(o);
+		return o;
 	}
 }

@@ -45,35 +45,35 @@ public class EquipementController {
 	        + "/equipement/all")
 	@ResponseBody
 	public String getAll() throws IOException {
-            ObjectMapperRepository objectMapperRepository = new ObjectMapperRepository();
-            GmaoService gmaoService = Context.getService(GmaoService.class);
-            return objectMapperRepository.writeValueAsString(gmaoService.getAll(Equipement.class));
+		ObjectMapperRepository objectMapperRepository = new ObjectMapperRepository();
+		GmaoService gmaoService = Context.getService(GmaoService.class);
+		return objectMapperRepository.writeValueAsString(gmaoService.getAll(Equipement.class));
 	}
-        
-        @RequestMapping(method = RequestMethod.GET, value = "/rest/" + RestConstants.VERSION_1 + GmaoRest.GMAO_NAMESPACE
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/rest/" + RestConstants.VERSION_1 + GmaoRest.GMAO_NAMESPACE
 	        + "/equipement/{id}")
 	@ResponseBody
 	public String get(@PathVariable("id") int id) throws IOException {
-            ObjectMapperRepository objectMapperRepository = new ObjectMapperRepository();
-            GmaoService gmaoService = Context.getService(GmaoService.class);
-            return objectMapperRepository.writeValueAsString(gmaoService.getAll(Equipement.class));
+		ObjectMapperRepository objectMapperRepository = new ObjectMapperRepository();
+		GmaoService gmaoService = Context.getService(GmaoService.class);
+		return objectMapperRepository.writeValueAsString(gmaoService.getAll(Equipement.class));
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/rest/" + RestConstants.VERSION_1 + GmaoRest.GMAO_NAMESPACE
 	        + "/equipement")
 	@ResponseBody
 	public Equipement upsert(Equipement o) throws IOException {
-            GmaoService gmaoService = Context.getService(GmaoService.class);
-            gmaoService.upsert(o);
-            return o;
+		GmaoService gmaoService = Context.getService(GmaoService.class);
+		gmaoService.upsert(o);
+		return o;
 	}
-        
-        @RequestMapping(method = RequestMethod.DELETE, value = "/rest/" + RestConstants.VERSION_1 + GmaoRest.GMAO_NAMESPACE
+	
+	@RequestMapping(method = RequestMethod.DELETE, value = "/rest/" + RestConstants.VERSION_1 + GmaoRest.GMAO_NAMESPACE
 	        + "/equipement")
 	@ResponseBody
 	public Equipement delete(Equipement o) throws IOException {
-            GmaoService gmaoService = Context.getService(GmaoService.class);
-            gmaoService.delete(o);
-            return o;
+		GmaoService gmaoService = Context.getService(GmaoService.class);
+		gmaoService.delete(o);
+		return o;
 	}
 }

@@ -22,10 +22,12 @@ import org.openmrs.api.UserService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.savicsgmao.api.service.GmaoService;
 import org.openmrs.module.savicsgmao.api.entity.Agent;
+import org.openmrs.module.savicsgmao.api.entity.Department;
 import org.openmrs.module.savicsgmao.rest.v1_0.resource.GmaoRest;
 import org.openmrs.module.savicsgmao.web.serialization.ObjectMapperRepository;
 import org.openmrs.module.webservices.rest.web.RestConstants;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -40,31 +42,38 @@ public class DepartmentController {
 	UserService userService;
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/rest/" + RestConstants.VERSION_1 + GmaoRest.GMAO_NAMESPACE
-	        + "/agent/all")
+	        + "/departement/all")
 	@ResponseBody
-	public String getAllAgents() throws IOException {
+	public String getAll() throws IOException {
 		ObjectMapperRepository objectMapperRepository = new ObjectMapperRepository();
 		GmaoService gmaoService = Context.getService(GmaoService.class);
-		return objectMapperRepository.writeValueAsString(gmaoService.getAll(Agent.class));
+		return objectMapperRepository.writeValueAsString(gmaoService.getAll(Department.class));
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/rest/" + RestConstants.VERSION_1 + GmaoRest.GMAO_NAMESPACE
-	        + "/agent/test")
+	        + "/departement/{id}")
 	@ResponseBody
-	public String testit() throws IOException {
+	public String get(@PathVariable("id") int id) throws IOException {
 		ObjectMapperRepository objectMapperRepository = new ObjectMapperRepository();
 		GmaoService gmaoService = Context.getService(GmaoService.class);
-		List<Agent> list1 = gmaoService.getAll(Agent.class);
-		return objectMapperRepository.writeValueAsString(list1);
+		return objectMapperRepository.writeValueAsString(gmaoService.getAll(Department.class));
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/rest/" + RestConstants.VERSION_1 + GmaoRest.GMAO_NAMESPACE
-	        + "/agent/test")
+	        + "/departement")
 	@ResponseBody
-	public String upsert() throws IOException {
-		ObjectMapperRepository objectMapperRepository = new ObjectMapperRepository();
+	public Department upsert(Department o) throws IOException {
 		GmaoService gmaoService = Context.getService(GmaoService.class);
-		List<Agent> list1 = gmaoService.getAll(Agent.class);
-		return objectMapperRepository.writeValueAsString(list1);
+		gmaoService.upsert(o);
+		return o;
+	}
+	
+	@RequestMapping(method = RequestMethod.DELETE, value = "/rest/" + RestConstants.VERSION_1 + GmaoRest.GMAO_NAMESPACE
+	        + "/departement")
+	@ResponseBody
+	public Department delete(Department o) throws IOException {
+		GmaoService gmaoService = Context.getService(GmaoService.class);
+		gmaoService.delete(o);
+		return o;
 	}
 }
