@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 13, 2021 3:01:21 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="org.openmrs.module.savicsgmao.api.entity.Equipement" table="gmao_equipement_type">
+        <id name="equipmentId" type="java.lang.Integer">
+            <column name="equipment_id"/>
+            <generator class="identity"/>
+        </id>
+        <property name="uuid" type="string">
+            <column length="38" name="uuid" not-null="true"/>
+        </property>
+        <property name="serialNumber" type="string">
+            <column length="250" name="serial_number" not-null="true"/>
+        </property>
+        <property name="acquisitionDate" type="DATE">
+            <column length="250" name="acquisition_date" not-null="true"/>
+        </property>
+    </class>
+</hibernate-mapping>

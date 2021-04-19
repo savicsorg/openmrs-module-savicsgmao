@@ -14,6 +14,11 @@
     -->
     
     <changeSet author="anatoleabe (generated)" id="85616249208432-1">
+        <preConditions onFail="WARN">
+            <not>
+              <tableExists tableName="gmao_agent"/>
+            </not> 
+        </preConditions>
         <createTable tableName="gmao_agent">
             <column autoIncrement="true" name="agent_id" type="INT">
                 <constraints primaryKey="true"/>
@@ -39,6 +44,11 @@
     </changeSet>
     
     <changeSet author="anatoleabe (generated)" id="1618332989197-2">
+        <preConditions onFail="WARN">
+            <not>
+              <tableExists tableName="gmao_department"/>
+            </not> 
+        </preConditions>
         <createTable tableName="gmao_department">
             <column autoIncrement="true" name="department_id" type="INT">
                 <constraints primaryKey="true"/>
@@ -55,6 +65,11 @@
         </createTable>
     </changeSet>
     <changeSet author="anatoleabe (generated)" id="1618332989197-3">
+        <preConditions onFail="WARN">
+            <not>
+              <tableExists tableName="gmao_district"/>
+            </not> 
+        </preConditions>
         <createTable tableName="gmao_district">
             <column autoIncrement="true" name="district_id" type="INT">
                 <constraints primaryKey="true"/>
@@ -74,6 +89,11 @@
         </createTable>
     </changeSet>
     <changeSet author="anatoleabe (generated)" id="1618332989197-4">
+        <preConditions onFail="WARN">
+            <not>
+              <tableExists tableName="gmao_equipement_type"/>
+            </not> 
+        </preConditions>
         <createTable tableName="gmao_equipement_type">
             <column autoIncrement="true" name="equipment_type_id" type="INT">
                 <constraints primaryKey="true"/>
@@ -87,6 +107,11 @@
         </createTable>
     </changeSet>
     <changeSet author="anatoleabe (generated)" id="1618332989197-5">
+        <preConditions onFail="WARN">
+            <not>
+              <tableExists tableName="gmao_equipment_operation"/>
+            </not> 
+        </preConditions>
         <createTable tableName="gmao_equipment_operation">
             <column autoIncrement="true" name="equipment_operation_id" type="INT">
                 <constraints primaryKey="true"/>
@@ -115,6 +140,11 @@
         </createTable>
     </changeSet>
     <changeSet author="anatoleabe (generated)" id="1618332989197-6">
+        <preConditions onFail="WARN">
+            <not>
+              <tableExists tableName="gmao_equipment_operation_item"/>
+            </not> 
+        </preConditions>
         <createTable tableName="gmao_equipment_operation_item">
             <column autoIncrement="true" name="equipment_operation_item_id" type="INT">
                 <constraints primaryKey="true"/>
@@ -131,6 +161,11 @@
         </createTable>
     </changeSet>
     <changeSet author="anatoleabe (generated)" id="1618332989197-7">
+        <preConditions onFail="WARN">
+            <not>
+              <tableExists tableName="gmao_maintenance"/>
+            </not> 
+        </preConditions>
         <createTable tableName="gmao_maintenance">
             <column autoIncrement="true" name="maintenance_id" type="INT">
                 <constraints primaryKey="true"/>
@@ -160,6 +195,11 @@
         </createTable>
     </changeSet>
     <changeSet author="anatoleabe (generated)" id="1618332989197-8">
+        <preConditions onFail="WARN">
+            <not>
+              <tableExists tableName="gmao_maintenance_reason"/>
+            </not> 
+        </preConditions>
         <createTable tableName="gmao_maintenance_reason">
             <column autoIncrement="true" name="maintenance_reason_id" type="INT">
                 <constraints primaryKey="true"/>
@@ -179,6 +219,11 @@
         </createTable>
     </changeSet>
     <changeSet author="anatoleabe (generated)" id="1618332989197-9">
+        <preConditions onFail="WARN">
+            <not>
+              <tableExists tableName="gmao_maintenance_request"/>
+            </not> 
+        </preConditions>
         <createTable tableName="gmao_maintenance_request">
             <column autoIncrement="true" name="maintenance_request_id" type="INT">
                 <constraints primaryKey="true"/>
@@ -217,6 +262,11 @@
         </createTable>
     </changeSet>
     <changeSet author="anatoleabe (generated)" id="1618332989197-10">
+        <preConditions onFail="WARN">
+            <not>
+              <tableExists tableName="gmao_maintenance_task"/>
+            </not> 
+        </preConditions>
         <createTable tableName="gmao_maintenance_task">
             <column autoIncrement="true" name="maintenance_task_id" type="INT">
                 <constraints primaryKey="true"/>
@@ -246,6 +296,11 @@
         </createTable>
     </changeSet>
     <changeSet author="anatoleabe (generated)" id="1618332989197-11">
+        <preConditions onFail="WARN">
+            <not>
+              <tableExists tableName="gmao_maintenance_type"/>
+            </not> 
+        </preConditions>
         <createTable tableName="gmao_maintenance_type">
             <column autoIncrement="true" name="maintenance_type_id" type="INT">
                 <constraints primaryKey="true"/>
@@ -262,6 +317,11 @@
         </createTable>
     </changeSet>
     <changeSet author="anatoleabe (generated)" id="1618332989197-12">
+        <preConditions onFail="WARN">
+            <not>
+              <tableExists tableName="gmao_planification"/>
+            </not> 
+        </preConditions>
         <createTable tableName="gmao_planification">
             <column autoIncrement="true" name="planification_id" type="INT">
                 <constraints primaryKey="true"/>
@@ -284,6 +344,11 @@
         </createTable>
     </changeSet>
     <changeSet author="anatoleabe (generated)" id="1618332989197-13">
+        <preConditions onFail="WARN">
+            <not>
+              <tableExists tableName="gmao_region"/>
+            </not> 
+        </preConditions>
         <createTable tableName="gmao_region">
             <column autoIncrement="true" name="region_id" type="INT">
                 <constraints primaryKey="true"/>
@@ -300,6 +365,11 @@
         </createTable>
     </changeSet>
     <changeSet author="anatoleabe (generated)" id="1618332989197-14">
+        <preConditions onFail="WARN">
+            <not>
+              <tableExists tableName="gmao_site_location"/>
+            </not> 
+        </preConditions>
         <createTable tableName="gmao_site_location">
             <column autoIncrement="true" name="site_location_id" type="INT">
                 <constraints primaryKey="true"/>
@@ -319,6 +389,11 @@
         </createTable>
     </changeSet>
     <changeSet author="anatoleabe (generated)" id="1618332989197-15">
+        <preConditions onFail="WARN">
+            <not>
+              <tableExists tableName="gmao_task"/>
+            </not> 
+        </preConditions>
         <createTable tableName="gmao_task">
             <column autoIncrement="true" name="task_id" type="INT">
                 <constraints primaryKey="true"/>
