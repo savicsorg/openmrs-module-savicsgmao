@@ -1,44 +1,51 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Apr 13, 2021 3:01:21 PM by Hibernate Tools 4.3.1 -->
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 19, 2021 4:44:32 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="org.openmrs.module.savicsgmao.api.entity.EquipmentOperation" table="gmao_equipment_operation">
+    <class name="org.openmrs.module.savicsgmao.api.entity.EquipmentOperation" table="gmao_equipment_operation" >
         <id name="equipmentOperationId" type="java.lang.Integer">
-            <column name="equipment_operation_id"/>
-            <generator class="identity"/>
+            <column name="equipment_operation_id" />
+            <generator class="identity" />
         </id>
         <property name="uuid" type="string">
-            <column length="38" name="uuid" not-null="true"/>
+            <column name="uuid" length="38" not-null="true" />
         </property>
         <property name="operationCode" type="string">
-            <column length="250" name="operation_code" not-null="true"/>
+            <column name="operation_code" length="250" not-null="true" />
         </property>
         <property name="operationType" type="int">
-            <column name="operation_type" not-null="true"/>
+            <column name="operation_type" not-null="true" />
         </property>
         <property name="operationDate" type="timestamp">
-            <column length="19" name="operation_date" not-null="true"/>
+            <column name="operation_date" length="19" not-null="true" />
         </property>
         <property name="sourceSiteId" type="java.lang.Integer">
-            <column name="source_site_id"/>
+            <column name="source_site_id" />
         </property>
         <property name="destinationSiteId" type="java.lang.Integer">
-            <column name="destination_site_id"/>
+            <column name="destination_site_id" />
         </property>
         <property name="reason" type="string">
-            <column length="65535" name="reason" not-null="true"/>
+            <column name="reason" length="65535" not-null="true" />
         </property>
         <property name="localApproval" type="java.lang.Byte">
-            <column name="local_approval"/>
+            <column name="local_approval" />
         </property>
         <property name="localApprovalDate" type="timestamp">
-            <column length="19" name="local_approval_date"/>
+            <column name="local_approval_date" length="19" />
         </property>
         <property name="centralApproval" type="java.lang.Byte">
-            <column name="central_approval"/>
+            <column name="central_approval" />
         </property>
         <property name="centralApprovalDate" type="timestamp">
-            <column length="19" name="central_approval_date"/>
+            <column name="central_approval_date" length="19" />
         </property>
+        <set name="gmaoEquipmentOperationItems" table="gmao_equipment_operation_item" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="equipment_operation_id" not-null="true" />
+            </key>
+            <one-to-many class="org.openmrs.module.savicsgmao.api.entity.EquipmentOperationItem" />
+        </set>
     </class>
 </hibernate-mapping>

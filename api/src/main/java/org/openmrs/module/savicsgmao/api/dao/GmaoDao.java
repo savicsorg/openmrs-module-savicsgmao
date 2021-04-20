@@ -36,6 +36,9 @@ public interface GmaoDao<T extends Serializable> {
 	@Transactional(readOnly = true)
 	T getEntityByUuid(Class<T> t, String uuid) throws APIException;
 	
+	@Transactional(readOnly = true)
+	T getEntityByid(Class<T> t, String idName, String id) throws APIException;
+	
 	@Transactional
 	T upsert(T entity) throws APIException;
 	

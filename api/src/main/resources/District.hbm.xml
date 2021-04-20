@@ -1,23 +1,30 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Apr 13, 2021 3:01:21 PM by Hibernate Tools 4.3.1 -->
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 19, 2021 4:44:32 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="org.openmrs.module.savicsgmao.api.entity.District" table="gmao_district">
+    <class name="org.openmrs.module.savicsgmao.api.entity.District" table="gmao_district" >
         <id name="districtId" type="java.lang.Integer">
-            <column name="district_id"/>
-            <generator class="identity"/>
+            <column name="district_id" />
+            <generator class="identity" />
         </id>
+        <many-to-one name="gmaoRegion" class="org.openmrs.module.savicsgmao.api.entity.Region" fetch="select">
+            <column name="region_id" not-null="true" />
+        </many-to-one>
         <property name="uuid" type="string">
-            <column length="38" name="uuid" not-null="true"/>
+            <column name="uuid" length="38" not-null="true" />
         </property>
         <property name="districtName" type="string">
-            <column length="250" name="district_name" not-null="true"/>
+            <column name="district_name" length="250" not-null="true" />
         </property>
         <property name="districtCode" type="string">
-            <column length="250" name="district_code" not-null="true" unique="true"/>
+            <column name="district_code" length="250" not-null="true" unique="true" />
         </property>
-        <property name="regionId" type="int">
-            <column name="region_id" not-null="true"/>
-        </property>
+        <set name="gmaoSiteLocations" table="gmao_site_location" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="district_id" not-null="true" />
+            </key>
+            <one-to-many class="org.openmrs.module.savicsgmao.api.entity.SiteLocation" />
+        </set>
     </class>
 </hibernate-mapping>

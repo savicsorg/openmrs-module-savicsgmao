@@ -17,17 +17,17 @@ import org.openmrs.module.webservices.rest.web.response.ResponseException;
 
 import java.util.List;
 import org.openmrs.module.savicsgmao.api.service.GmaoService;
-import org.openmrs.module.savicsgmao.api.entity.EquipementType;
+import org.openmrs.module.savicsgmao.api.entity.EquipmentType;
 import org.openmrs.module.savicsgmao.rest.v1_0.resource.GmaoRest;
 import org.openmrs.module.webservices.rest.web.representation.DefaultRepresentation;
 import org.openmrs.module.webservices.rest.web.representation.FullRepresentation;
 
-@Resource(name = RestConstants.VERSION_1 + GmaoRest.GMAO_NAMESPACE + "/equipementType", supportedClass = EquipementType.class, supportedOpenmrsVersions = { "2.*.*" })
-public class EquipementTypeRequestResource extends DelegatingCrudResource<EquipementType> {
+@Resource(name = RestConstants.VERSION_1 + GmaoRest.GMAO_NAMESPACE + "/equipmentType", supportedClass = EquipmentType.class, supportedOpenmrsVersions = { "2.*.*" })
+public class EquipmentTypeRequestResource extends DelegatingCrudResource<EquipmentType> {
 	
 	@Override
-	public EquipementType newDelegate() {
-		return new EquipementType();
+	public EquipmentType newDelegate() {
+		return new EquipmentType();
 	}
 	
 	@Override
@@ -47,28 +47,28 @@ public class EquipementTypeRequestResource extends DelegatingCrudResource<Equipe
 	
 	@Override
 	protected PageableResult doGetAll(RequestContext context) throws ResponseException {
-		List<EquipementType> equipementTypeList = Context.getService(GmaoService.class).getAll(EquipementType.class,
+		List<EquipmentType> equipmentTypeList = Context.getService(GmaoService.class).getAll(EquipmentType.class,
 		    context.getLimit(), context.getStartIndex());
-		return new AlreadyPaged<EquipementType>(context, equipementTypeList, false);
+		return new AlreadyPaged<EquipmentType>(context, equipmentTypeList, false);
 	}
 	
 	@Override
 	protected PageableResult doSearch(RequestContext context) {
 		String value = context.getParameter("typeName");
-		List<EquipementType> equipementTypeList = Context.getService(GmaoService.class).doSearch(EquipementType.class,
+		List<EquipmentType> equipmentTypeList = Context.getService(GmaoService.class).doSearch(EquipmentType.class,
 		    "typeName", value, context.getLimit(), context.getStartIndex());
-		return new AlreadyPaged<EquipementType>(context, equipementTypeList, false);
+		return new AlreadyPaged<EquipmentType>(context, equipmentTypeList, false);
 	}
 	
 	@Override
-	public EquipementType getByUniqueId(String uuid) {
+	public EquipmentType getByUniqueId(String uuid) {
 		
-		return (EquipementType) Context.getService(GmaoService.class).getEntityByUuid(EquipementType.class, uuid);
+		return (EquipmentType) Context.getService(GmaoService.class).getEntityByUuid(EquipmentType.class, uuid);
 	}
 	
 	@Override
-	public EquipementType save(EquipementType equipementType) {
-		return (EquipementType) Context.getService(GmaoService.class).upsert(equipementType);
+	public EquipmentType save(EquipmentType equipmentType) {
+		return (EquipmentType) Context.getService(GmaoService.class).upsert(equipmentType);
 	}
 	
 	@Override
@@ -77,54 +77,54 @@ public class EquipementTypeRequestResource extends DelegatingCrudResource<Equipe
 			throw new ConversionException("Required properties: typeName");
 		}
 		
-		EquipementType equipementType = this.constructEquipementType(null, propertiesToCreate);
-		Context.getService(GmaoService.class).upsert(equipementType);
-		return ConversionUtil.convertToRepresentation(equipementType, context.getRepresentation());
+		EquipmentType equipmentType = this.constructEquipmentType(null, propertiesToCreate);
+		Context.getService(GmaoService.class).upsert(equipmentType);
+		return ConversionUtil.convertToRepresentation(equipmentType, context.getRepresentation());
 	}
 	
 	@Override
 	public Object update(String uuid, SimpleObject propertiesToUpdate, RequestContext context) throws ResponseException {
-		EquipementType equipementType = this.constructEquipementType(uuid, propertiesToUpdate);
-		Context.getService(GmaoService.class).upsert(equipementType);
-		return ConversionUtil.convertToRepresentation(equipementType, context.getRepresentation());
+		EquipmentType equipmentType = this.constructEquipmentType(uuid, propertiesToUpdate);
+		Context.getService(GmaoService.class).upsert(equipmentType);
+		return ConversionUtil.convertToRepresentation(equipmentType, context.getRepresentation());
 	}
 	
 	@Override
-	protected void delete(EquipementType equipementType, String reason, RequestContext context) throws ResponseException {
-		Context.getService(GmaoService.class).delete(equipementType);
+	protected void delete(EquipmentType equipmentType, String reason, RequestContext context) throws ResponseException {
+		Context.getService(GmaoService.class).delete(equipmentType);
 	}
 	
 	@Override
-	public void purge(EquipementType equipementType, RequestContext context) throws ResponseException {
-		Context.getService(GmaoService.class).delete(equipementType);
+	public void purge(EquipmentType equipmentType, RequestContext context) throws ResponseException {
+		Context.getService(GmaoService.class).delete(equipmentType);
 	}
 	
-	private EquipementType constructEquipementType(String uuid, SimpleObject properties) {
-		EquipementType equipementType;
+	private EquipmentType constructEquipmentType(String uuid, SimpleObject properties) {
+		EquipmentType equipmentType;
 		if (uuid != null) {
-			equipementType = (EquipementType) Context.getService(GmaoService.class).getEntityByUuid(EquipementType.class,
+			equipmentType = (EquipmentType) Context.getService(GmaoService.class).getEntityByUuid(EquipmentType.class,
 			    uuid);
-			if (equipementType == null) {
-				throw new IllegalPropertyException("equipementType not exist");
+			if (equipmentType == null) {
+				throw new IllegalPropertyException("equipmentType not exist");
 			}
 			
 			if (properties.get("typeName") != null) {
-				equipementType.setTypeName((String) properties.get("typeName"));
+				equipmentType.setTypeName((String) properties.get("typeName"));
 			}
 		} else {
-			equipementType = new EquipementType();
+			equipmentType = new EquipmentType();
 			if (properties.get("typeName") == null || properties.get("typeName") == null) {
 				throw new IllegalPropertyException("Required parameters: typeName");
 			}
-			equipementType.setTypeName((String) properties.get("typeName"));
+			equipmentType.setTypeName((String) properties.get("typeName"));
 		}
 		
-		return equipementType;
+		return equipmentType;
 	}
 	
 	@Override
 	public String getUri(Object instance) {
-		return RestConstants.URI_PREFIX + "/equipementType";
+		return RestConstants.URI_PREFIX + "/equipmentType";
 	}
 	
 }

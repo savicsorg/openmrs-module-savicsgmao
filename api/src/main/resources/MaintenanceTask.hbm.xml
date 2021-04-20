@@ -1,35 +1,36 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Apr 13, 2021 3:01:21 PM by Hibernate Tools 4.3.1 -->
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 19, 2021 4:44:32 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="org.openmrs.module.savicsgmao.api.entity.MaintenanceTask" table="gmao_maintenance_task">
+    <class name="org.openmrs.module.savicsgmao.api.entity.MaintenanceTask" table="gmao_maintenance_task" >
         <id name="maintenanceTaskId" type="java.lang.Integer">
-            <column name="maintenance_task_id"/>
-            <generator class="identity"/>
+            <column name="maintenance_task_id" />
+            <generator class="identity" />
         </id>
+        <many-to-one name="gmaoEquipment" class="org.openmrs.module.savicsgmao.api.entity.Equipment" fetch="select">
+            <column name="equipment_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="gmaoMaintenance" class="org.openmrs.module.savicsgmao.api.entity.Maintenance" fetch="select">
+            <column name="maintenance_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="gmaoPlanification" class="org.openmrs.module.savicsgmao.api.entity.Planification" fetch="select">
+            <column name="planification_id" />
+        </many-to-one>
         <property name="uuid" type="string">
-            <column length="38" name="uuid" not-null="true"/>
+            <column name="uuid" length="38" not-null="true" />
         </property>
         <property name="designation" type="string">
-            <column length="250" name="designation" not-null="true"/>
+            <column name="designation" length="250" not-null="true" />
         </property>
         <property name="details" type="string">
-            <column length="65535" name="details" not-null="true"/>
+            <column name="details" length="65535" not-null="true" />
         </property>
         <property name="executed" type="byte">
-            <column name="executed" not-null="true"/>
+            <column name="executed" not-null="true" />
         </property>
         <property name="taskId" type="int">
-            <column name="task_id" not-null="true"/>
-        </property>
-        <property name="maintenanceId" type="int">
-            <column name="maintenance_id" not-null="true"/>
-        </property>
-        <property name="equipementId" type="int">
-            <column name="equipement_id" not-null="true"/>
-        </property>
-        <property name="planificationId" type="java.lang.Integer">
-            <column name="planification_id"/>
+            <column name="task_id" not-null="true" />
         </property>
     </class>
 </hibernate-mapping>

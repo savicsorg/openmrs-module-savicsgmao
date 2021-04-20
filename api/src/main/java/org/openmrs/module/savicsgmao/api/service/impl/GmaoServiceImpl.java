@@ -7,6 +7,7 @@ package org.openmrs.module.savicsgmao.api.service.impl;
 
 import java.io.Serializable;
 import java.util.List;
+import org.openmrs.api.APIException;
 import org.openmrs.api.LocationService;
 import org.openmrs.api.impl.BaseOpenmrsService;
 import org.openmrs.module.savicsgmao.api.dao.GmaoDao;
@@ -73,4 +74,9 @@ public class GmaoServiceImpl<T extends Serializable> extends BaseOpenmrsService 
 	public void delete(Serializable entity) {
 		this.dao.delete(entity);
 	}
+
+        @Override
+        public Serializable getEntityByid(Class t, String idName, String id) throws APIException {
+            return (T) this.dao.getEntityByUuid(t, id);
+        }
 }

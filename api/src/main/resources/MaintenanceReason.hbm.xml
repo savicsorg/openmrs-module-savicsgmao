@@ -1,23 +1,24 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Apr 13, 2021 3:01:21 PM by Hibernate Tools 4.3.1 -->
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 19, 2021 4:44:32 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="org.openmrs.module.savicsgmao.api.entity.MaintenanceReason" table="gmao_maintenance_reason">
+    <class name="org.openmrs.module.savicsgmao.api.entity.MaintenanceReason" table="gmao_maintenance_reason" >
         <id name="maintenanceReasonId" type="java.lang.Integer">
-            <column name="maintenance_reason_id"/>
-            <generator class="identity"/>
+            <column name="maintenance_reason_id" />
+            <generator class="identity" />
         </id>
         <property name="uuid" type="string">
-            <column length="38" name="uuid" not-null="true"/>
+            <column name="uuid" length="38" not-null="true" />
         </property>
         <property name="reasonCode" type="string">
-            <column length="250" name="reason_code" not-null="true"/>
+            <column name="reason_code" length="250" not-null="true" />
         </property>
         <property name="reasonName" type="string">
-            <column length="250" name="reason_name" not-null="true"/>
+            <column name="reason_name" length="250" not-null="true" />
         </property>
         <property name="details" type="string">
-            <column length="65535" name="details" not-null="true"/>
+            <column name="details" length="65535" not-null="true" />
         </property>
     </class>
 </hibernate-mapping>

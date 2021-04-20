@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 19, 2021 4:44:32 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="org.openmrs.module.savicsgmao.api.entity.Equipment" table="gmao_equipment" >
+        <id name="equipmentId" type="java.lang.Integer">
+            <column name="equipment_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="gmaoDepartment" class="org.openmrs.module.savicsgmao.api.entity.Department" fetch="select">
+            <column name="department_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="gmaoEquipmentType" class="org.openmrs.module.savicsgmao.api.entity.EquipmentType" fetch="select">
+            <column name="equipment_type_id" not-null="true" />
+        </many-to-one>
+        <property name="uuid" type="string">
+            <column name="uuid" length="38" not-null="true" />
+        </property>
+        <property name="serialNumber" type="string">
+            <column name="serial_number" length="250" not-null="true" />
+        </property>
+        <property name="acquisitionDate" type="timestamp">
+            <column name="acquisition_date" length="19" />
+        </property>
+        <property name="equipmentStatus" type="int">
+            <column name="equipment_status" not-null="true" />
+        </property>
+        <property name="designation" type="string">
+            <column name="designation" length="250" not-null="true" />
+        </property>
+        <property name="localization" type="string">
+            <column name="localization" length="250" not-null="true" />
+        </property>
+        <property name="lastModifiedDate" type="timestamp">
+            <column name="last_modified_date" length="19" />
+        </property>
+        <property name="equipmentWeight" type="java.lang.Float">
+            <column name="equipment_weight" precision="12" scale="0" />
+        </property>
+        <property name="volume" type="java.lang.Float">
+            <column name="volume" precision="12" scale="0" />
+        </property>
+        <property name="acquisitionValue" type="java.lang.Float">
+            <column name="acquisition_value" precision="12" scale="0" />
+        </property>
+        <property name="tracking" type="java.lang.Integer">
+            <column name="tracking" />
+        </property>
+        <property name="inService" type="java.lang.Byte">
+            <column name="in_service" />
+        </property>
+        <property name="operatingState" type="java.lang.Integer">
+            <column name="operating_state" />
+        </property>
+        <property name="commisionningYear" type="java.lang.Integer">
+            <column name="commisionning_year" />
+        </property>
+        <property name="comments" type="string">
+            <column name="comments" length="65535" not-null="true" />
+        </property>
+        <property name="providerId" type="int">
+            <column name="provider_id" not-null="true" />
+        </property>
+        <set name="gmaoMaintenances" table="gmao_maintenance" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="equipment_id" not-null="true" />
+            </key>
+            <one-to-many class="org.openmrs.module.savicsgmao.api.entity.Maintenance" />
+        </set>
+        <set name="gmaoMaintenanceRequests" table="gmao_maintenance_request" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="equipment_id" not-null="true" />
+            </key>
+            <one-to-many class="org.openmrs.module.savicsgmao.api.entity.MaintenanceRequest" />
+        </set>
+        <set name="gmaoMaintenanceTasks" table="gmao_maintenance_task" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="equipment_id" not-null="true" />
+            </key>
+            <one-to-many class="org.openmrs.module.savicsgmao.api.entity.MaintenanceTask" />
+        </set>
+        <set name="gmaoEquipmentOperationItems" table="gmao_equipment_operation_item" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="equipment_id" not-null="true" />
+            </key>
+            <one-to-many class="org.openmrs.module.savicsgmao.api.entity.EquipmentOperationItem" />
+        </set>
+    </class>
+</hibernate-mapping>

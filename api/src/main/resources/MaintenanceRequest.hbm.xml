@@ -1,44 +1,45 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Apr 13, 2021 3:01:21 PM by Hibernate Tools 4.3.1 -->
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 19, 2021 4:44:32 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="org.openmrs.module.savicsgmao.api.entity.MaintenanceRequest" table="gmao_maintenance_request">
+    <class name="org.openmrs.module.savicsgmao.api.entity.MaintenanceRequest" table="gmao_maintenance_request" >
         <id name="maintenanceRequestId" type="java.lang.Integer">
-            <column name="maintenance_request_id"/>
-            <generator class="identity"/>
+            <column name="maintenance_request_id" />
+            <generator class="identity" />
         </id>
+        <many-to-one name="gmaoDepartment" class="org.openmrs.module.savicsgmao.api.entity.Department" fetch="select">
+            <column name="department_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="gmaoEquipment" class="org.openmrs.module.savicsgmao.api.entity.Equipment" fetch="select">
+            <column name="equipment_id" not-null="true" />
+        </many-to-one>
         <property name="uuid" type="string">
-            <column length="38" name="uuid" not-null="true"/>
+            <column name="uuid" length="38" not-null="true" />
         </property>
         <property name="systemNumber" type="string">
-            <column length="250" name="system_number" not-null="true"/>
-        </property>
-        <property name="departmentId" type="int">
-            <column name="department_id" not-null="true"/>
+            <column name="system_number" length="250" not-null="true" />
         </property>
         <property name="applicantName" type="string">
-            <column length="250" name="applicant_name" not-null="true"/>
+            <column name="applicant_name" length="250" not-null="true" />
         </property>
         <property name="registerNumber" type="string">
-            <column length="250" name="register_number" not-null="true"/>
+            <column name="register_number" length="250" not-null="true" />
         </property>
         <property name="startdate" type="timestamp">
-            <column length="19" name="startdate" not-null="true"/>
+            <column name="startdate" length="19" not-null="true" />
         </property>
         <property name="natureOfWork" type="string">
-            <column length="250" name="nature_of_work" not-null="true"/>
+            <column name="nature_of_work" length="250" not-null="true" />
         </property>
         <property name="enddate" type="timestamp">
-            <column length="19" name="enddate"/>
+            <column name="enddate" length="19" />
         </property>
         <property name="motif" type="string">
-            <column length="65535" name="motif" not-null="true"/>
+            <column name="motif" length="65535" not-null="true" />
         </property>
         <property name="requestPriority" type="int">
-            <column name="request_priority" not-null="true"/>
-        </property>
-        <property name="equipmentId" type="int">
-            <column name="equipment_id" not-null="true"/>
+            <column name="request_priority" not-null="true" />
         </property>
     </class>
 </hibernate-mapping>
