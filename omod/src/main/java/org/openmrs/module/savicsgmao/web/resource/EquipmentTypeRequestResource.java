@@ -102,8 +102,7 @@ public class EquipmentTypeRequestResource extends DelegatingCrudResource<Equipme
 	private EquipmentType constructEquipmentType(String uuid, SimpleObject properties) {
 		EquipmentType equipmentType;
 		if (uuid != null) {
-			equipmentType = (EquipmentType) Context.getService(GmaoService.class).getEntityByUuid(EquipmentType.class,
-			    uuid);
+			equipmentType = (EquipmentType) Context.getService(GmaoService.class).getEntityByUuid(EquipmentType.class, uuid);
 			if (equipmentType == null) {
 				throw new IllegalPropertyException("equipmentType not exist");
 			}

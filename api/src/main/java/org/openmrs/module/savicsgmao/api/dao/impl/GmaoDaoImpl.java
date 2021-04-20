@@ -121,12 +121,12 @@ public class GmaoDaoImpl<T extends Serializable> implements GmaoDao<T> {
 		DbSession session = this.dbSessionFactory.getCurrentSession();
 		session.delete(entity);
 	}
-
-        @Override
-        public T getEntityByid(Class<T> t, String idName, String id) throws APIException {
-            DbSession session = dbSessionFactory.getCurrentSession();
+	
+	@Override
+	public T getEntityByid(Class<T> t, String idName, String id) throws APIException {
+		DbSession session = dbSessionFactory.getCurrentSession();
 		Criteria criteria = session.createCriteria(t);
 		criteria.add(Restrictions.eq(idName, id));
 		return (T) criteria.uniqueResult();
-        }
+	}
 }

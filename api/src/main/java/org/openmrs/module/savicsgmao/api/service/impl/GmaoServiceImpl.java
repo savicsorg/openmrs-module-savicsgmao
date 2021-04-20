@@ -74,9 +74,9 @@ public class GmaoServiceImpl<T extends Serializable> extends BaseOpenmrsService 
 	public void delete(Serializable entity) {
 		this.dao.delete(entity);
 	}
-
-        @Override
-        public Serializable getEntityByid(Class t, String idName, String id) throws APIException {
-            return (T) this.dao.getEntityByUuid(t, id);
-        }
+	
+	@Override
+	public Serializable getEntityByid(Class t, String idName, String id) throws APIException {
+		return (T) this.dao.getEntityByUuid(t, id);
+	}
 }
