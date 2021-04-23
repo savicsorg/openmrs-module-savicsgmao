@@ -17,7 +17,7 @@
         <property name="typeName" type="string">
             <column name="type_name" length="250" not-null="true" />
         </property>
-        <set name="gmaoMaintenances" table="gmao_maintenance" inverse="true" lazy="true" fetch="select">
+        <set name="Maintenances" table="gmao_maintenance" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="maintenance_type_id" not-null="true" />
             </key>

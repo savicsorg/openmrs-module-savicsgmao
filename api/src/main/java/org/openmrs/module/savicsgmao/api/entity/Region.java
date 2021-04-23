@@ -20,7 +20,7 @@ public class Region extends BaseOpenmrsData implements java.io.Serializable {
 	
 	private String regionCode;
 	
-	private Set gmaoDistricts = new HashSet(0);
+	private Set Districts = new HashSet(0);
 	
 	public Region() {
 	}
@@ -31,11 +31,11 @@ public class Region extends BaseOpenmrsData implements java.io.Serializable {
 		this.regionCode = regionCode;
 	}
 	
-	public Region(String uuid, String regionName, String regionCode, Set gmaoDistricts) {
+	public Region(String uuid, String regionName, String regionCode, Set Districts) {
 		this.uuid = uuid;
 		this.regionName = regionName;
 		this.regionCode = regionCode;
-		this.gmaoDistricts = gmaoDistricts;
+		this.Districts = Districts;
 	}
 	
 	public Integer getRegionId() {
@@ -62,12 +62,12 @@ public class Region extends BaseOpenmrsData implements java.io.Serializable {
 		this.regionCode = regionCode;
 	}
 	
-	public Set getGmaoDistricts() {
-		return this.gmaoDistricts;
+	public Set getDistricts() {
+		return this.Districts;
 	}
 	
-	public void setGmaoDistricts(Set gmaoDistricts) {
-		this.gmaoDistricts = gmaoDistricts;
+	public void setDistricts(Set Districts) {
+		this.Districts = Districts;
 	}
 	
 	@Override

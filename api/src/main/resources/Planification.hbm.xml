@@ -23,7 +23,7 @@
         <property name="observations" type="string">
             <column name="observations" length="250" not-null="true" />
         </property>
-        <set name="gmaoMaintenanceTasks" table="gmao_maintenance_task" inverse="true" lazy="true" fetch="select">
+        <set name="MaintenanceTasks" table="gmao_maintenance_task" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="planification_id" />
             </key>

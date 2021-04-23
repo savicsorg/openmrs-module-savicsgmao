@@ -8,13 +8,13 @@
             <column name="maintenance_id" />
             <generator class="identity" />
         </id>
-        <many-to-one name="gmaoAgent" class="org.openmrs.module.savicsgmao.api.entity.Agent" fetch="select">
+        <many-to-one name="Agent" class="org.openmrs.module.savicsgmao.api.entity.Agent" fetch="select">
             <column name="agent_id" not-null="true" />
         </many-to-one>
-        <many-to-one name="gmaoEquipment" class="org.openmrs.module.savicsgmao.api.entity.Equipment" fetch="select">
+        <many-to-one name="Equipment" class="org.openmrs.module.savicsgmao.api.entity.Equipment" fetch="select">
             <column name="equipment_id" not-null="true" />
         </many-to-one>
-        <many-to-one name="gmaoMaintenanceType" class="org.openmrs.module.savicsgmao.api.entity.MaintenanceType" fetch="select">
+        <many-to-one name="MaintenanceType" class="org.openmrs.module.savicsgmao.api.entity.MaintenanceType" fetch="select">
             <column name="maintenance_type_id" not-null="true" />
         </many-to-one>
         <property name="uuid" type="string">
@@ -32,7 +32,7 @@
         <property name="details" type="string">
             <column name="details" length="65535" not-null="true" />
         </property>
-        <set name="gmaoMaintenanceTasks" table="gmao_maintenance_task" inverse="true" lazy="true" fetch="select">
+        <set name="MaintenanceTasks" table="gmao_maintenance_task" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="maintenance_id" not-null="true" />
             </key>

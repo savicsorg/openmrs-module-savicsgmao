@@ -17,7 +17,7 @@
         <property name="regionCode" type="string">
             <column name="region_code" length="250" not-null="true" unique="true" />
         </property>
-        <set name="gmaoDistricts" table="gmao_district" inverse="true" lazy="true" fetch="select">
+        <set name="Districts" table="gmao_district" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="region_id" not-null="true" />
             </key>

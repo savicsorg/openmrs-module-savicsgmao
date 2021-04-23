@@ -17,19 +17,19 @@
         <property name="departmentCode" type="string">
             <column name="department_code" length="250" not-null="true" unique="true" />
         </property>
-        <set name="gmaoAgents" table="gmao_agent" inverse="true" lazy="true" fetch="select">
+        <set name="Agents" table="gmao_agent" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="department_id" />
             </key>
             <one-to-many class="org.openmrs.module.savicsgmao.api.entity.Agent" />
         </set>
-        <set name="gmaoMaintenanceRequests" table="gmao_maintenance_request" inverse="true" lazy="true" fetch="select">
+        <set name="MaintenanceRequests" table="gmao_maintenance_request" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="department_id" not-null="true" />
             </key>
             <one-to-many class="org.openmrs.module.savicsgmao.api.entity.MaintenanceRequest" />
         </set>
-        <set name="gmaoEquipments" table="gmao_equipment" inverse="true" lazy="true" fetch="select">
+        <set name="Equipments" table="gmao_equipment" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="department_id" not-null="true" />
             </key>

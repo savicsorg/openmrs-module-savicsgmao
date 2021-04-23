@@ -8,7 +8,7 @@
             <column name="site_location_id" />
             <generator class="identity" />
         </id>
-        <many-to-one name="gmaoDistrict" class="org.openmrs.module.savicsgmao.api.entity.District" fetch="select">
+        <many-to-one name="District" class="org.openmrs.module.savicsgmao.api.entity.District" fetch="select">
             <column name="district_id" not-null="true" />
         </many-to-one>
         <property name="uuid" type="string">
@@ -20,7 +20,7 @@
         <property name="locationCode" type="string">
             <column name="location_code" length="250" not-null="true" unique="true" />
         </property>
-        <set name="gmaoAgents" table="gmao_agent" inverse="true" lazy="true" fetch="select">
+        <set name="Agents" table="gmao_agent" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="site_location_id" />
             </key>

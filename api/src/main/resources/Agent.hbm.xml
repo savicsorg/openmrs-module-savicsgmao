@@ -8,10 +8,10 @@
             <column name="agent_id" />
             <generator class="identity" />
         </id>
-        <many-to-one name="gmaoDepartment" class="org.openmrs.module.savicsgmao.api.entity.Department" fetch="select">
+        <many-to-one name="Department" class="org.openmrs.module.savicsgmao.api.entity.Department" fetch="select">
             <column name="department_id" />
         </many-to-one>
-        <many-to-one name="gmaoSiteLocation" class="org.openmrs.module.savicsgmao.api.entity.SiteLocation" fetch="select">
+        <many-to-one name="SiteLocation" class="org.openmrs.module.savicsgmao.api.entity.SiteLocation" fetch="select">
             <column name="site_location_id" />
         </many-to-one>
         <property name="uuid" type="string">
@@ -32,7 +32,7 @@
         <property name="isExternal" type="byte">
             <column name="is_external" not-null="true" />
         </property>
-        <set name="gmaoMaintenances" table="gmao_maintenance" inverse="true" lazy="true" fetch="select">
+        <set name="Maintenances" table="gmao_maintenance" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="agent_id" not-null="true" />
             </key>

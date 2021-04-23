@@ -8,13 +8,13 @@
             <column name="maintenance_task_id" />
             <generator class="identity" />
         </id>
-        <many-to-one name="gmaoEquipment" class="org.openmrs.module.savicsgmao.api.entity.Equipment" fetch="select">
+        <many-to-one name="Equipment" class="org.openmrs.module.savicsgmao.api.entity.Equipment" fetch="select">
             <column name="equipment_id" not-null="true" />
         </many-to-one>
-        <many-to-one name="gmaoMaintenance" class="org.openmrs.module.savicsgmao.api.entity.Maintenance" fetch="select">
+        <many-to-one name="Maintenance" class="org.openmrs.module.savicsgmao.api.entity.Maintenance" fetch="select">
             <column name="maintenance_id" not-null="true" />
         </many-to-one>
-        <many-to-one name="gmaoPlanification" class="org.openmrs.module.savicsgmao.api.entity.Planification" fetch="select">
+        <many-to-one name="Planification" class="org.openmrs.module.savicsgmao.api.entity.Planification" fetch="select">
             <column name="planification_id" />
         </many-to-one>
         <property name="uuid" type="string">

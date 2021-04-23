@@ -57,7 +57,7 @@
             Department.hbm.xml
             District.hbm.xml
             Equipment.hbm.xml
-            EquipementType.hbm.xml
+            EquipmentType.hbm.xml
             EquipmentOperation.hbm.xml
             EquipmentOperationItem.hbm.xml
             Maintenance.hbm.xml

@@ -41,7 +41,7 @@
         <property name="centralApprovalDate" type="timestamp">
             <column name="central_approval_date" length="19" />
         </property>
-        <set name="gmaoEquipmentOperationItems" table="gmao_equipment_operation_item" inverse="true" lazy="true" fetch="select">
+        <set name="EquipmentOperationItems" table="gmao_equipment_operation_item" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="equipment_operation_id" not-null="true" />
             </key>

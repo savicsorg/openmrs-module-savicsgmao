@@ -8,10 +8,10 @@
             <column name="equipment_id" />
             <generator class="identity" />
         </id>
-        <many-to-one name="gmaoDepartment" class="org.openmrs.module.savicsgmao.api.entity.Department" fetch="select">
+        <many-to-one name="Department" class="org.openmrs.module.savicsgmao.api.entity.Department" fetch="select">
             <column name="department_id" not-null="true" />
         </many-to-one>
-        <many-to-one name="gmaoEquipmentType" class="org.openmrs.module.savicsgmao.api.entity.EquipmentType" fetch="select">
+        <many-to-one name="EquipmentType" class="org.openmrs.module.savicsgmao.api.entity.EquipmentType" fetch="select">
             <column name="equipment_type_id" not-null="true" />
         </many-to-one>
         <property name="uuid" type="string">
@@ -62,25 +62,25 @@
         <property name="providerId" type="int">
             <column name="provider_id" not-null="true" />
         </property>
-        <set name="gmaoMaintenances" table="gmao_maintenance" inverse="true" lazy="true" fetch="select">
+        <set name="Maintenances" table="gmao_maintenance" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="equipment_id" not-null="true" />
             </key>
             <one-to-many class="org.openmrs.module.savicsgmao.api.entity.Maintenance" />
         </set>
-        <set name="gmaoMaintenanceRequests" table="gmao_maintenance_request" inverse="true" lazy="true" fetch="select">
+        <set name="MaintenanceRequests" table="gmao_maintenance_request" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="equipment_id" not-null="true" />
             </key>
             <one-to-many class="org.openmrs.module.savicsgmao.api.entity.MaintenanceRequest" />
         </set>
-        <set name="gmaoMaintenanceTasks" table="gmao_maintenance_task" inverse="true" lazy="true" fetch="select">
+        <set name="MaintenanceTasks" table="gmao_maintenance_task" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="equipment_id" not-null="true" />
             </key>
             <one-to-many class="org.openmrs.module.savicsgmao.api.entity.MaintenanceTask" />
         </set>
-        <set name="gmaoEquipmentOperationItems" table="gmao_equipment_operation_item" inverse="true" lazy="true" fetch="select">
+        <set name="EquipmentOperationItems" table="gmao_equipment_operation_item" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="equipment_id" not-null="true" />
             </key>

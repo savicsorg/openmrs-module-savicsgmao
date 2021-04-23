@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
- 
-<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
-                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
-                  http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
- 
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    
+    
+    
     <changeSet author="anatoleabe (generated)" id="1619101234148-1">
         <createTable tableName="gmao_agent">
             <column autoIncrement="true" name="agent_id" type="INT">
@@ -508,5 +506,4 @@
     <changeSet author="anatoleabe (generated)" id="1619101234148-50">
         <addForeignKeyConstraint baseColumnNames="equipment_type_id" baseTableName="gmao_task" constraintName="gmao_task_ibfk_1" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="equipment_type_id" referencedTableName="gmao_equipment_type" />
     </changeSet>
- 
 </databaseChangeLog>

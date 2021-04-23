@@ -14,13 +14,13 @@
         <property name="typeName" type="string">
             <column name="type_name" length="250" not-null="true" />
         </property>
-        <set name="gmaoTasks" table="gmao_task" inverse="true" lazy="true" fetch="select">
+        <set name="Tasks" table="gmao_task" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="equipment_type_id" not-null="true" />
             </key>
             <one-to-many class="org.openmrs.module.savicsgmao.api.entity.Task" />
         </set>
-        <set name="gmaoEquipments" table="gmao_equipment" inverse="true" lazy="true" fetch="select">
+        <set name="Equipments" table="gmao_equipment" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="equipment_type_id" not-null="true" />
             </key>

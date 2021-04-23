@@ -53,19 +53,19 @@ public class EquipmentType extends BaseOpenmrsData implements java.io.Serializab
 		this.typeName = typeName;
 	}
 	
-	public Set getGmaoTasks() {
+	public Set getTasks() {
 		return this.Tasks;
 	}
 	
-	public void setGmaoTasks(Set Tasks) {
+	public void setTasks(Set Tasks) {
 		this.Tasks = Tasks;
 	}
 	
-	public Set getGmaoEquipments() {
+	public Set getEquipments() {
 		return this.Equipments;
 	}
 	
-	public void setGmaoEquipments(Set Equipments) {
+	public void setEquipments(Set Equipments) {
 		this.Equipments = Equipments;
 	}
 	
