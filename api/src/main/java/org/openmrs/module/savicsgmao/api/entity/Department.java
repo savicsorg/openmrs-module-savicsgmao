@@ -24,25 +24,6 @@ public class Department extends BaseOpenmrsData implements java.io.Serializable 
 	
 	private Set Equipments = new HashSet(0);
 	
-	public Department() {
-	}
-	
-	public Department(String uuid, String departmentName, String departmentCode) {
-		this.uuid = uuid;
-		this.departmentName = departmentName;
-		this.departmentCode = departmentCode;
-	}
-	
-	public Department(String uuid, String departmentName, String departmentCode, Set Agents, Set MaintenanceRequests,
-	    Set Equipments) {
-		this.uuid = uuid;
-		this.departmentName = departmentName;
-		this.departmentCode = departmentCode;
-		this.Agents = Agents;
-		this.MaintenanceRequests = MaintenanceRequests;
-		this.Equipments = Equipments;
-	}
-	
 	public Integer getDepartmentId() {
 		return this.departmentId;
 	}

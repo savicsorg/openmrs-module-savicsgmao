@@ -23,6 +23,7 @@ import org.openmrs.module.savicsgmao.api.entity.SiteLocation;
 import org.openmrs.module.savicsgmao.rest.v1_0.resource.GmaoRest;
 import org.openmrs.module.webservices.rest.web.representation.DefaultRepresentation;
 import org.openmrs.module.webservices.rest.web.representation.FullRepresentation;
+import org.openmrs.module.webservices.rest.web.representation.RefRepresentation;
 
 @Resource(name = RestConstants.VERSION_1 + GmaoRest.GMAO_NAMESPACE + "/agent", supportedClass = Agent.class, supportedOpenmrsVersions = { "2.*.*" })
 public class AgentRequestResource extends DelegatingCrudResource<Agent> {
@@ -34,35 +35,51 @@ public class AgentRequestResource extends DelegatingCrudResource<Agent> {
 	
 	@Override
 	public DelegatingResourceDescription getRepresentationDescription(Representation rep) {
-		DelegatingResourceDescription description = new DelegatingResourceDescription();
-		if (rep instanceof DefaultRepresentation || rep instanceof FullRepresentation) {
+		if (rep instanceof DefaultRepresentation) {
+			DelegatingResourceDescription description = new DelegatingResourceDescription();
+			System.out.println("");
+			description.addProperty("id");
 			description.addProperty("uuid");
 			description.addProperty("fullName");
 			description.addProperty("agentAddress");
 			description.addProperty("phoneNumber");
 			description.addProperty("rollNumber");
 			description.addProperty("isExternal");
-			description.addProperty("departmentId");
-			description.addProperty("siteLocationId");
-			description.addProperty("SiteLocation");
-			description.addProperty("Department");
-			description.addProperty("Equipments");
-			description.addLink("full", ".?v=" + RestConstants.REPRESENTATION_FULL);
-		} else {
+			description.addProperty("department");
+			description.addProperty("siteLocation");
+			description.addLink("ref", ".?v=" + RestConstants.REPRESENTATION_REF);
+			description.addSelfLink();
+			return description;
+		} else if (rep instanceof FullRepresentation) {
+			DelegatingResourceDescription description = new DelegatingResourceDescription();
+			description.addProperty("id");
 			description.addProperty("uuid");
 			description.addProperty("fullName");
 			description.addProperty("agentAddress");
 			description.addProperty("phoneNumber");
 			description.addProperty("rollNumber");
 			description.addProperty("isExternal");
-			description.addProperty("departmentId");
-			description.addProperty("siteLocationId");
-			description.addProperty("SiteLocation");
-			description.addProperty("siteLocationId");
-			description.addProperty("Equipments");
+			description.addProperty("department");
+			description.addProperty("siteLocation");
 			description.addLink("full", ".?v=" + RestConstants.REPRESENTATION_FULL);
+			description.addLink("ref", ".?v=" + RestConstants.REPRESENTATION_REF);
+			description.addSelfLink();
+			return description;
+		} else if (rep instanceof RefRepresentation) {
+			DelegatingResourceDescription description = new DelegatingResourceDescription();
+			description.addProperty("id");
+			description.addProperty("uuid");
+			description.addProperty("fullName");
+			description.addProperty("agentAddress");
+			description.addProperty("phoneNumber");
+			description.addProperty("rollNumber");
+			description.addProperty("isExternal");
+			description.addProperty("department");
+			description.addProperty("siteLocation");
+			description.addSelfLink();
+			return description;
 		}
-		return description;
+		return null;
 	}
 	
 	@Override

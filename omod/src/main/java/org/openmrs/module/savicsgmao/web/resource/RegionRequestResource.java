@@ -21,6 +21,7 @@ import org.openmrs.module.savicsgmao.api.entity.Region;
 import org.openmrs.module.savicsgmao.rest.v1_0.resource.GmaoRest;
 import org.openmrs.module.webservices.rest.web.representation.DefaultRepresentation;
 import org.openmrs.module.webservices.rest.web.representation.FullRepresentation;
+import org.openmrs.module.webservices.rest.web.representation.RefRepresentation;
 
 @Resource(name = RestConstants.VERSION_1 + GmaoRest.GMAO_NAMESPACE + "/region", supportedClass = Region.class, supportedOpenmrsVersions = { "2.*.*" })
 public class RegionRequestResource extends DelegatingCrudResource<Region> {
@@ -32,19 +33,37 @@ public class RegionRequestResource extends DelegatingCrudResource<Region> {
 	
 	@Override
 	public DelegatingResourceDescription getRepresentationDescription(Representation rep) {
-		DelegatingResourceDescription description = new DelegatingResourceDescription();
-		if (rep instanceof DefaultRepresentation || rep instanceof FullRepresentation) {
+		if (rep instanceof DefaultRepresentation) {
+			DelegatingResourceDescription description = new DelegatingResourceDescription();
+			System.out.println("");
+			description.addProperty("id");
 			description.addProperty("uuid");
 			description.addProperty("regionName");
 			description.addProperty("regionCode");
 			description.addLink("full", ".?v=" + RestConstants.REPRESENTATION_FULL);
-		} else {
+			description.addSelfLink();
+			return description;
+		} else if (rep instanceof FullRepresentation) {
+			DelegatingResourceDescription description = new DelegatingResourceDescription();
+			description.addProperty("id");
 			description.addProperty("uuid");
 			description.addProperty("regionName");
 			description.addProperty("regionCode");
 			description.addLink("full", ".?v=" + RestConstants.REPRESENTATION_FULL);
+			description.addLink("ref", ".?v=" + RestConstants.REPRESENTATION_REF);
+			description.addSelfLink();
+			return description;
+		} else if (rep instanceof RefRepresentation) {
+			DelegatingResourceDescription description = new DelegatingResourceDescription();
+			description.addProperty("id");
+			description.addProperty("uuid");
+			description.addProperty("regionName");
+			description.addProperty("regionCode");
+			description.addSelfLink();
+			return description;
 		}
-		return description;
+		
+		return null;
 	}
 	
 	@Override

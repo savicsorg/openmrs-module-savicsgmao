@@ -9,14 +9,12 @@ import org.openmrs.module.webservices.rest.web.annotation.Resource;
 import org.openmrs.module.webservices.rest.web.representation.Representation;
 import org.openmrs.module.webservices.rest.web.resource.api.PageableResult;
 import org.openmrs.module.webservices.rest.web.resource.impl.AlreadyPaged;
-import org.openmrs.module.webservices.rest.web.resource.impl.DelegatingCrudResource;
 import org.openmrs.module.webservices.rest.web.resource.impl.DelegatingResourceDescription;
 import org.openmrs.module.webservices.rest.web.response.ConversionException;
 import org.openmrs.module.webservices.rest.web.response.IllegalPropertyException;
 import org.openmrs.module.webservices.rest.web.response.ResponseException;
 
 import java.util.List;
-import org.openmrs.module.savicsgmao.api.entity.Department;
 import org.openmrs.module.savicsgmao.api.service.GmaoService;
 import org.openmrs.module.savicsgmao.api.entity.District;
 import org.openmrs.module.savicsgmao.api.entity.Region;
@@ -24,9 +22,10 @@ import org.openmrs.module.savicsgmao.rest.v1_0.resource.GmaoRest;
 import org.openmrs.module.webservices.rest.web.representation.DefaultRepresentation;
 import org.openmrs.module.webservices.rest.web.representation.FullRepresentation;
 import org.openmrs.module.webservices.rest.web.representation.RefRepresentation;
+import org.openmrs.module.webservices.rest.web.resource.impl.DataDelegatingCrudResource;
 
 @Resource(name = RestConstants.VERSION_1 + GmaoRest.GMAO_NAMESPACE + "/district", supportedClass = District.class, supportedOpenmrsVersions = { "2.*.*" })
-public class DistrictRequestResource extends DelegatingCrudResource<District> {
+public class DistrictRequestResource extends DataDelegatingCrudResource<District> {
 	
 	@Override
 	public District newDelegate() {
@@ -35,40 +34,46 @@ public class DistrictRequestResource extends DelegatingCrudResource<District> {
 	
 	@Override
 	public DelegatingResourceDescription getRepresentationDescription(Representation rep) {
-		try {
-			
-			if (rep instanceof DefaultRepresentation || rep instanceof RefRepresentation) {
-				DelegatingResourceDescription description = new DelegatingResourceDescription();
-				description.addProperty("Region", Representation.REF);
-				description.addProperty("id");
-				description.addProperty("uuid");
-				description.addProperty("districtName");
-				description.addProperty("districtCode");
-				description.addLink("full", ".?v=" + RestConstants.REPRESENTATION_FULL);
-				return description;
-			}
-			
-			if (rep instanceof FullRepresentation) {
-				DelegatingResourceDescription description = new DelegatingResourceDescription();
-				description.addProperty("Region", Representation.REF);
-				description.addProperty("id");
-				description.addProperty("uuid");
-				description.addProperty("districtName");
-				description.addProperty("districtCode");
-				description.addLink("full", ".?v=" + RestConstants.REPRESENTATION_FULL);
-				return description;
-			}
-		}
-		catch (Exception e) {
-			e.printStackTrace();
+		if (rep instanceof DefaultRepresentation) {
+			DelegatingResourceDescription description = new DelegatingResourceDescription();
+			System.out.println("");
+			description.addProperty("id");
+			description.addProperty("uuid");
+			description.addProperty("districtName");
+			description.addProperty("districtCode");
+			description.addProperty("region");
+			description.addLink("ref", ".?v=" + RestConstants.REPRESENTATION_REF);
+			description.addSelfLink();
+			return description;
+		} else if (rep instanceof FullRepresentation) {
+			DelegatingResourceDescription description = new DelegatingResourceDescription();
+			description.addProperty("id");
+			description.addProperty("uuid");
+			description.addProperty("districtName");
+			description.addProperty("districtCode");
+			description.addProperty("region");
+			description.addLink("full", ".?v=" + RestConstants.REPRESENTATION_FULL);
+			description.addLink("ref", ".?v=" + RestConstants.REPRESENTATION_REF);
+			description.addSelfLink();
+			return description;
+		} else if (rep instanceof RefRepresentation) {
+			DelegatingResourceDescription description = new DelegatingResourceDescription();
+			description.addProperty("id");
+			description.addProperty("uuid");
+			description.addProperty("districtName");
+			description.addProperty("districtCode");
+			description.addSelfLink();
+			return description;
 		}
 		return null;
 	}
 	
 	@Override
 	protected PageableResult doGetAll(RequestContext context) throws ResponseException {
+		System.out.println("---- doGetAll ");
 		List<District> districtList = Context.getService(GmaoService.class).getAll(District.class, context.getLimit(),
 		    context.getStartIndex());
+		System.out.println(districtList.toString());
 		return new AlreadyPaged<District>(context, districtList, false);
 	}
 	
@@ -124,9 +129,9 @@ public class DistrictRequestResource extends DelegatingCrudResource<District> {
 	private District constructDistrict(String uuid, SimpleObject properties) {
 		District district;
 		Region region = null;
-		System.out.println(">>>>Region ID " + properties.get("Region"));
-		if (properties.get("Region") != null) {
-			Integer regionId = properties.get("Region");
+		System.out.println(">>>>Region ID " + properties.get("region"));
+		if (properties.get("region") != null) {
+			Integer regionId = properties.get("region");
 			region = (Region) Context.getService(GmaoService.class).getEntityByid(Region.class, "regionId", regionId);
 		}
 		if (uuid != null) {
