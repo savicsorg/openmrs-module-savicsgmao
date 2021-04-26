@@ -76,7 +76,7 @@ public class GmaoServiceImpl<T extends Serializable> extends BaseOpenmrsService 
 	}
 	
 	@Override
-	public Serializable getEntityByid(Class t, String idName, String id) throws APIException {
-		return (T) this.dao.getEntityByUuid(t, id);
+	public Serializable getEntityByid(Class t, String idName, Integer id) throws APIException {
+		return (T) this.dao.getEntityByid(t, idName, id);
 	}
 }

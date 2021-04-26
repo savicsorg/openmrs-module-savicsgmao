@@ -110,7 +110,7 @@ public class SiteLocationRequestResource extends DelegatingCrudResource<SiteLoca
 		
 		District district = null;
 		if (properties.get("District") != null) {
-			String districtId = properties.get("District");
+			Integer districtId = properties.get("District");
 			district = (District) Context.getService(GmaoService.class).getEntityByid(District.class, "districtId",
 			    districtId);
 		}

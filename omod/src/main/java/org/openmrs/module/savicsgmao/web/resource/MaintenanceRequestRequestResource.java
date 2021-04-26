@@ -126,14 +126,14 @@ public class MaintenanceRequestRequestResource extends DelegatingCrudResource<Ma
 		
 		Equipment equipment = null;
 		if (properties.get("Equipment") != null) {
-			String regionId = properties.get("Equipment");
+			Integer regionId = properties.get("Equipment");
 			equipment = (Equipment) Context.getService(GmaoService.class).getEntityByid(Equipment.class, "regionId",
 			    regionId);
 		}
 		
 		Department department = null;
 		if (properties.get("Department") != null) {
-			String departmentId = properties.get("Department");
+			Integer departmentId = properties.get("Department");
 			department = (Department) Context.getService(GmaoService.class).getEntityByid(Equipment.class, "departmentId",
 			    departmentId);
 		}

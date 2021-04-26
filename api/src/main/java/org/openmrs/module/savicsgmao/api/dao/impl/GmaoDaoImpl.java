@@ -123,7 +123,7 @@ public class GmaoDaoImpl<T extends Serializable> implements GmaoDao<T> {
 	}
 	
 	@Override
-	public T getEntityByid(Class<T> t, String idName, String id) throws APIException {
+	public T getEntityByid(Class<T> t, String idName, Integer id) throws APIException {
 		DbSession session = dbSessionFactory.getCurrentSession();
 		Criteria criteria = session.createCriteria(t);
 		criteria.add(Restrictions.eq(idName, id));

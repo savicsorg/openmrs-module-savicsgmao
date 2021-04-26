@@ -109,7 +109,7 @@ public class TaskRequestResource extends DelegatingCrudResource<Task> {
 		Task task;
 		EquipmentType equipmentType = null;
 		if (properties.get("EquipmentType") != null) {
-			String equipmentTypeId = properties.get("EquipmentType");
+			Integer equipmentTypeId = properties.get("EquipmentType");
 			equipmentType = (EquipmentType) Context.getService(GmaoService.class).getEntityByid(EquipmentType.class,
 			    "equipmentTypeId", equipmentTypeId);
 		}

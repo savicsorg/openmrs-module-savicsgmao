@@ -110,13 +110,13 @@ public class EquipmentOperationItemRequestResource extends DelegatingCrudResourc
 		
 		Equipment equipment = null;
 		if (properties.get("Equipment") != null) {
-			String equipementId = properties.get("Equipment");
+			Integer equipementId = properties.get("Equipment");
 			equipment = (Equipment) Context.getService(GmaoService.class).getEntityByid(Equipment.class, "equipementId",
 			    equipementId);
 		}
 		EquipmentOperation EquipmentOperation = null;
 		if (properties.get("EquipmentOperation") != null) {
-			String EquipmentOperationId = properties.get("EquipmentOperation");
+			Integer EquipmentOperationId = properties.get("EquipmentOperation");
 			EquipmentOperation = (EquipmentOperation) Context.getService(GmaoService.class).getEntityByid(
 			    EquipmentOperation.class, "equipmentOperationId", EquipmentOperationId);
 		}

@@ -146,13 +146,13 @@ public class EquipmentRequestResource extends DelegatingCrudResource<Equipment> 
 		Equipment equipment;
 		Department department = null;
 		if (properties.get("Department") != null) {
-			String departementID = properties.get("Department");
+			Integer departementID = properties.get("Department");
 			department = (Department) Context.getService(GmaoService.class).getEntityByid(Department.class, "departmentId",
 			    departementID);
 		}
 		EquipmentType equipmentType = null;
 		if (properties.get("EquipmentType") != null) {
-			String equipmentTypeId = properties.get("EquipmentType");
+			Integer equipmentTypeId = properties.get("EquipmentType");
 			equipmentType = (EquipmentType) Context.getService(GmaoService.class).getEntityByid(EquipmentType.class,
 			    "equipmentTypeId", equipmentTypeId);
 		}

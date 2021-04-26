@@ -119,21 +119,21 @@ public class MaintenanceTaskRequestResource extends DelegatingCrudResource<Maint
 		
 		Equipment equipment = null;
 		if (properties.get("Equipment") != null) {
-			String equipementId = properties.get("Equipment");
+			Integer equipementId = properties.get("Equipment");
 			equipment = (Equipment) Context.getService(GmaoService.class).getEntityByid(Equipment.class, "equipementId",
 			    equipementId);
 		}
 		
 		Maintenance maintenance = null;
 		if (properties.get("Maintenance") != null) {
-			String maintenanceId = properties.get("Maintenance");
+			Integer maintenanceId = properties.get("Maintenance");
 			maintenance = (Maintenance) Context.getService(GmaoService.class).getEntityByid(Maintenance.class,
 			    "maintenanceId", maintenanceId);
 		}
 		
 		Planification planification = null;
 		if (properties.get("Planification") != null) {
-			String planificationId = properties.get("Planification");
+			Integer planificationId = properties.get("Planification");
 			planification = (Planification) Context.getService(GmaoService.class).getEntityByid(Planification.class,
 			    "planificationId", planificationId);
 		}

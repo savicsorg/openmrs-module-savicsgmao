@@ -23,6 +23,7 @@ import org.openmrs.module.savicsgmao.api.entity.Region;
 import org.openmrs.module.savicsgmao.rest.v1_0.resource.GmaoRest;
 import org.openmrs.module.webservices.rest.web.representation.DefaultRepresentation;
 import org.openmrs.module.webservices.rest.web.representation.FullRepresentation;
+import org.openmrs.module.webservices.rest.web.representation.RefRepresentation;
 
 @Resource(name = RestConstants.VERSION_1 + GmaoRest.GMAO_NAMESPACE + "/district", supportedClass = District.class, supportedOpenmrsVersions = { "2.*.*" })
 public class DistrictRequestResource extends DelegatingCrudResource<District> {
@@ -34,21 +35,34 @@ public class DistrictRequestResource extends DelegatingCrudResource<District> {
 	
 	@Override
 	public DelegatingResourceDescription getRepresentationDescription(Representation rep) {
-		DelegatingResourceDescription description = new DelegatingResourceDescription();
-		if (rep instanceof DefaultRepresentation || rep instanceof FullRepresentation) {
-			description.addProperty("uuid");
-			description.addProperty("districtName");
-			description.addProperty("districtCode");
-			description.addProperty("regionId");
-			description.addLink("full", ".?v=" + RestConstants.REPRESENTATION_FULL);
-		} else {
-			description.addProperty("uuid");
-			description.addProperty("districtName");
-			description.addProperty("districtCode");
-			description.addProperty("regionId");
-			description.addLink("full", ".?v=" + RestConstants.REPRESENTATION_FULL);
+		try {
+			
+			if (rep instanceof DefaultRepresentation || rep instanceof RefRepresentation) {
+				DelegatingResourceDescription description = new DelegatingResourceDescription();
+				description.addProperty("Region", Representation.REF);
+				description.addProperty("id");
+				description.addProperty("uuid");
+				description.addProperty("districtName");
+				description.addProperty("districtCode");
+				description.addLink("full", ".?v=" + RestConstants.REPRESENTATION_FULL);
+				return description;
+			}
+			
+			if (rep instanceof FullRepresentation) {
+				DelegatingResourceDescription description = new DelegatingResourceDescription();
+				description.addProperty("Region", Representation.REF);
+				description.addProperty("id");
+				description.addProperty("uuid");
+				description.addProperty("districtName");
+				description.addProperty("districtCode");
+				description.addLink("full", ".?v=" + RestConstants.REPRESENTATION_FULL);
+				return description;
+			}
 		}
-		return description;
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	@Override
@@ -82,7 +96,9 @@ public class DistrictRequestResource extends DelegatingCrudResource<District> {
 		if (propertiesToCreate.get("districtName") == null || propertiesToCreate.get("districtCode") == null) {
 			throw new ConversionException("Required properties: districtName, districtCode");
 		}
-		
+		System.out.println("-----------------------------");
+		System.out.println(propertiesToCreate);
+		System.out.println();
 		District district = this.constructDistrict(null, propertiesToCreate);
 		Context.getService(GmaoService.class).upsert(district);
 		return ConversionUtil.convertToRepresentation(district, context.getRepresentation());
@@ -108,9 +124,10 @@ public class DistrictRequestResource extends DelegatingCrudResource<District> {
 	private District constructDistrict(String uuid, SimpleObject properties) {
 		District district;
 		Region region = null;
+		System.out.println(">>>>Region ID " + properties.get("Region"));
 		if (properties.get("Region") != null) {
-			String regionId = properties.get("Region");
-			region = (Region) Context.getService(GmaoService.class).getEntityByid(Department.class, "regionId", regionId);
+			Integer regionId = properties.get("Region");
+			region = (Region) Context.getService(GmaoService.class).getEntityByid(Region.class, "regionId", regionId);
 		}
 		if (uuid != null) {
 			district = (District) Context.getService(GmaoService.class).getEntityByUuid(District.class, uuid);
@@ -126,9 +143,7 @@ public class DistrictRequestResource extends DelegatingCrudResource<District> {
 				district.setDistrictCode((String) properties.get("districtCode"));
 			}
 			
-			if (properties.get("regionId") != null) {
-				district.setRegion(region);
-			}
+			district.setRegion(region);
 		} else {
 			district = new District();
 			if (properties.get("districtName") == null || properties.get("districtCode") == null) {
@@ -137,6 +152,7 @@ public class DistrictRequestResource extends DelegatingCrudResource<District> {
 			district.setDistrictName((String) properties.get("districtName"));
 			district.setDistrictCode((String) properties.get("districtCode"));
 			district.setRegion(region);
+			System.out.println("region = " + region);
 		}
 		
 		return district;
