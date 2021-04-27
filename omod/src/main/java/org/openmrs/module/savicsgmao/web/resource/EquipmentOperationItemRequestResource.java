@@ -23,6 +23,8 @@ import org.openmrs.module.savicsgmao.api.entity.EquipmentOperationItem;
 import org.openmrs.module.savicsgmao.rest.v1_0.resource.GmaoRest;
 import org.openmrs.module.webservices.rest.web.representation.DefaultRepresentation;
 import org.openmrs.module.webservices.rest.web.representation.FullRepresentation;
+import org.openmrs.module.webservices.rest.web.representation.RefRepresentation;
+import org.openmrs.module.webservices.rest.web.response.ResourceDoesNotSupportOperationException;
 
 @Resource(name = RestConstants.VERSION_1 + GmaoRest.GMAO_NAMESPACE + "/equipmentOperationItem", supportedClass = EquipmentOperationItem.class, supportedOpenmrsVersions = { "2.*.*" })
 public class EquipmentOperationItemRequestResource extends DelegatingCrudResource<EquipmentOperationItem> {
@@ -34,19 +36,36 @@ public class EquipmentOperationItemRequestResource extends DelegatingCrudResourc
 	
 	@Override
 	public DelegatingResourceDescription getRepresentationDescription(Representation rep) {
-		DelegatingResourceDescription description = new DelegatingResourceDescription();
-		if (rep instanceof DefaultRepresentation || rep instanceof FullRepresentation) {
+		
+                if (rep instanceof DefaultRepresentation) {
+			DelegatingResourceDescription description = new DelegatingResourceDescription();
+			description.addProperty("id");
 			description.addProperty("uuid");
-			description.addProperty("equipmentId");
-			description.addProperty("equipmentOperationId");
-			description.addLink("full", ".?v=" + RestConstants.REPRESENTATION_FULL);
-		} else {
+			description.addProperty("equipment");
+			description.addProperty("equipmentOperation");
+			description.addLink("ref", ".?v=" + RestConstants.REPRESENTATION_REF);
+			description.addSelfLink();
+			return description;
+		} else if (rep instanceof FullRepresentation) {
+			DelegatingResourceDescription description = new DelegatingResourceDescription();
+			description.addProperty("id");
 			description.addProperty("uuid");
-			description.addProperty("equipmentId");
-			description.addProperty("equipmentOperationId");
+			description.addProperty("equipment");
+			description.addProperty("equipmentOperation");
 			description.addLink("full", ".?v=" + RestConstants.REPRESENTATION_FULL);
+			description.addLink("ref", ".?v=" + RestConstants.REPRESENTATION_REF);
+			description.addSelfLink();
+			return description;
+		} else if (rep instanceof RefRepresentation) {
+                    DelegatingResourceDescription description = new DelegatingResourceDescription();
+			description.addProperty("id");
+			description.addProperty("uuid");
+			description.addProperty("equipment");
+			description.addProperty("equipmentOperation");
+			description.addSelfLink();
+			return description;
 		}
-		return description;
+		return null;
 	}
 	
 	@Override
@@ -58,10 +77,7 @@ public class EquipmentOperationItemRequestResource extends DelegatingCrudResourc
 	
 	@Override
 	protected PageableResult doSearch(RequestContext context) {
-		String value = context.getParameter("equipmentId");
-		List<EquipmentOperationItem> equipmentOperationItemList = Context.getService(GmaoService.class).doSearch(
-		    EquipmentOperationItem.class, "equipmentId", value, context.getLimit(), context.getStartIndex());
-		return new AlreadyPaged<EquipmentOperationItem>(context, equipmentOperationItemList, false);
+		throw new ResourceDoesNotSupportOperationException("doSearch not allowed on "+this.getClass()+ " resource");
 	}
 	
 	@Override
@@ -78,8 +94,8 @@ public class EquipmentOperationItemRequestResource extends DelegatingCrudResourc
 	
 	@Override
 	public Object create(SimpleObject propertiesToCreate, RequestContext context) throws ResponseException {
-		if (propertiesToCreate.get("equipmentId") == null || propertiesToCreate.get("equipmentOperationId") == null) {
-			throw new ConversionException("Required properties: equipmentId, equipmentOperationId");
+		if (propertiesToCreate.get("equipment") == null || propertiesToCreate.get("equipmentOperation") == null) {
+			throw new ConversionException("Required properties: equipmentId, equipmentOperation");
 		}
 		
 		EquipmentOperationItem equipmentOperationItem = this.constructEquipmentOperationItem(null, propertiesToCreate);
@@ -109,16 +125,16 @@ public class EquipmentOperationItemRequestResource extends DelegatingCrudResourc
 		EquipmentOperationItem equipmentOperationItem;
 		
 		Equipment equipment = null;
-		if (properties.get("Equipment") != null) {
-			Integer equipementId = properties.get("Equipment");
+		if (properties.get("equipment") != null) {
+			Integer equipementId = properties.get("equipment");
 			equipment = (Equipment) Context.getService(GmaoService.class).getEntityByid(Equipment.class, "equipementId",
 			    equipementId);
 		}
-		EquipmentOperation EquipmentOperation = null;
-		if (properties.get("EquipmentOperation") != null) {
-			Integer EquipmentOperationId = properties.get("EquipmentOperation");
-			EquipmentOperation = (EquipmentOperation) Context.getService(GmaoService.class).getEntityByid(
-			    EquipmentOperation.class, "equipmentOperationId", EquipmentOperationId);
+		EquipmentOperation equipmentOperation = null;
+		if (properties.get("equipmentOperation") != null) {
+			Integer equipmentOperationId = properties.get("equipmentOperation");
+			equipmentOperation = (EquipmentOperation) Context.getService(GmaoService.class).getEntityByid(
+			    EquipmentOperation.class, "equipmentOperation", equipmentOperationId);
 		}
 		
 		if (uuid != null) {
@@ -128,12 +144,12 @@ public class EquipmentOperationItemRequestResource extends DelegatingCrudResourc
 				throw new IllegalPropertyException("equipmentOperationItem not exist");
 			}
 			
-			if (properties.get("equipmentId") != null) {
+			if (properties.get("equipment") != null) {
 				equipmentOperationItem.setEquipment(equipment);
 			}
 			
-			if (properties.get("equipmentOperationId") != null) {
-				equipmentOperationItem.setEquipmentOperation(EquipmentOperation);
+			if (properties.get("equipmentOperation") != null) {
+				equipmentOperationItem.setEquipmentOperation(equipmentOperation);
 			}
 		} else {
 			equipmentOperationItem = new EquipmentOperationItem();
@@ -142,7 +158,7 @@ public class EquipmentOperationItemRequestResource extends DelegatingCrudResourc
 				        "Required parameters: equipmentOperationItemName, equipmentOperationItemCode");
 			}
 			equipmentOperationItem.setEquipment(equipment);
-			equipmentOperationItem.setEquipmentOperation(EquipmentOperation);
+			equipmentOperationItem.setEquipmentOperation(equipmentOperation);
 		}
 		
 		return equipmentOperationItem;

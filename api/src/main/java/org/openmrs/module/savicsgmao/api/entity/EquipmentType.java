@@ -22,21 +22,6 @@ public class EquipmentType extends BaseOpenmrsData implements java.io.Serializab
 	
 	private Set Equipments = new HashSet(0);
 	
-	public EquipmentType() {
-	}
-	
-	public EquipmentType(String uuid, String typeName) {
-		this.uuid = uuid;
-		this.typeName = typeName;
-	}
-	
-	public EquipmentType(String uuid, String typeName, Set Tasks, Set Equipments) {
-		this.uuid = uuid;
-		this.typeName = typeName;
-		this.Tasks = Tasks;
-		this.Equipments = Equipments;
-	}
-	
 	public Integer getEquipmentTypeId() {
 		return this.equipmentTypeId;
 	}

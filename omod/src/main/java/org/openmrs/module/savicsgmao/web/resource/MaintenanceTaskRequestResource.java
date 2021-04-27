@@ -24,6 +24,7 @@ import org.openmrs.module.savicsgmao.api.entity.Planification;
 import org.openmrs.module.savicsgmao.rest.v1_0.resource.GmaoRest;
 import org.openmrs.module.webservices.rest.web.representation.DefaultRepresentation;
 import org.openmrs.module.webservices.rest.web.representation.FullRepresentation;
+import org.openmrs.module.webservices.rest.web.representation.RefRepresentation;
 
 @Resource(name = RestConstants.VERSION_1 + GmaoRest.GMAO_NAMESPACE + "/maintenanceTask", supportedClass = MaintenanceTask.class, supportedOpenmrsVersions = { "2.*.*" })
 public class MaintenanceTaskRequestResource extends DelegatingCrudResource<MaintenanceTask> {
@@ -35,29 +36,50 @@ public class MaintenanceTaskRequestResource extends DelegatingCrudResource<Maint
 	
 	@Override
 	public DelegatingResourceDescription getRepresentationDescription(Representation rep) {
-		DelegatingResourceDescription description = new DelegatingResourceDescription();
-		if (rep instanceof DefaultRepresentation || rep instanceof FullRepresentation) {
+                if (rep instanceof DefaultRepresentation) {
+			DelegatingResourceDescription description = new DelegatingResourceDescription();
+			description.addProperty("id");
 			description.addProperty("uuid");
 			description.addProperty("designation");
 			description.addProperty("details");
 			description.addProperty("executed");
 			description.addProperty("taskId");
-			description.addProperty("maintenanceId");
-			description.addProperty("equipementId");
-			description.addProperty("planificationId");
-			description.addLink("full", ".?v=" + RestConstants.REPRESENTATION_FULL);
-		} else {
+			description.addProperty("maintenance");
+			description.addProperty("equipement");
+			description.addProperty("planification");
+			description.addLink("ref", ".?v=" + RestConstants.REPRESENTATION_REF);
+			description.addSelfLink();
+			return description;
+		} else if (rep instanceof FullRepresentation) {
+			DelegatingResourceDescription description = new DelegatingResourceDescription();
+			description.addProperty("id");
 			description.addProperty("uuid");
 			description.addProperty("designation");
 			description.addProperty("details");
 			description.addProperty("executed");
 			description.addProperty("taskId");
-			description.addProperty("maintenanceId");
-			description.addProperty("equipementId");
-			description.addProperty("planificationId");
+			description.addProperty("maintenance");
+			description.addProperty("equipement");
+			description.addProperty("planification");
 			description.addLink("full", ".?v=" + RestConstants.REPRESENTATION_FULL);
+			description.addLink("ref", ".?v=" + RestConstants.REPRESENTATION_REF);
+			description.addSelfLink();
+			return description;
+		} else if (rep instanceof RefRepresentation) {
+			DelegatingResourceDescription description = new DelegatingResourceDescription();
+			description.addProperty("id");
+			description.addProperty("uuid");
+			description.addProperty("designation");
+			description.addProperty("details");
+			description.addProperty("executed");
+			description.addProperty("taskId");
+			description.addProperty("maintenance");
+			description.addProperty("equipement");
+			description.addProperty("planification");
+			description.addSelfLink();
+			return description;
 		}
-		return description;
+		return null;
 	}
 	
 	@Override
@@ -118,22 +140,22 @@ public class MaintenanceTaskRequestResource extends DelegatingCrudResource<Maint
 		MaintenanceTask maintenanceTask;
 		
 		Equipment equipment = null;
-		if (properties.get("Equipment") != null) {
-			Integer equipementId = properties.get("Equipment");
+		if (properties.get("equipment") != null) {
+			Integer equipementId = properties.get("equipment");
 			equipment = (Equipment) Context.getService(GmaoService.class).getEntityByid(Equipment.class, "equipementId",
 			    equipementId);
 		}
 		
 		Maintenance maintenance = null;
-		if (properties.get("Maintenance") != null) {
-			Integer maintenanceId = properties.get("Maintenance");
+		if (properties.get("maintenance") != null) {
+			Integer maintenanceId = properties.get("maintenance");
 			maintenance = (Maintenance) Context.getService(GmaoService.class).getEntityByid(Maintenance.class,
 			    "maintenanceId", maintenanceId);
 		}
 		
 		Planification planification = null;
-		if (properties.get("Planification") != null) {
-			Integer planificationId = properties.get("Planification");
+		if (properties.get("planification") != null) {
+			Integer planificationId = properties.get("planification");
 			planification = (Planification) Context.getService(GmaoService.class).getEntityByid(Planification.class,
 			    "planificationId", planificationId);
 		}
@@ -161,15 +183,15 @@ public class MaintenanceTaskRequestResource extends DelegatingCrudResource<Maint
 				maintenanceTask.setTaskId((Integer) properties.get("taskId"));
 			}
 			
-			if (properties.get("maintenanceId") != null) {
+			if (properties.get("maintenance") != null) {
 				maintenanceTask.setMaintenance(maintenance);
 			}
 			
-			if (properties.get("equipementId") != null) {
+			if (properties.get("equipemen") != null) {
 				maintenanceTask.setEquipment(equipment);
 			}
 			
-			if (properties.get("planificationId") != null) {
+			if (properties.get("planification") != null) {
 				maintenanceTask.setPlanification(planification);
 			}
 			

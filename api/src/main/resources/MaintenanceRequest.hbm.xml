@@ -8,10 +8,10 @@
             <column name="maintenance_request_id" />
             <generator class="identity" />
         </id>
-        <many-to-one name="Department" class="org.openmrs.module.savicsgmao.api.entity.Department" fetch="select">
+        <many-to-one name="department" class="org.openmrs.module.savicsgmao.api.entity.Department" fetch="select">
             <column name="department_id" not-null="true" />
         </many-to-one>
-        <many-to-one name="Equipment" class="org.openmrs.module.savicsgmao.api.entity.Equipment" fetch="select">
+        <many-to-one name="equipment" class="org.openmrs.module.savicsgmao.api.entity.Equipment" fetch="select">
             <column name="equipment_id" not-null="true" />
         </many-to-one>
         <property name="uuid" type="string">

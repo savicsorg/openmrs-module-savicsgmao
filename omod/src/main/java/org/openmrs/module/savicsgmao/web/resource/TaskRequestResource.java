@@ -16,13 +16,13 @@ import org.openmrs.module.webservices.rest.web.response.IllegalPropertyException
 import org.openmrs.module.webservices.rest.web.response.ResponseException;
 
 import java.util.List;
-import org.openmrs.module.savicsgmao.api.entity.Equipment;
 import org.openmrs.module.savicsgmao.api.entity.EquipmentType;
 import org.openmrs.module.savicsgmao.api.service.GmaoService;
 import org.openmrs.module.savicsgmao.api.entity.Task;
 import org.openmrs.module.savicsgmao.rest.v1_0.resource.GmaoRest;
 import org.openmrs.module.webservices.rest.web.representation.DefaultRepresentation;
 import org.openmrs.module.webservices.rest.web.representation.FullRepresentation;
+import org.openmrs.module.webservices.rest.web.representation.RefRepresentation;
 
 @Resource(name = RestConstants.VERSION_1 + GmaoRest.GMAO_NAMESPACE + "/task", supportedClass = Task.class, supportedOpenmrsVersions = { "2.*.*" })
 public class TaskRequestResource extends DelegatingCrudResource<Task> {
@@ -34,21 +34,37 @@ public class TaskRequestResource extends DelegatingCrudResource<Task> {
 	
 	@Override
 	public DelegatingResourceDescription getRepresentationDescription(Representation rep) {
-		DelegatingResourceDescription description = new DelegatingResourceDescription();
-		if (rep instanceof DefaultRepresentation || rep instanceof FullRepresentation) {
+                if (rep instanceof DefaultRepresentation) {
+			DelegatingResourceDescription description = new DelegatingResourceDescription();
 			description.addProperty("uuid");
 			description.addProperty("taskName");
 			description.addProperty("taskProcedure");
-			description.addProperty("equipmentTypeId");
-			description.addLink("full", ".?v=" + RestConstants.REPRESENTATION_FULL);
-		} else {
+			description.addProperty("equipmentType");
+			description.addLink("ref", ".?v=" + RestConstants.REPRESENTATION_REF);
+			description.addSelfLink();
+			return description;
+		} else if (rep instanceof FullRepresentation) {
+			DelegatingResourceDescription description = new DelegatingResourceDescription();
+			description.addProperty("id");
 			description.addProperty("uuid");
 			description.addProperty("taskName");
 			description.addProperty("taskProcedure");
-			description.addProperty("equipmentTypeId");
+			description.addProperty("equipmentType");
 			description.addLink("full", ".?v=" + RestConstants.REPRESENTATION_FULL);
+			description.addLink("ref", ".?v=" + RestConstants.REPRESENTATION_REF);
+			description.addSelfLink();
+			return description;
+		} else if (rep instanceof RefRepresentation) {
+			DelegatingResourceDescription description = new DelegatingResourceDescription();
+			description.addProperty("id");
+			description.addProperty("uuid");
+			description.addProperty("taskName");
+			description.addProperty("taskProcedure");
+			description.addProperty("equipmentType");
+			description.addSelfLink();
+			return description;
 		}
-		return description;
+		return null;
 	}
 	
 	@Override
@@ -108,8 +124,8 @@ public class TaskRequestResource extends DelegatingCrudResource<Task> {
 	private Task constructAgent(String uuid, SimpleObject properties) {
 		Task task;
 		EquipmentType equipmentType = null;
-		if (properties.get("EquipmentType") != null) {
-			Integer equipmentTypeId = properties.get("EquipmentType");
+		if (properties.get("equipmentType") != null) {
+			Integer equipmentTypeId = properties.get("equipmentType");
 			equipmentType = (EquipmentType) Context.getService(GmaoService.class).getEntityByid(EquipmentType.class,
 			    "equipmentTypeId", equipmentTypeId);
 		}
@@ -127,7 +143,7 @@ public class TaskRequestResource extends DelegatingCrudResource<Task> {
 				task.setTaskProcedure((String) properties.get("taskProcedure"));
 			}
 			
-			if (properties.get("equipmentTypeId") != null) {
+			if (properties.get("equipmentType") != null) {
 				task.setEquipmentType(equipmentType);
 			}
 			

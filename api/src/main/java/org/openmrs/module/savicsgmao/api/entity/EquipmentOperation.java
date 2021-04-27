@@ -39,34 +39,6 @@ public class EquipmentOperation extends BaseOpenmrsData implements java.io.Seria
 	
 	private Set EquipmentOperationItems = new HashSet(0);
 	
-	public EquipmentOperation() {
-	}
-	
-	public EquipmentOperation(String uuid, String operationCode, int operationType, Date operationDate, String reason) {
-		this.uuid = uuid;
-		this.operationCode = operationCode;
-		this.operationType = operationType;
-		this.operationDate = operationDate;
-		this.reason = reason;
-	}
-	
-	public EquipmentOperation(String uuid, String operationCode, int operationType, Date operationDate,
-	    Integer sourceSiteId, Integer destinationSiteId, String reason, Byte localApproval, Date localApprovalDate,
-	    Byte centralApproval, Date centralApprovalDate, Set EquipmentOperationItems) {
-		this.uuid = uuid;
-		this.operationCode = operationCode;
-		this.operationType = operationType;
-		this.operationDate = operationDate;
-		this.sourceSiteId = sourceSiteId;
-		this.destinationSiteId = destinationSiteId;
-		this.reason = reason;
-		this.localApproval = localApproval;
-		this.localApprovalDate = localApprovalDate;
-		this.centralApproval = centralApproval;
-		this.centralApprovalDate = centralApprovalDate;
-		this.EquipmentOperationItems = EquipmentOperationItems;
-	}
-	
 	public Integer getEquipmentOperationId() {
 		return this.equipmentOperationId;
 	}

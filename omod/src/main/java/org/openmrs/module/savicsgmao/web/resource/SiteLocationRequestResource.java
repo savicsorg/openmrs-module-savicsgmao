@@ -17,12 +17,12 @@ import org.openmrs.module.webservices.rest.web.response.ResponseException;
 
 import java.util.List;
 import org.openmrs.module.savicsgmao.api.entity.District;
-import org.openmrs.module.savicsgmao.api.entity.Equipment;
 import org.openmrs.module.savicsgmao.api.service.GmaoService;
 import org.openmrs.module.savicsgmao.api.entity.SiteLocation;
 import org.openmrs.module.savicsgmao.rest.v1_0.resource.GmaoRest;
 import org.openmrs.module.webservices.rest.web.representation.DefaultRepresentation;
 import org.openmrs.module.webservices.rest.web.representation.FullRepresentation;
+import org.openmrs.module.webservices.rest.web.representation.RefRepresentation;
 
 @Resource(name = RestConstants.VERSION_1 + GmaoRest.GMAO_NAMESPACE + "/siteLocation", supportedClass = SiteLocation.class, supportedOpenmrsVersions = { "2.*.*" })
 public class SiteLocationRequestResource extends DelegatingCrudResource<SiteLocation> {
@@ -34,21 +34,38 @@ public class SiteLocationRequestResource extends DelegatingCrudResource<SiteLoca
 	
 	@Override
 	public DelegatingResourceDescription getRepresentationDescription(Representation rep) {
-		DelegatingResourceDescription description = new DelegatingResourceDescription();
-		if (rep instanceof DefaultRepresentation || rep instanceof FullRepresentation) {
+                if (rep instanceof DefaultRepresentation) {
+			DelegatingResourceDescription description = new DelegatingResourceDescription();
+			description.addProperty("id");
 			description.addProperty("uuid");
-			description.addProperty("siteLocationName");
-			description.addProperty("siteLocationCode");
-			description.addProperty("districtId");
-			description.addLink("full", ".?v=" + RestConstants.REPRESENTATION_FULL);
-		} else {
+			description.addProperty("locationName");
+			description.addProperty("locationCode");
+			description.addProperty("district");
+			description.addLink("ref", ".?v=" + RestConstants.REPRESENTATION_REF);
+			description.addSelfLink();
+			return description;
+		} else if (rep instanceof FullRepresentation) {
+			DelegatingResourceDescription description = new DelegatingResourceDescription();
+			description.addProperty("id");
 			description.addProperty("uuid");
-			description.addProperty("siteLocationName");
-			description.addProperty("siteLocationCode");
-			description.addProperty("districtId");
+			description.addProperty("locationName");
+			description.addProperty("locationCode");
+			description.addProperty("district");
 			description.addLink("full", ".?v=" + RestConstants.REPRESENTATION_FULL);
+			description.addLink("ref", ".?v=" + RestConstants.REPRESENTATION_REF);
+			description.addSelfLink();
+			return description;
+		} else if (rep instanceof RefRepresentation) {
+			DelegatingResourceDescription description = new DelegatingResourceDescription();
+			description.addProperty("id");
+			description.addProperty("uuid");
+			description.addProperty("locationName");
+			description.addProperty("locationCode");
+			description.addProperty("district");
+			description.addSelfLink();
+			return description;
 		}
-		return description;
+		return null;
 	}
 	
 	@Override
@@ -62,7 +79,7 @@ public class SiteLocationRequestResource extends DelegatingCrudResource<SiteLoca
 	protected PageableResult doSearch(RequestContext context) {
 		String value = context.getParameter("locationName");
 		List<SiteLocation> siteLocationList = Context.getService(GmaoService.class).doSearch(SiteLocation.class,
-		    "siteLocationName", value, context.getLimit(), context.getStartIndex());
+		    "locationName", value, context.getLimit(), context.getStartIndex());
 		return new AlreadyPaged<SiteLocation>(context, siteLocationList, false);
 	}
 	
@@ -109,8 +126,8 @@ public class SiteLocationRequestResource extends DelegatingCrudResource<SiteLoca
 		SiteLocation siteLocation;
 		
 		District district = null;
-		if (properties.get("District") != null) {
-			Integer districtId = properties.get("District");
+		if (properties.get("district") != null) {
+			Integer districtId = properties.get("district");
 			district = (District) Context.getService(GmaoService.class).getEntityByid(District.class, "districtId",
 			    districtId);
 		}
@@ -137,7 +154,7 @@ public class SiteLocationRequestResource extends DelegatingCrudResource<SiteLoca
 			if (properties.get("locationName") == null || properties.get("locationCode") == null) {
 				throw new IllegalPropertyException("Required parameters: locationName, locationCode");
 			}
-			siteLocation.setLocationName((String) properties.get("siteLocationName"));
+			siteLocation.setLocationName((String) properties.get("locationName"));
 			siteLocation.setLocationCode((String) properties.get("locationCode"));
 			siteLocation.setDistrict(district);
 		}

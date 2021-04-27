@@ -13,11 +13,11 @@ public class Maintenance extends BaseOpenmrsData implements java.io.Serializable
 	
 	private Integer maintenanceId;
 	
-	private Agent Agent;
+	private Agent agent;
 	
-	private Equipment Equipment;
+	private Equipment equipment;
 	
-	private MaintenanceType MaintenanceType;
+	private MaintenanceType maintenanceType;
 	
 	private String uuid;
 	
@@ -31,33 +31,6 @@ public class Maintenance extends BaseOpenmrsData implements java.io.Serializable
 	
 	private Set MaintenanceTasks = new HashSet(0);
 	
-	public Maintenance() {
-	}
-	
-	public Maintenance(Agent Agent, Equipment Equipment, MaintenanceType MaintenanceType, String uuid, String designation,
-	    Date startdate, String details) {
-		this.Agent = Agent;
-		this.Equipment = Equipment;
-		this.MaintenanceType = MaintenanceType;
-		this.uuid = uuid;
-		this.designation = designation;
-		this.startdate = startdate;
-		this.details = details;
-	}
-	
-	public Maintenance(Agent Agent, Equipment Equipment, MaintenanceType MaintenanceType, String uuid, String designation,
-	    Date startdate, Date enddate, String details, Set MaintenanceTasks) {
-		this.Agent = Agent;
-		this.Equipment = Equipment;
-		this.MaintenanceType = MaintenanceType;
-		this.uuid = uuid;
-		this.designation = designation;
-		this.startdate = startdate;
-		this.enddate = enddate;
-		this.details = details;
-		this.MaintenanceTasks = MaintenanceTasks;
-	}
-	
 	public Integer getMaintenanceId() {
 		return this.maintenanceId;
 	}
@@ -67,27 +40,27 @@ public class Maintenance extends BaseOpenmrsData implements java.io.Serializable
 	}
 	
 	public Agent getAgent() {
-		return this.Agent;
+		return this.agent;
 	}
 	
 	public void setAgent(Agent Agent) {
-		this.Agent = Agent;
+		this.agent = Agent;
 	}
 	
 	public Equipment getEquipment() {
-		return this.Equipment;
+		return this.equipment;
 	}
 	
 	public void setEquipment(Equipment Equipment) {
-		this.Equipment = Equipment;
+		this.equipment = Equipment;
 	}
 	
 	public MaintenanceType getMaintenanceType() {
-		return this.MaintenanceType;
+		return this.maintenanceType;
 	}
 	
 	public void setMaintenanceType(MaintenanceType MaintenanceType) {
-		this.MaintenanceType = MaintenanceType;
+		this.maintenanceType = MaintenanceType;
 	}
 	
 	public String getDesignation() {

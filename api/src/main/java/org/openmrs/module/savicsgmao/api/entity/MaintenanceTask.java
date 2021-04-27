@@ -10,11 +10,11 @@ public class MaintenanceTask extends BaseOpenmrsData implements java.io.Serializ
 	
 	private Integer maintenanceTaskId;
 	
-	private Equipment Equipment;
+	private Equipment equipment;
 	
-	private Maintenance Maintenance;
+	private Maintenance maintenance;
 	
-	private Planification Planification;
+	private Planification planification;
 	
 	private String uuid;
 	
@@ -26,32 +26,6 @@ public class MaintenanceTask extends BaseOpenmrsData implements java.io.Serializ
 	
 	private int taskId;
 	
-	public MaintenanceTask() {
-	}
-	
-	public MaintenanceTask(Equipment Equipment, Maintenance Maintenance, String uuid, String designation, String details,
-	    byte executed, int taskId) {
-		this.Equipment = Equipment;
-		this.Maintenance = Maintenance;
-		this.uuid = uuid;
-		this.designation = designation;
-		this.details = details;
-		this.executed = executed;
-		this.taskId = taskId;
-	}
-	
-	public MaintenanceTask(Equipment Equipment, Maintenance Maintenance, Planification Planification, String uuid,
-	    String designation, String details, byte executed, int taskId) {
-		this.Equipment = Equipment;
-		this.Maintenance = Maintenance;
-		this.Planification = Planification;
-		this.uuid = uuid;
-		this.designation = designation;
-		this.details = details;
-		this.executed = executed;
-		this.taskId = taskId;
-	}
-	
 	public Integer getMaintenanceTaskId() {
 		return this.maintenanceTaskId;
 	}
@@ -61,27 +35,27 @@ public class MaintenanceTask extends BaseOpenmrsData implements java.io.Serializ
 	}
 	
 	public Equipment getEquipment() {
-		return this.Equipment;
+		return this.equipment;
 	}
 	
 	public void setEquipment(Equipment Equipment) {
-		this.Equipment = Equipment;
+		this.equipment = Equipment;
 	}
 	
 	public Maintenance getMaintenance() {
-		return this.Maintenance;
+		return this.maintenance;
 	}
 	
 	public void setMaintenance(Maintenance Maintenance) {
-		this.Maintenance = Maintenance;
+		this.maintenance = Maintenance;
 	}
 	
 	public Planification getPlanification() {
-		return this.Planification;
+		return this.planification;
 	}
 	
 	public void setPlanification(Planification Planification) {
-		this.Planification = Planification;
+		this.planification = Planification;
 	}
 	
 	public String getDesignation() {

@@ -8,7 +8,7 @@
             <column name="task_id" />
             <generator class="identity" />
         </id>
-        <many-to-one name="EquipmentType" class="org.openmrs.module.savicsgmao.api.entity.EquipmentType" fetch="select">
+        <many-to-one name="equipmentType" class="org.openmrs.module.savicsgmao.api.entity.EquipmentType" fetch="select">
             <column name="equipment_type_id" not-null="true" />
         </many-to-one>
         <property name="uuid" type="string">

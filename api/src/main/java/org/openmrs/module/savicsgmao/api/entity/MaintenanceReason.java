@@ -20,16 +20,6 @@ public class MaintenanceReason extends BaseOpenmrsData implements java.io.Serial
 	
 	private String details;
 	
-	public MaintenanceReason() {
-	}
-	
-	public MaintenanceReason(String uuid, String reasonCode, String reasonName, String details) {
-		this.uuid = uuid;
-		this.reasonCode = reasonCode;
-		this.reasonName = reasonName;
-		this.details = details;
-	}
-	
 	public Integer getMaintenanceReasonId() {
 		return this.maintenanceReasonId;
 	}

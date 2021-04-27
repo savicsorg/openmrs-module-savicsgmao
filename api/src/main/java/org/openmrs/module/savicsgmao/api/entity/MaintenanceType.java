@@ -20,22 +20,6 @@ public class MaintenanceType extends BaseOpenmrsData implements java.io.Serializ
 	
 	private Set Maintenances = new HashSet(0);
 	
-	public MaintenanceType() {
-	}
-	
-	public MaintenanceType(String uuid, String typeCode, String typeName) {
-		this.uuid = uuid;
-		this.typeCode = typeCode;
-		this.typeName = typeName;
-	}
-	
-	public MaintenanceType(String uuid, String typeCode, String typeName, Set Maintenances) {
-		this.uuid = uuid;
-		this.typeCode = typeCode;
-		this.typeName = typeName;
-		this.Maintenances = Maintenances;
-	}
-	
 	public Integer getMaintenanceTypeId() {
 		return this.maintenanceTypeId;
 	}

@@ -12,7 +12,7 @@ public class SiteLocation extends BaseOpenmrsData implements java.io.Serializabl
 	
 	private Integer siteLocationId;
 	
-	private District District;
+	private District district;
 	
 	private String uuid;
 	
@@ -21,24 +21,6 @@ public class SiteLocation extends BaseOpenmrsData implements java.io.Serializabl
 	private String locationCode;
 	
 	private Set Agents = new HashSet(0);
-	
-	public SiteLocation() {
-	}
-	
-	public SiteLocation(District District, String uuid, String locationName, String locationCode) {
-		this.District = District;
-		this.uuid = uuid;
-		this.locationName = locationName;
-		this.locationCode = locationCode;
-	}
-	
-	public SiteLocation(District District, String uuid, String locationName, String locationCode, Set Agents) {
-		this.District = District;
-		this.uuid = uuid;
-		this.locationName = locationName;
-		this.locationCode = locationCode;
-		this.Agents = Agents;
-	}
 	
 	public Integer getSiteLocationId() {
 		return this.siteLocationId;
@@ -49,11 +31,11 @@ public class SiteLocation extends BaseOpenmrsData implements java.io.Serializabl
 	}
 	
 	public District getDistrict() {
-		return this.District;
+		return this.district;
 	}
 	
 	public void setDistrict(District District) {
-		this.District = District;
+		this.district = District;
 	}
 	
 	public String getLocationName() {

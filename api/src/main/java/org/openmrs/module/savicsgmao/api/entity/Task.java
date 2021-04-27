@@ -10,23 +10,13 @@ public class Task extends BaseOpenmrsData implements java.io.Serializable {
 	
 	private Integer taskId;
 	
-	private EquipmentType EquipmentType;
+	private EquipmentType equipmentType;
 	
 	private String uuid;
 	
 	private String taskName;
 	
 	private String taskProcedure;
-	
-	public Task() {
-	}
-	
-	public Task(EquipmentType EquipmentType, String uuid, String taskName, String taskProcedure) {
-		this.EquipmentType = EquipmentType;
-		this.uuid = uuid;
-		this.taskName = taskName;
-		this.taskProcedure = taskProcedure;
-	}
 	
 	public Integer getTaskId() {
 		return this.taskId;
@@ -37,11 +27,11 @@ public class Task extends BaseOpenmrsData implements java.io.Serializable {
 	}
 	
 	public EquipmentType getEquipmentType() {
-		return this.EquipmentType;
+		return this.equipmentType;
 	}
 	
 	public void setEquipmentType(EquipmentType EquipmentType) {
-		this.EquipmentType = EquipmentType;
+		this.equipmentType = EquipmentType;
 	}
 	
 	public String getTaskName() {

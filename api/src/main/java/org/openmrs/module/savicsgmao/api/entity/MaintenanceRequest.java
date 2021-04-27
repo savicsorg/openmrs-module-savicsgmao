@@ -11,9 +11,9 @@ public class MaintenanceRequest extends BaseOpenmrsData implements java.io.Seria
 	
 	private Integer maintenanceRequestId;
 	
-	private Department Department;
+	private Department department;
 	
-	private Equipment Equipment;
+	private Equipment equipment;
 	
 	private String uuid;
 	
@@ -33,39 +33,6 @@ public class MaintenanceRequest extends BaseOpenmrsData implements java.io.Seria
 	
 	private int requestPriority;
 	
-	public MaintenanceRequest() {
-	}
-	
-	public MaintenanceRequest(Department Department, Equipment Equipment, String uuid, String systemNumber,
-	    String applicantName, String registerNumber, Date startdate, String natureOfWork, String motif, int requestPriority) {
-		this.Department = Department;
-		this.Equipment = Equipment;
-		this.uuid = uuid;
-		this.systemNumber = systemNumber;
-		this.applicantName = applicantName;
-		this.registerNumber = registerNumber;
-		this.startdate = startdate;
-		this.natureOfWork = natureOfWork;
-		this.motif = motif;
-		this.requestPriority = requestPriority;
-	}
-	
-	public MaintenanceRequest(Department Department, Equipment Equipment, String uuid, String systemNumber,
-	    String applicantName, String registerNumber, Date startdate, String natureOfWork, Date enddate, String motif,
-	    int requestPriority) {
-		this.Department = Department;
-		this.Equipment = Equipment;
-		this.uuid = uuid;
-		this.systemNumber = systemNumber;
-		this.applicantName = applicantName;
-		this.registerNumber = registerNumber;
-		this.startdate = startdate;
-		this.natureOfWork = natureOfWork;
-		this.enddate = enddate;
-		this.motif = motif;
-		this.requestPriority = requestPriority;
-	}
-	
 	public Integer getMaintenanceRequestId() {
 		return this.maintenanceRequestId;
 	}
@@ -75,19 +42,19 @@ public class MaintenanceRequest extends BaseOpenmrsData implements java.io.Seria
 	}
 	
 	public Department getDepartment() {
-		return this.Department;
+		return this.department;
 	}
 	
 	public void setDepartment(Department Department) {
-		this.Department = Department;
+		this.department = Department;
 	}
 	
 	public Equipment getEquipment() {
-		return this.Equipment;
+		return this.equipment;
 	}
 	
 	public void setEquipment(Equipment Equipment) {
-		this.Equipment = Equipment;
+		this.equipment = Equipment;
 	}
 	
 	public String getSystemNumber() {

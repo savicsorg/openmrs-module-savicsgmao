@@ -8,7 +8,7 @@
             <column name="site_location_id" />
             <generator class="identity" />
         </id>
-        <many-to-one name="District" class="org.openmrs.module.savicsgmao.api.entity.District" fetch="select">
+        <many-to-one name="district" class="org.openmrs.module.savicsgmao.api.entity.District" fetch="select">
             <column name="district_id" not-null="true" />
         </many-to-one>
         <property name="uuid" type="string">

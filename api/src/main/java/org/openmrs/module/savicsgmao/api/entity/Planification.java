@@ -25,28 +25,6 @@ public class Planification extends BaseOpenmrsData implements java.io.Serializab
 	
 	private Set MaintenanceTasks = new HashSet(0);
 	
-	public Planification() {
-	}
-	
-	public Planification(String uuid, String designation, String planificationCode, Date planificationDate,
-	    String observations) {
-		this.uuid = uuid;
-		this.designation = designation;
-		this.planificationCode = planificationCode;
-		this.planificationDate = planificationDate;
-		this.observations = observations;
-	}
-	
-	public Planification(String uuid, String designation, String planificationCode, Date planificationDate,
-	    String observations, Set MaintenanceTasks) {
-		this.uuid = uuid;
-		this.designation = designation;
-		this.planificationCode = planificationCode;
-		this.planificationDate = planificationDate;
-		this.observations = observations;
-		this.MaintenanceTasks = MaintenanceTasks;
-	}
-	
 	public Integer getPlanificationId() {
 		return this.planificationId;
 	}

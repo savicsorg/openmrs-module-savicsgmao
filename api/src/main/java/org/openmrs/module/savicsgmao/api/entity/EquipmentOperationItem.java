@@ -10,20 +10,11 @@ public class EquipmentOperationItem extends BaseOpenmrsData implements java.io.S
 	
 	private Integer equipmentOperationItemId;
 	
-	private Equipment Equipment;
+	private Equipment equipment;
 	
-	private EquipmentOperation EquipmentOperation;
+	private EquipmentOperation equipmentOperation;
 	
 	private String uuid;
-	
-	public EquipmentOperationItem() {
-	}
-	
-	public EquipmentOperationItem(Equipment Equipment, EquipmentOperation EquipmentOperation, String uuid) {
-		this.Equipment = Equipment;
-		this.EquipmentOperation = EquipmentOperation;
-		this.uuid = uuid;
-	}
 	
 	public Integer getEquipmentOperationItemId() {
 		return this.equipmentOperationItemId;
@@ -34,19 +25,19 @@ public class EquipmentOperationItem extends BaseOpenmrsData implements java.io.S
 	}
 	
 	public Equipment getEquipment() {
-		return this.Equipment;
+		return this.equipment;
 	}
 	
 	public void setEquipment(Equipment Equipment) {
-		this.Equipment = Equipment;
+		this.equipment = Equipment;
 	}
 	
 	public EquipmentOperation getEquipmentOperation() {
-		return this.EquipmentOperation;
+		return this.equipmentOperation;
 	}
 	
-	public void setEquipmentOperation(EquipmentOperation EquipmentOperation) {
-		this.EquipmentOperation = EquipmentOperation;
+	public void setEquipmentOperation(EquipmentOperation equipmentOperation) {
+		this.equipmentOperation = equipmentOperation;
 	}
 	
 	@Override

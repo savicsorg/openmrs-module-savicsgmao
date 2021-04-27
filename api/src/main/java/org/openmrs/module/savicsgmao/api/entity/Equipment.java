@@ -15,9 +15,9 @@ public class Equipment extends BaseOpenmrsData implements java.io.Serializable {
 	
 	private Integer equipmentId;
 	
-	private Department Department;
+	private Department department;
 	
-	private EquipmentType EquipmentType;
+	private EquipmentType equipmentType;
 	
 	private String uuid;
 	
@@ -59,51 +59,6 @@ public class Equipment extends BaseOpenmrsData implements java.io.Serializable {
 	
 	private Set EquipmentOperationItems = new HashSet(0);
 	
-	public Equipment() {
-	}
-	
-	public Equipment(Department Department, EquipmentType EquipmentType, String uuid, String serialNumber,
-	    int equipmentStatus, String designation, String localization, String comments, int providerId) {
-		this.Department = Department;
-		this.EquipmentType = EquipmentType;
-		this.uuid = uuid;
-		this.serialNumber = serialNumber;
-		this.equipmentStatus = equipmentStatus;
-		this.designation = designation;
-		this.localization = localization;
-		this.comments = comments;
-		this.providerId = providerId;
-	}
-	
-	public Equipment(Department Department, EquipmentType EquipmentType, String uuid, String serialNumber,
-	    Date acquisitionDate, int equipmentStatus, String designation, String localization, Date lastModifiedDate,
-	    Float equipmentWeight, Float volume, Float acquisitionValue, Integer tracking, Byte inService,
-	    Integer operatingState, Integer commisionningYear, String comments, int providerId, Set Maintenances,
-	    Set MaintenanceRequests, Set MaintenanceTasks, Set EquipmentOperationItems) {
-		this.Department = Department;
-		this.EquipmentType = EquipmentType;
-		this.uuid = uuid;
-		this.serialNumber = serialNumber;
-		this.acquisitionDate = acquisitionDate;
-		this.equipmentStatus = equipmentStatus;
-		this.designation = designation;
-		this.localization = localization;
-		this.lastModifiedDate = lastModifiedDate;
-		this.equipmentWeight = equipmentWeight;
-		this.volume = volume;
-		this.acquisitionValue = acquisitionValue;
-		this.tracking = tracking;
-		this.inService = inService;
-		this.operatingState = operatingState;
-		this.commisionningYear = commisionningYear;
-		this.comments = comments;
-		this.providerId = providerId;
-		this.Maintenances = Maintenances;
-		this.MaintenanceRequests = MaintenanceRequests;
-		this.MaintenanceTasks = MaintenanceTasks;
-		this.EquipmentOperationItems = EquipmentOperationItems;
-	}
-	
 	public Integer getEquipmentId() {
 		return this.equipmentId;
 	}
@@ -113,19 +68,19 @@ public class Equipment extends BaseOpenmrsData implements java.io.Serializable {
 	}
 	
 	public Department getDepartment() {
-		return this.Department;
+		return this.department;
 	}
 	
 	public void setDepartment(Department Department) {
-		this.Department = Department;
+		this.department = Department;
 	}
 	
 	public EquipmentType getEquipmentType() {
-		return this.EquipmentType;
+		return this.equipmentType;
 	}
 	
 	public void setEquipmentType(EquipmentType EquipmentType) {
-		this.EquipmentType = EquipmentType;
+		this.equipmentType = EquipmentType;
 	}
 	
 	public String getSerialNumber() {
