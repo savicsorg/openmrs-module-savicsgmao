@@ -37,7 +37,7 @@ public class EquipmentOperationItemRequestResource extends DelegatingCrudResourc
 	@Override
 	public DelegatingResourceDescription getRepresentationDescription(Representation rep) {
 		
-                if (rep instanceof DefaultRepresentation) {
+		if (rep instanceof DefaultRepresentation) {
 			DelegatingResourceDescription description = new DelegatingResourceDescription();
 			description.addProperty("id");
 			description.addProperty("uuid");
@@ -57,7 +57,7 @@ public class EquipmentOperationItemRequestResource extends DelegatingCrudResourc
 			description.addSelfLink();
 			return description;
 		} else if (rep instanceof RefRepresentation) {
-                    DelegatingResourceDescription description = new DelegatingResourceDescription();
+			DelegatingResourceDescription description = new DelegatingResourceDescription();
 			description.addProperty("id");
 			description.addProperty("uuid");
 			description.addProperty("equipment");
@@ -77,7 +77,7 @@ public class EquipmentOperationItemRequestResource extends DelegatingCrudResourc
 	
 	@Override
 	protected PageableResult doSearch(RequestContext context) {
-		throw new ResourceDoesNotSupportOperationException("doSearch not allowed on "+this.getClass()+ " resource");
+		throw new ResourceDoesNotSupportOperationException("doSearch not allowed on " + this.getClass() + " resource");
 	}
 	
 	@Override

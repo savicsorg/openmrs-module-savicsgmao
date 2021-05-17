@@ -34,7 +34,7 @@ public class SiteLocationRequestResource extends DelegatingCrudResource<SiteLoca
 	
 	@Override
 	public DelegatingResourceDescription getRepresentationDescription(Representation rep) {
-                if (rep instanceof DefaultRepresentation) {
+		if (rep instanceof DefaultRepresentation) {
 			DelegatingResourceDescription description = new DelegatingResourceDescription();
 			description.addProperty("id");
 			description.addProperty("uuid");

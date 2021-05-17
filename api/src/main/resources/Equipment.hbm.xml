@@ -11,7 +11,7 @@
         <many-to-one name="department" class="org.openmrs.module.savicsgmao.api.entity.Department" fetch="select">
             <column name="department_id" not-null="true" />
         </many-to-one>
-        <many-to-one name="dquipmentType" class="org.openmrs.module.savicsgmao.api.entity.EquipmentType" fetch="select">
+        <many-to-one name="equipmentType" class="org.openmrs.module.savicsgmao.api.entity.EquipmentType" fetch="select">
             <column name="equipment_type_id" not-null="true" />
         </many-to-one>
         <property name="uuid" type="string">
