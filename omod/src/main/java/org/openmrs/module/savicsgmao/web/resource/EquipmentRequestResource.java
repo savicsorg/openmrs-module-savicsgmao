@@ -41,7 +41,7 @@ public class EquipmentRequestResource extends DelegatingCrudResource<Equipment> 
 			description.addProperty("id");
 			description.addProperty("uuid");
 			description.addProperty("department");
-			description.addProperty("dquipmentType");
+			description.addProperty("equipmentType");
 			description.addProperty("serialNumber");
 			description.addProperty("acquisitionDate");
 			description.addProperty("equipmentStatus");
@@ -69,7 +69,7 @@ public class EquipmentRequestResource extends DelegatingCrudResource<Equipment> 
 			description.addProperty("id");
 			description.addProperty("uuid");
 			description.addProperty("department");
-			description.addProperty("dquipmentType");
+			description.addProperty("equipmentType");
 			description.addProperty("serialNumber");
 			description.addProperty("acquisitionDate");
 			description.addProperty("equipmentStatus");
@@ -97,7 +97,7 @@ public class EquipmentRequestResource extends DelegatingCrudResource<Equipment> 
 			DelegatingResourceDescription description = new DelegatingResourceDescription();
 			description.addProperty("id");
 			description.addProperty("uuid");
-			description.addProperty("Department");
+			description.addProperty("department");
 			description.addProperty("EquipmentType");
 			description.addProperty("serialNumber");
 			description.addProperty("acquisitionDate");
