@@ -35,13 +35,13 @@
         <property name="lastModifiedDate" type="timestamp">
             <column name="last_modified_date" length="19" />
         </property>
-        <property name="equipmentWeight" type="java.lang.Float">
+        <property name="equipmentWeight" type="java.lang.Double">
             <column name="equipment_weight" precision="12" scale="0" />
         </property>
-        <property name="volume" type="java.lang.Float">
+        <property name="volume" type="java.lang.Double">
             <column name="volume" precision="12" scale="0" />
         </property>
-        <property name="acquisitionValue" type="java.lang.Float">
+        <property name="acquisitionValue" type="java.lang.Double">
             <column name="acquisition_value" precision="12" scale="0" />
         </property>
         <property name="tracking" type="java.lang.Integer">

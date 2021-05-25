@@ -33,11 +33,11 @@ public class Equipment extends BaseOpenmrsData implements java.io.Serializable {
 	
 	private Date lastModifiedDate;
 	
-	private Float equipmentWeight;
+	private Double equipmentWeight;
 	
-	private Float volume;
+	private Double volume;
 	
-	private Float acquisitionValue;
+	private Double acquisitionValue;
 	
 	private Integer tracking;
 	
@@ -131,27 +131,27 @@ public class Equipment extends BaseOpenmrsData implements java.io.Serializable {
 		this.lastModifiedDate = lastModifiedDate;
 	}
 	
-	public Float getEquipmentWeight() {
+	public Double getEquipmentWeight() {
 		return this.equipmentWeight;
 	}
 	
-	public void setEquipmentWeight(Float equipmentWeight) {
+	public void setEquipmentWeight(Double equipmentWeight) {
 		this.equipmentWeight = equipmentWeight;
 	}
 	
-	public Float getVolume() {
+	public Double getVolume() {
 		return this.volume;
 	}
 	
-	public void setVolume(Float volume) {
+	public void setVolume(Double volume) {
 		this.volume = volume;
 	}
 	
-	public Float getAcquisitionValue() {
+	public Double getAcquisitionValue() {
 		return this.acquisitionValue;
 	}
 	
-	public void setAcquisitionValue(Float acquisitionValue) {
+	public void setAcquisitionValue(Double acquisitionValue) {
 		this.acquisitionValue = acquisitionValue;
 	}
 	

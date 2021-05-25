@@ -508,5 +508,23 @@
     <changeSet author="anatoleabe (generated)" id="1619101234148-50">
         <addForeignKeyConstraint baseColumnNames="equipment_type_id" baseTableName="gmao_task" constraintName="gmao_task_ibfk_1" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="equipment_type_id" referencedTableName="gmao_equipment_type" />
     </changeSet>
- 
+
+    <changeSet author="anatoleabe" id="1619101234148-51">
+        <sql>
+            ALTER TABLE gmao_equipment MODIFY COLUMN equipment_weight DOUBLE
+        </sql>
+    </changeSet>
+    
+    <changeSet author="anatoleabe" id="1619101234148-52">
+        <sql>
+            ALTER TABLE gmao_equipment MODIFY COLUMN volume DOUBLE
+        </sql>
+    </changeSet>
+    
+    <changeSet author="anatoleabe" id="1619101234148-53">
+        <sql>
+            ALTER TABLE gmao_equipment MODIFY COLUMN acquisition_value DOUBLE
+        </sql>
+    </changeSet>
+    
 </databaseChangeLog>

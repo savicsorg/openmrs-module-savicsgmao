@@ -210,15 +210,15 @@ public class EquipmentRequestResource extends DelegatingCrudResource<Equipment> 
 			}
 			
 			if (properties.get("equipmentWeight") != null) {
-				equipment.setEquipmentWeight((Float) properties.get("equipmentWeight"));
+				equipment.setEquipmentWeight((Double) properties.get("equipmentWeight"));
 			}
 			
 			if (properties.get("volume") != null) {
-				equipment.setVolume((Float) properties.get("volume"));
+				equipment.setVolume((Double) properties.get("volume"));
 			}
 			
 			if (properties.get("acquisitionValue") != null) {
-				equipment.setAcquisitionValue((Float) properties.get("acquisitionValue"));
+				equipment.setAcquisitionValue((Double) properties.get("acquisitionValue"));
 			}
 			
 			if (properties.get("tracking") != null) {
@@ -259,11 +259,11 @@ public class EquipmentRequestResource extends DelegatingCrudResource<Equipment> 
 			equipment.setEquipmentStatus((Integer) properties.get("equipmentStatus"));
 			equipment.setLocalization((String) properties.get("localization"));
 			
-			equipment.setEquipmentWeight((Float) properties.get("equipmentWeight"));
+			equipment.setEquipmentWeight((Double) properties.get("equipmentWeight"));
 			
-			equipment.setVolume((Float) properties.get("volume"));
+			equipment.setVolume((Double) properties.get("volume"));
 			
-			equipment.setAcquisitionValue((Float) properties.get("acquisitionValue"));
+			equipment.setAcquisitionValue((Double) properties.get("acquisitionValue"));
 			
 			equipment.setTracking((Integer) properties.get("tracking"));
 			
