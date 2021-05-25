@@ -128,8 +128,8 @@ public class MaintenanceReasonRequestResource extends DelegatingCrudResource<Mai
 			
 		} else {
 			maintenanceReason = new MaintenanceReason();
-			if (properties.get("designation") == null || properties.get("planificationCode") == null) {
-				throw new IllegalPropertyException("Required parameters: designation, phoneNumber");
+			if (properties.get("reasonName") == null || properties.get("reasonName") == null) {
+				throw new IllegalPropertyException("Required parameters: reasonName, reasonName");
 			}
 			maintenanceReason.setReasonName((String) properties.get("reasonName"));
 			maintenanceReason.setReasonCode((String) properties.get("reasonCode"));
