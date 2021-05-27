@@ -41,7 +41,7 @@ public class Equipment extends BaseOpenmrsData implements java.io.Serializable {
 	
 	private Integer tracking;
 	
-	private Byte inService;
+	private Boolean inService;
 	
 	private Integer operatingState;
 	
@@ -163,11 +163,11 @@ public class Equipment extends BaseOpenmrsData implements java.io.Serializable {
 		this.tracking = tracking;
 	}
 	
-	public Byte getInService() {
+	public Boolean getInService() {
 		return this.inService;
 	}
 	
-	public void setInService(Byte inService) {
+	public void setInService(Boolean inService) {
 		this.inService = inService;
 	}
 	

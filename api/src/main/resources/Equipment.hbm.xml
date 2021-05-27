@@ -47,7 +47,7 @@
         <property name="tracking" type="java.lang.Integer">
             <column name="tracking" />
         </property>
-        <property name="inService" type="java.lang.Byte">
+        <property name="inService" type="java.lang.Boolean">
             <column name="in_service" />
         </property>
         <property name="operatingState" type="java.lang.Integer">

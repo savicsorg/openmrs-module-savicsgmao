@@ -526,5 +526,10 @@
             ALTER TABLE gmao_equipment MODIFY COLUMN acquisition_value DOUBLE
         </sql>
     </changeSet>
+    <changeSet author="anatoleabe" id="1619101234148-52">
+        <sql>
+            ALTER TABLE gmao_equipment MODIFY COLUMN inService BOOLEAN
+        </sql>
+    </changeSet>
     
 </databaseChangeLog>

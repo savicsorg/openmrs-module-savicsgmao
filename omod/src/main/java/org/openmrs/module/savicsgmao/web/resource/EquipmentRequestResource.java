@@ -226,7 +226,7 @@ public class EquipmentRequestResource extends DelegatingCrudResource<Equipment> 
 			}
 			
 			if (properties.get("inService") != null) {
-				equipment.setInService((Byte) properties.get("inService"));
+				equipment.setInService((Boolean) properties.get("inService"));
 			}
 			
 			if (properties.get("operatingState") != null) {
@@ -267,7 +267,7 @@ public class EquipmentRequestResource extends DelegatingCrudResource<Equipment> 
 			
 			equipment.setTracking((Integer) properties.get("tracking"));
 			
-			equipment.setInService((Byte) properties.get("inService"));
+			equipment.setInService((Boolean) properties.get("inService"));
 			
 			equipment.setOperatingState((Integer) properties.get("operatingState"));
 			
