@@ -222,7 +222,7 @@ public class EquipmentRequestResource extends DelegatingCrudResource<Equipment> 
 			}
 			
 			if (properties.get("equipmentStatus") != null) {
-				equipment.setEquipmentStatus((Integer) properties.get("equipmentStatus"));
+				equipment.setEquipmentStatus(Integer.valueOf(properties.get("equipmentStatus").toString()));
 			}
 			
 			if (properties.get("localization") != null) {
@@ -232,19 +232,19 @@ public class EquipmentRequestResource extends DelegatingCrudResource<Equipment> 
 			}
 			
 			if (properties.get("equipmentWeight") != null) {
-				equipment.setEquipmentWeight((Double) properties.get("equipmentWeight"));
+				equipment.setEquipmentWeight(Double.valueOf(properties.get("equipmentWeight").toString()));
 			}
 			
 			if (properties.get("volume") != null) {
-				equipment.setVolume((Double) properties.get("volume"));
+				equipment.setVolume(Double.valueOf(properties.get("volume").toString()));
 			}
 			
 			if (properties.get("acquisitionValue") != null) {
-				equipment.setAcquisitionValue((Double) properties.get("acquisitionValue"));
+				equipment.setAcquisitionValue(Double.valueOf(properties.get("acquisitionValue").toString()));
 			}
 			
 			if (properties.get("tracking") != null) {
-				equipment.setTracking((Integer) properties.get("tracking"));
+				equipment.setTracking(Integer.valueOf(properties.get("tracking").toString()));
 			}
 			
 			if (properties.get("inService") != null) {
@@ -252,11 +252,11 @@ public class EquipmentRequestResource extends DelegatingCrudResource<Equipment> 
 			}
 			
 			if (properties.get("operatingState") != null) {
-				equipment.setOperatingState((Integer) properties.get("operatingState"));
+				equipment.setOperatingState(Integer.valueOf(properties.get("operatingState").toString()));
 			}
 			
 			if (properties.get("commisionningYear") != null) {
-				equipment.setCommisionningYear((Integer) properties.get("commisionningYear"));
+				equipment.setCommisionningYear(Integer.valueOf(properties.get("commisionningYear").toString()));
 			}
 			
 			if (properties.get("providerId") != null) {
@@ -279,7 +279,7 @@ public class EquipmentRequestResource extends DelegatingCrudResource<Equipment> 
 			equipment.setDesignation((String) properties.get("designation"));
 			DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			equipment.setAcquisitionDate(simpleDateFormat.parse(properties.get("acquisitionDate").toString()));
-			equipment.setEquipmentStatus((Integer) properties.get("equipmentStatus"));
+			equipment.setEquipmentStatus(Integer.valueOf(properties.get("equipmentStatus").toString()));
 			equipment.setLocalization((String) properties.get("localization"));
 			
 			equipment.setEquipmentWeight(Double.valueOf(properties.get("equipmentWeight").toString()));
@@ -288,16 +288,16 @@ public class EquipmentRequestResource extends DelegatingCrudResource<Equipment> 
 			
 			equipment.setAcquisitionValue(Double.valueOf(properties.get("acquisitionValue").toString()));
 			
-			equipment.setTracking((Integer) properties.get("tracking"));
+			equipment.setTracking(Integer.valueOf(properties.get("tracking").toString()));
 			
 			equipment.setInService((Boolean) properties.get("inService"));
 			
-			equipment.setOperatingState((Integer) properties.get("operatingState"));
+			equipment.setOperatingState(Integer.valueOf(properties.get("operatingState").toString()));
 			
-			equipment.setCommisionningYear((Integer) properties.get("commisionningYear"));
-			
-			equipment.setProviderId((Integer) properties.get("providerId"));
-			
+			equipment.setCommisionningYear(Integer.valueOf(properties.get("commisionningYear").toString()));
+			if (properties.get("providerId") != null) {
+				equipment.setProviderId(Integer.valueOf(properties.get("providerId").toString()));
+			}
 			equipment.setComments((String) properties.get("comments"));
 			equipment.setDepartment(department);
 			equipment.setEquipmentType(equipmentType);
