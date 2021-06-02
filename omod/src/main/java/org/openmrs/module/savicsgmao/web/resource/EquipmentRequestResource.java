@@ -1,5 +1,8 @@
 package org.openmrs.module.savicsgmao.web.resource;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.webservices.rest.SimpleObject;
@@ -17,6 +20,8 @@ import org.openmrs.module.webservices.rest.web.response.IllegalPropertyException
 import org.openmrs.module.webservices.rest.web.response.ResponseException;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.openmrs.module.savicsgmao.api.service.GmaoService;
 import org.openmrs.module.savicsgmao.api.entity.Equipment;
 import org.openmrs.module.savicsgmao.api.entity.Department;
@@ -144,16 +149,32 @@ public class EquipmentRequestResource extends DelegatingCrudResource<Equipment> 
 			throw new ConversionException("Required properties: designation, serialNumber");
 		}
 		
-		Equipment equipment = this.constructEquipment(null, propertiesToCreate);
-		Context.getService(GmaoService.class).upsert(equipment);
-		return ConversionUtil.convertToRepresentation(equipment, context.getRepresentation());
+		Equipment equipment;
+		try {
+			equipment = this.constructEquipment(null, propertiesToCreate);
+			Context.getService(GmaoService.class).upsert(equipment);
+			return ConversionUtil.convertToRepresentation(equipment, context.getRepresentation());
+		}
+		catch (ParseException ex) {
+			Logger.getLogger(EquipmentRequestResource.class.getName()).log(Level.SEVERE, null, ex);
+			return null;
+		}
+		
 	}
 	
 	@Override
 	public Object update(String uuid, SimpleObject propertiesToUpdate, RequestContext context) throws ResponseException {
-		Equipment equipment = this.constructEquipment(uuid, propertiesToUpdate);
-		Context.getService(GmaoService.class).upsert(equipment);
-		return ConversionUtil.convertToRepresentation(equipment, context.getRepresentation());
+		Equipment equipment;
+		try {
+			equipment = this.constructEquipment(uuid, propertiesToUpdate);
+			Context.getService(GmaoService.class).upsert(equipment);
+			return ConversionUtil.convertToRepresentation(equipment, context.getRepresentation());
+		}
+		catch (ParseException ex) {
+			Logger.getLogger(EquipmentRequestResource.class.getName()).log(Level.SEVERE, null, ex);
+			return null;
+		}
+		
 	}
 	
 	@Override
@@ -166,7 +187,7 @@ public class EquipmentRequestResource extends DelegatingCrudResource<Equipment> 
 		Context.getService(GmaoService.class).delete(equipment);
 	}
 	
-	private Equipment constructEquipment(String uuid, SimpleObject properties) {
+	private Equipment constructEquipment(String uuid, SimpleObject properties) throws ParseException {
 		Equipment equipment;
 		Department department = null;
 		if (properties.get("department") != null) {
@@ -196,7 +217,8 @@ public class EquipmentRequestResource extends DelegatingCrudResource<Equipment> 
 			}
 			
 			if (properties.get("acquisitionDate") != null) {
-				equipment.setAcquisitionDate((Date) properties.get("acquisitionDate"));
+				DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+				equipment.setAcquisitionDate(simpleDateFormat.parse(properties.get("acquisitionDate").toString()));
 			}
 			
 			if (properties.get("equipmentStatus") != null) {
@@ -255,7 +277,8 @@ public class EquipmentRequestResource extends DelegatingCrudResource<Equipment> 
 			}
 			equipment.setSerialNumber((String) properties.get("serialNumber"));
 			equipment.setDesignation((String) properties.get("designation"));
-			equipment.setAcquisitionDate((Date) properties.get("acquisitionDate"));
+                        DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			equipment.setAcquisitionDate(simpleDateFormat.parse(properties.get("acquisitionDate").toString()));
 			equipment.setEquipmentStatus((Integer) properties.get("equipmentStatus"));
 			equipment.setLocalization((String) properties.get("localization"));
 			
