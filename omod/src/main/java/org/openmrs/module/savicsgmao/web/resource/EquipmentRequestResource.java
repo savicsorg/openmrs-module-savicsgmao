@@ -277,16 +277,16 @@ public class EquipmentRequestResource extends DelegatingCrudResource<Equipment> 
 			}
 			equipment.setSerialNumber((String) properties.get("serialNumber"));
 			equipment.setDesignation((String) properties.get("designation"));
-                        DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			equipment.setAcquisitionDate(simpleDateFormat.parse(properties.get("acquisitionDate").toString()));
 			equipment.setEquipmentStatus((Integer) properties.get("equipmentStatus"));
 			equipment.setLocalization((String) properties.get("localization"));
 			
-			equipment.setEquipmentWeight((Double) properties.get("equipmentWeight"));
+			equipment.setEquipmentWeight(Double.valueOf(properties.get("equipmentWeight").toString()));
 			
-			equipment.setVolume((Double) properties.get("volume"));
+			equipment.setVolume(Double.valueOf(properties.get("volume").toString()));
 			
-			equipment.setAcquisitionValue((Double) properties.get("acquisitionValue"));
+			equipment.setAcquisitionValue(Double.valueOf(properties.get("acquisitionValue").toString()));
 			
 			equipment.setTracking((Integer) properties.get("tracking"));
 			
