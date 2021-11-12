@@ -34,11 +34,13 @@ public class DepartmentRequestResource extends DelegatingCrudResource<Department
 	public DelegatingResourceDescription getRepresentationDescription(Representation rep) {
 		DelegatingResourceDescription description = new DelegatingResourceDescription();
 		if (rep instanceof DefaultRepresentation || rep instanceof FullRepresentation) {
+			description.addProperty("id");
 			description.addProperty("uuid");
 			description.addProperty("departmentName");
 			description.addProperty("departmentCode");
 			description.addLink("full", ".?v=" + RestConstants.REPRESENTATION_FULL);
 		} else {
+			description.addProperty("id");
 			description.addProperty("uuid");
 			description.addProperty("departmentName");
 			description.addProperty("departmentCode");
