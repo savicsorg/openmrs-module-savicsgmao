@@ -139,16 +139,16 @@ public class AgentRequestResource extends DelegatingCrudResource<Agent> {
 	private Agent constructAgent(String uuid, SimpleObject properties) {
 		Agent agent;
 		Department department = null;
-		if (properties.get("Department") != null) {
-			Integer departementID = properties.get("Department");
-			department = (Department) Context.getService(GmaoService.class).getEntityByid(Department.class, "departmentId",
+		if (properties.get("department") != null) {
+			Integer departementID = Integer.valueOf(properties.get("department").toString());
+			department = (Department) Context.getService(GmaoService.class).getEntityByid(Department.class, "id",
 			    departementID);
 		}
 		SiteLocation siteLocation = null;
-		if (properties.get("SiteLocation") != null) {
-			Integer siteLocationId = properties.get("SiteLocation");
+		if (properties.get("siteLocation") != null) {
+			Integer siteLocationId = Integer.valueOf(properties.get("siteLocation").toString());
 			siteLocation = (SiteLocation) Context.getService(GmaoService.class).getEntityByid(SiteLocation.class,
-			    "siteLocationId", siteLocationId);
+			    "id", siteLocationId);
 		}
 		
 		if (uuid != null) {

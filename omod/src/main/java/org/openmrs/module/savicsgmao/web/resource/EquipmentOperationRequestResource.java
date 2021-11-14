@@ -1,6 +1,8 @@
 package org.openmrs.module.savicsgmao.web.resource;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.webservices.rest.SimpleObject;
 import org.openmrs.module.webservices.rest.web.ConversionUtil;
@@ -17,8 +19,11 @@ import org.openmrs.module.webservices.rest.web.response.IllegalPropertyException
 import org.openmrs.module.webservices.rest.web.response.ResponseException;
 
 import java.util.List;
+import java.util.Map;
+import org.openmrs.module.savicsgmao.api.entity.Equipment;
 import org.openmrs.module.savicsgmao.api.service.GmaoService;
 import org.openmrs.module.savicsgmao.api.entity.EquipmentOperation;
+import org.openmrs.module.savicsgmao.api.entity.EquipmentOperationItem;
 import org.openmrs.module.savicsgmao.rest.v1_0.resource.GmaoRest;
 import org.openmrs.module.webservices.rest.web.representation.DefaultRepresentation;
 import org.openmrs.module.webservices.rest.web.representation.FullRepresentation;
@@ -87,6 +92,21 @@ public class EquipmentOperationRequestResource extends DelegatingCrudResource<Eq
 	
 	@Override
 	public EquipmentOperation save(EquipmentOperation equipmentOperation) {
+		List<EquipmentOperationItem> items = new ArrayList<EquipmentOperationItem>(
+		        equipmentOperation.getEquipmentOperationItems());
+		for (EquipmentOperationItem item : items) {
+			Equipment toUpdate = (Equipment) Context.getService(GmaoService.class).getEntityByid(Equipment.class,
+			    "EquipmentId", item.getEquipment().getEquipmentId());
+			if (equipmentOperation.getOperationType() == 1) { //output
+				toUpdate.setInService(false);
+				toUpdate.setEquipmentStatus(2);//disposed
+				Context.getService(GmaoService.class).upsert(toUpdate);
+			} else { //transfert
+				toUpdate.setInService(false);
+				toUpdate.setEquipmentStatus(1);//transfered
+				Context.getService(GmaoService.class).upsert(toUpdate);
+			}
+		}
 		return (EquipmentOperation) Context.getService(GmaoService.class).upsert(equipmentOperation);
 	}
 	
