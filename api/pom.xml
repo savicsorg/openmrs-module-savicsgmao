@@ -55,7 +55,11 @@
         </dependency>
 				
         <!-- End OpenMRS core -->
-
+        <dependency>
+                <groupId>org.openmrs.module</groupId>
+                <artifactId>addresshierarchy-api</artifactId>
+                <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>org.ict4h</groupId>
             <artifactId>atomfeed-server</artifactId>

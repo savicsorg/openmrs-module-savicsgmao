@@ -76,7 +76,12 @@
 				
         <!-- End OpenMRS modules -->
 		
-
+        <dependency>
+                <groupId>org.openmrs.module</groupId>
+                <artifactId>addresshierarchy-api</artifactId>
+                <version>${addresshierarchyVersion}</version>
+                <scope>provided</scope>
+        </dependency>
         <!-- Begin OpenMRS core -->
 
         <dependency>
