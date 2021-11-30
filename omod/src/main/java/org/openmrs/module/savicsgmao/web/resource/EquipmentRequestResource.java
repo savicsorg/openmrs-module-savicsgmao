@@ -299,7 +299,7 @@ public class EquipmentRequestResource extends DelegatingCrudResource<Equipment> 
 			//equipment.setOperatingState(new Integer(properties.get("operatingState").toString()));
 			
 			if (properties.get("commisionningYear") != null) {
-				equipment.setCommisionningYear(new Integer(properties.get("commisionningYear").toString()));
+                            equipment.setCommisionningYear(new Integer(properties.get("commisionningYear").toString()));
 			}
 			
 			//equipment.setProviderId(new Integer(properties.get("providerId").toString()));
