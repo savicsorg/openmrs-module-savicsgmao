@@ -40,21 +40,15 @@ made subject to such option by the copyright holder.
 Contributor(s):
 -->
 <hibernate-reverse-engineering>
-  <schema-selection match-catalog="gmaovalid"/>
-  <table-filter match-name="gmao_site_location"/>
-  <table-filter match-name="gmao_maintenance_request"/>
-  <table-filter match-name="gmao_region"/>
+  <schema-selection match-catalog="gmao1"/>
   <table-filter match-name="gmao_equipment"/>
-  <table-filter match-name="gmao_equipment_operation"/>
-  <table-filter match-name="gmao_equipment_operation_item"/>
-  <table-filter match-name="gmao_district"/>
-  <table-filter match-name="gmao_task"/>
-  <table-filter match-name="gmao_maintenance_type"/>
-  <table-filter match-name="gmao_maintenance_task"/>
-  <table-filter match-name="gmao_department"/>
-  <table-filter match-name="gmao_maintenance"/>
-  <table-filter match-name="gmao_maintenance_reason"/>
-  <table-filter match-name="gmao_planification"/>
-  <table-filter match-name="gmao_agent"/>
   <table-filter match-name="gmao_equipment_type"/>
+  <table-filter match-name="gmao_maintenance_request"/>
+  <table-filter match-name="gmao_maintenance_type"/>
+  <table-filter match-name="gmao_healthcenter"/>
+  <table-filter match-name="gmao_service"/>
+  <table-filter match-name="gmao_mouvement"/>
+  <table-filter match-name="gmao_maintenance"/>
+  <table-filter match-name="gmao_district"/>
+  <table-filter match-name="gmao_site"/>
 </hibernate-reverse-engineering>

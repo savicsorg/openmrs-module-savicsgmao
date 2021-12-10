@@ -1,23 +1,20 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Apr 19, 2021 4:44:32 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated Dec 9, 2021 11:58:17 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="org.openmrs.module.savicsgmao.api.entity.MaintenanceType" table="gmao_maintenance_type" >
-        <id name="maintenanceTypeId" type="java.lang.Integer">
-            <column name="maintenance_type_id" />
-            <generator class="identity" />
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="assigned" />
         </id>
         <property name="uuid" type="string">
             <column name="uuid" length="38" not-null="true" />
         </property>
-        <property name="typeCode" type="string">
-            <column name="type_code" length="250" not-null="true" />
+        <property name="name" type="string">
+            <column name="name" length="250" not-null="true" />
         </property>
-        <property name="typeName" type="string">
-            <column name="type_name" length="250" not-null="true" />
-        </property>
-        <set name="Maintenances" table="gmao_maintenance" inverse="true" lazy="true" fetch="select">
+        <set name="maintenances" table="gmao_maintenance" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="maintenance_type_id" not-null="true" />
             </key>

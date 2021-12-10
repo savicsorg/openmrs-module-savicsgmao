@@ -1,45 +1,45 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Apr 19, 2021 4:44:32 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated Dec 9, 2021 11:58:17 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="org.openmrs.module.savicsgmao.api.entity.MaintenanceRequest" table="gmao_maintenance_request" >
-        <id name="maintenanceRequestId" type="java.lang.Integer">
-            <column name="maintenance_request_id" />
-            <generator class="identity" />
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="assigned" />
         </id>
-        <many-to-one name="department" class="org.openmrs.module.savicsgmao.api.entity.Department" fetch="select">
-            <column name="department_id" not-null="true" />
-        </many-to-one>
         <many-to-one name="equipment" class="org.openmrs.module.savicsgmao.api.entity.Equipment" fetch="select">
             <column name="equipment_id" not-null="true" />
         </many-to-one>
         <property name="uuid" type="string">
             <column name="uuid" length="38" not-null="true" />
         </property>
-        <property name="systemNumber" type="string">
-            <column name="system_number" length="250" not-null="true" />
-        </property>
-        <property name="applicantName" type="string">
-            <column name="applicant_name" length="250" not-null="true" />
+        <property name="requestedby" type="string">
+            <column name="requestedby" length="250" not-null="true" />
         </property>
         <property name="registerNumber" type="string">
             <column name="register_number" length="250" not-null="true" />
         </property>
-        <property name="startdate" type="timestamp">
-            <column name="startdate" length="19" not-null="true" />
-        </property>
         <property name="natureOfWork" type="string">
             <column name="nature_of_work" length="250" not-null="true" />
         </property>
-        <property name="enddate" type="timestamp">
-            <column name="enddate" length="19" />
+        <property name="priority" type="java.lang.Integer">
+            <column name="priority" not-null="true" />
         </property>
         <property name="motif" type="string">
             <column name="motif" length="65535" not-null="true" />
         </property>
-        <property name="requestPriority" type="int">
-            <column name="request_priority" not-null="true" />
+        <property name="lastmodified" type="timestamp">
+            <column name="lastmodified" length="19" />
         </property>
+        <property name="creation" type="timestamp">
+            <column name="creation" length="19" />
+        </property>
+        <set name="maintenances" table="gmao_maintenance" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="maintenance_requested_id" />
+            </key>
+            <one-to-many class="org.openmrs.module.savicsgmao.api.entity.Maintenance" />
+        </set>
     </class>
 </hibernate-mapping>

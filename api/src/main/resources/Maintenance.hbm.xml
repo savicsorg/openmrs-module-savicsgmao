@@ -1,18 +1,18 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Apr 19, 2021 4:44:32 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated Dec 9, 2021 11:58:17 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="org.openmrs.module.savicsgmao.api.entity.Maintenance" table="gmao_maintenance" >
-        <id name="maintenanceId" type="java.lang.Integer">
-            <column name="maintenance_id" />
-            <generator class="identity" />
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="assigned" />
         </id>
-        <many-to-one name="agent" class="org.openmrs.module.savicsgmao.api.entity.Agent" fetch="select">
-            <column name="agent_id" not-null="true" />
-        </many-to-one>
         <many-to-one name="equipment" class="org.openmrs.module.savicsgmao.api.entity.Equipment" fetch="select">
             <column name="equipment_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="maintenanceRequest" class="org.openmrs.module.savicsgmao.api.entity.MaintenanceRequest" fetch="select">
+            <column name="maintenance_requested_id" />
         </many-to-one>
         <many-to-one name="maintenanceType" class="org.openmrs.module.savicsgmao.api.entity.MaintenanceType" fetch="select">
             <column name="maintenance_type_id" not-null="true" />
@@ -20,8 +20,11 @@
         <property name="uuid" type="string">
             <column name="uuid" length="38" not-null="true" />
         </property>
-        <property name="designation" type="string">
-            <column name="designation" length="250" not-null="true" />
+        <property name="name" type="string">
+            <column name="name" length="250" not-null="true" />
+        </property>
+        <property name="description" type="string">
+            <column name="description" length="65535" not-null="true" />
         </property>
         <property name="startdate" type="timestamp">
             <column name="startdate" length="19" not-null="true" />
@@ -29,14 +32,17 @@
         <property name="enddate" type="timestamp">
             <column name="enddate" length="19" />
         </property>
-        <property name="details" type="string">
-            <column name="details" length="65535" not-null="true" />
+        <property name="status" type="short">
+            <column name="status" not-null="true" />
         </property>
-        <set name="MaintenanceTasks" table="gmao_maintenance_task" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="maintenance_id" not-null="true" />
-            </key>
-            <one-to-many class="org.openmrs.module.savicsgmao.api.entity.MaintenanceTask" />
-        </set>
+        <property name="doneby" type="string">
+            <column name="doneby" length="32" />
+        </property>
+        <property name="lastmodified" type="timestamp">
+            <column name="lastmodified" length="19" />
+        </property>
+        <property name="creation" type="timestamp">
+            <column name="creation" length="19" />
+        </property>
     </class>
 </hibernate-mapping>

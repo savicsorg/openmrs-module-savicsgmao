@@ -43,23 +43,17 @@ Contributor(s):
   <session-factory>
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/gmaovalid?zeroDateTimeBehavior=convertToNull</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/gmao1?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">root</property>
-    <mapping resource="org/openmrs/module/savicsgmao/api/entity/GmaoPlanification.hbm.xml"/>
-    <mapping resource="org/openmrs/module/savicsgmao/api/entity/GmaoSiteLocation.hbm.xml"/>
-    <mapping resource="org/openmrs/module/savicsgmao/api/entity/GmaoEquipment.hbm.xml"/>
-    <mapping resource="org/openmrs/module/savicsgmao/api/entity/GmaoEquipmentOperation.hbm.xml"/>
-    <mapping resource="org/openmrs/module/savicsgmao/api/entity/GmaoEquipmentType.hbm.xml"/>
-    <mapping resource="org/openmrs/module/savicsgmao/api/entity/GmaoRegion.hbm.xml"/>
+    <mapping resource="org/openmrs/module/savicsgmao/api/entity/GmaoMouvement.hbm.xml"/>
     <mapping resource="org/openmrs/module/savicsgmao/api/entity/GmaoMaintenanceRequest.hbm.xml"/>
-    <mapping resource="org/openmrs/module/savicsgmao/api/entity/GmaoTask.hbm.xml"/>
-    <mapping resource="org/openmrs/module/savicsgmao/api/entity/GmaoMaintenanceReason.hbm.xml"/>
+    <mapping resource="org/openmrs/module/savicsgmao/api/entity/GmaoSite.hbm.xml"/>
     <mapping resource="org/openmrs/module/savicsgmao/api/entity/GmaoDistrict.hbm.xml"/>
+    <mapping resource="org/openmrs/module/savicsgmao/api/entity/GmaoEquipment.hbm.xml"/>
     <mapping resource="org/openmrs/module/savicsgmao/api/entity/GmaoMaintenanceType.hbm.xml"/>
-    <mapping resource="org/openmrs/module/savicsgmao/api/entity/GmaoMaintenanceTask.hbm.xml"/>
-    <mapping resource="org/openmrs/module/savicsgmao/api/entity/GmaoDepartment.hbm.xml"/>
+    <mapping resource="org/openmrs/module/savicsgmao/api/entity/GmaoEquipmentType.hbm.xml"/>
+    <mapping resource="org/openmrs/module/savicsgmao/api/entity/GmaoHealthcenter.hbm.xml"/>
+    <mapping resource="org/openmrs/module/savicsgmao/api/entity/GmaoService.hbm.xml"/>
     <mapping resource="org/openmrs/module/savicsgmao/api/entity/GmaoMaintenance.hbm.xml"/>
-    <mapping resource="org/openmrs/module/savicsgmao/api/entity/GmaoEquipmentOperationItem.hbm.xml"/>
-    <mapping resource="org/openmrs/module/savicsgmao/api/entity/GmaoAgent.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

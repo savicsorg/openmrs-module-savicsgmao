@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Dec 9, 2021 11:58:17 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="org.openmrs.module.savicsgmao.api.entity.Service" table="gmao_service">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="healthcenter" class="org.openmrs.module.savicsgmao.api.entity.Healthcenter" fetch="select">
+            <column name="healthcenter_id" not-null="true" />
+        </many-to-one>
+        <property name="uuid" type="string">
+            <column name="uuid" length="38" not-null="true" />
+        </property>
+        <property name="name" type="string">
+            <column name="name" length="250" not-null="true" />
+        </property>
+        <property name="code" type="string">
+            <column name="code" length="250" not-null="true" />
+        </property>
+        <property name="lastmodified" type="timestamp">
+            <column name="lastmodified" length="19" />
+        </property>
+        <property name="creation" type="timestamp">
+            <column name="creation" length="19" />
+        </property>
+        <set name="sites" table="gmao_site" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="service_id" not-null="true" />
+            </key>
+            <one-to-many class="org.openmrs.module.savicsgmao.api.entity.Site" />
+        </set>
+    </class>
+</hibernate-mapping>

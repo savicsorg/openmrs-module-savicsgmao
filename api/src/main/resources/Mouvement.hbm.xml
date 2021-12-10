@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Dec 9, 2021 11:58:17 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="org.openmrs.module.savicsgmao.api.entity.Mouvement" table="gmao_mouvement" >
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="equipment" class="org.openmrs.module.savicsgmao.api.entity.Equipment" fetch="select">
+            <column name="equipment_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="siteByDestinationId" class="org.openmrs.module.savicsgmao.api.entity.Site" fetch="select">
+            <column name="destination_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="siteBySourceId" class="org.openmrs.module.savicsgmao.api.entity.Site" fetch="select">
+            <column name="source_id" not-null="true" />
+        </many-to-one>
+        <property name="uuid" type="string">
+            <column name="uuid" length="38" not-null="true" />
+        </property>
+        <property name="type" type="java.lang.Integer">
+            <column name="type" not-null="true" />
+        </property>
+        <property name="date" type="timestamp">
+            <column name="date" length="19" not-null="true" />
+        </property>
+        <property name="motif" type="string">
+            <column name="motif" length="65535" not-null="true" />
+        </property>
+        <property name="localapproval" type="timestamp">
+            <column name="localapproval" length="19" />
+        </property>
+        <property name="localapprover" type="string">
+            <column name="localapprover" length="32" />
+        </property>
+        <property name="centralapproval" type="timestamp">
+            <column name="centralapproval" length="19" />
+        </property>
+        <property name="centralapprover" type="string">
+            <column name="centralapprover" length="32" />
+        </property>
+        <property name="creation" type="timestamp">
+            <column name="creation" length="19" />
+        </property>
+        <property name="lastmodified" type="timestamp">
+            <column name="lastmodified" length="19" />
+        </property>
+    </class>
+</hibernate-mapping>
