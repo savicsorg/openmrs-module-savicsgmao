@@ -17,7 +17,6 @@ import org.openmrs.module.webservices.rest.web.response.IllegalPropertyException
 import org.openmrs.module.webservices.rest.web.response.ResponseException;
 
 import java.util.List;
-import org.openmrs.module.savicsgmao.api.entity.Department;
 import org.openmrs.module.savicsgmao.api.entity.Equipment;
 import org.openmrs.module.savicsgmao.api.service.GmaoService;
 import org.openmrs.module.savicsgmao.api.entity.MaintenanceRequest;
@@ -40,15 +39,13 @@ public class MaintenanceRequestRequestResource extends DelegatingCrudResource<Ma
 			DelegatingResourceDescription description = new DelegatingResourceDescription();
 			description.addProperty("id");
 			description.addProperty("uuid");
-			description.addProperty("systemNumber");
-			description.addProperty("applicantName");
+			description.addProperty("requestedby");
 			description.addProperty("registerNumber");
-			description.addProperty("startdate");
 			description.addProperty("natureOfWork");
-			description.addProperty("enddate");
+			description.addProperty("priority");
 			description.addProperty("motif");
-			description.addProperty("requestPriority");
-			description.addProperty("department");
+			description.addProperty("lastmodified");
+			description.addProperty("creation");
 			description.addProperty("equipment");
 			description.addLink("ref", ".?v=" + RestConstants.REPRESENTATION_REF);
 			description.addSelfLink();
@@ -57,15 +54,13 @@ public class MaintenanceRequestRequestResource extends DelegatingCrudResource<Ma
 			DelegatingResourceDescription description = new DelegatingResourceDescription();
 			description.addProperty("id");
 			description.addProperty("uuid");
-			description.addProperty("systemNumber");
-			description.addProperty("applicantName");
+			description.addProperty("requestedby");
 			description.addProperty("registerNumber");
-			description.addProperty("startdate");
 			description.addProperty("natureOfWork");
-			description.addProperty("enddate");
+			description.addProperty("priority");
 			description.addProperty("motif");
-			description.addProperty("requestPriority");
-			description.addProperty("department");
+			description.addProperty("lastmodified");
+			description.addProperty("creation");
 			description.addProperty("equipment");
 			description.addLink("full", ".?v=" + RestConstants.REPRESENTATION_FULL);
 			description.addLink("ref", ".?v=" + RestConstants.REPRESENTATION_REF);
@@ -75,15 +70,13 @@ public class MaintenanceRequestRequestResource extends DelegatingCrudResource<Ma
 			DelegatingResourceDescription description = new DelegatingResourceDescription();
 			description.addProperty("id");
 			description.addProperty("uuid");
-			description.addProperty("systemNumber");
-			description.addProperty("applicantName");
+			description.addProperty("requestedby");
 			description.addProperty("registerNumber");
-			description.addProperty("startdate");
 			description.addProperty("natureOfWork");
-			description.addProperty("enddate");
+			description.addProperty("priority");
 			description.addProperty("motif");
-			description.addProperty("requestPriority");
-			description.addProperty("department");
+			description.addProperty("lastmodified");
+			description.addProperty("creation");
 			description.addProperty("equipment");
 			description.addSelfLink();
 			return description;
@@ -100,9 +93,9 @@ public class MaintenanceRequestRequestResource extends DelegatingCrudResource<Ma
 	
 	@Override
 	protected PageableResult doSearch(RequestContext context) {
-		String value = context.getParameter("systemNumber");
+		String value = context.getParameter("registerNumber");
 		List<MaintenanceRequest> maintenanceRequestList = Context.getService(GmaoService.class).doSearch(
-		    MaintenanceRequest.class, "systemNumber", value, context.getLimit(), context.getStartIndex());
+		    MaintenanceRequest.class, "registerNumber", value, context.getLimit(), context.getStartIndex());
 		return new AlreadyPaged<MaintenanceRequest>(context, maintenanceRequestList, false);
 	}
 	
@@ -119,8 +112,8 @@ public class MaintenanceRequestRequestResource extends DelegatingCrudResource<Ma
 	
 	@Override
 	public Object create(SimpleObject propertiesToCreate, RequestContext context) throws ResponseException {
-		if (propertiesToCreate.get("systemNumber") == null) {
-			throw new ConversionException("Required properties: systemNumber");
+		if (propertiesToCreate.get("registerNumber") == null) {
+			throw new ConversionException("Required properties: registerNumber");
 		}
 		
 		MaintenanceRequest maintenanceRequest = this.constructAgent(null, propertiesToCreate);
@@ -152,15 +145,7 @@ public class MaintenanceRequestRequestResource extends DelegatingCrudResource<Ma
 		Equipment equipment = null;
 		if (properties.get("equipment") != null) {
 			Integer regionId = properties.get("equipment");
-			equipment = (Equipment) Context.getService(GmaoService.class).getEntityByid(Equipment.class, "regionId",
-			    regionId);
-		}
-		
-		Department department = null;
-		if (properties.get("department") != null) {
-			Integer departmentId = properties.get("department");
-			department = (Department) Context.getService(GmaoService.class).getEntityByid(Department.class, "departmentId",
-			    departmentId);
+			equipment = (Equipment) Context.getService(GmaoService.class).getEntityByid(Equipment.class, "id", regionId);
 		}
 		
 		if (uuid != null) {
@@ -169,57 +154,38 @@ public class MaintenanceRequestRequestResource extends DelegatingCrudResource<Ma
 			if (maintenanceRequest == null) {
 				throw new IllegalPropertyException("Maintenance Request not exist");
 			}
-			
-			if (properties.get("systemNumber") != null) {
-				maintenanceRequest.setSystemNumber((String) properties.get("systemNumber"));
-			}
-			
-			if (properties.get("department") != null) {
-				maintenanceRequest.setDepartment(department);
-			}
-			
-			if (properties.get("applicantName") != null) {
-				maintenanceRequest.setApplicantName((String) properties.get("applicantName"));
-			}
-			
-			if (properties.get("registerNumber") != null) {
-				maintenanceRequest.setRegisterNumber((String) properties.get("registerNumber"));
-			}
-			
-			if (properties.get("startdate") != null) {
-				maintenanceRequest.setStartdate((Date) properties.get("startdate"));
-			}
-			
-			if (properties.get("natureOfWork") != null) {
-				maintenanceRequest.setNatureOfWork((String) properties.get("natureOfWork"));
-			}
-			
-			if (properties.get("enddate") != null) {
-				maintenanceRequest.setEnddate((Date) properties.get("enddate"));
-			}
-			
-			if (properties.get("motif") != null) {
-				maintenanceRequest.setMotif((String) properties.get("motif"));
-			}
-			
-			if (properties.get("equipment") != null) {
-				maintenanceRequest.setEquipment(equipment);
-			}
-			
 		} else {
 			maintenanceRequest = new MaintenanceRequest();
-			if (properties.get("fullName") == null || properties.get("phoneNumber") == null) {
-				throw new IllegalPropertyException("Required parameters: fullName, phoneNumber");
+			if (properties.get("registerNumber") == null) {
+				throw new IllegalPropertyException("Required parameters: registerNumber");
 			}
-			maintenanceRequest.setSystemNumber((String) properties.get("systemNumber"));
-			maintenanceRequest.setDepartment(department);
-			maintenanceRequest.setApplicantName((String) properties.get("applicantName"));
+		}
+		if (properties.get("registerNumber") != null) {
 			maintenanceRequest.setRegisterNumber((String) properties.get("registerNumber"));
-			maintenanceRequest.setStartdate((Date) properties.get("startdate"));
+		}
+		
+		if (properties.get("requestedby") != null) {
+			maintenanceRequest.setRequestedby(properties.get("requestedby").toString());
+		}
+		
+		if (properties.get("natureOfWork") != null) {
 			maintenanceRequest.setNatureOfWork((String) properties.get("natureOfWork"));
-			maintenanceRequest.setEnddate((Date) properties.get("enddate"));
-			maintenanceRequest.setMotif((String) properties.get("motif"));
-			maintenanceRequest.setRequestPriority((Integer) properties.get("requestPriority"));
+		}
+		
+		if (properties.get("priority") != null) {
+			maintenanceRequest.setPriority(Integer.valueOf(properties.get("priority").toString()));
+		}
+		
+		if (properties.get("motif") != null) {
+			maintenanceRequest.setMotif(properties.get("motif").toString());
+		}
+		
+		if (properties.get("natureOfWork") != null) {
+			maintenanceRequest.setNatureOfWork((String) properties.get("natureOfWork"));
+		}
+		equipment.setLastmodified(new Date());
+		
+		if (properties.get("equipment") != null) {
 			maintenanceRequest.setEquipment(equipment);
 		}
 		

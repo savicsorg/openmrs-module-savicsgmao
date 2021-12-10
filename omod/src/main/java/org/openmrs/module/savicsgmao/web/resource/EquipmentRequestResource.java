@@ -24,8 +24,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.openmrs.module.savicsgmao.api.service.GmaoService;
 import org.openmrs.module.savicsgmao.api.entity.Equipment;
-import org.openmrs.module.savicsgmao.api.entity.Department;
 import org.openmrs.module.savicsgmao.api.entity.EquipmentType;
+import org.openmrs.module.savicsgmao.api.entity.Site;
 import org.openmrs.module.savicsgmao.rest.v1_0.resource.GmaoRest;
 import org.openmrs.module.webservices.rest.web.representation.DefaultRepresentation;
 import org.openmrs.module.webservices.rest.web.representation.FullRepresentation;
@@ -45,23 +45,29 @@ public class EquipmentRequestResource extends DelegatingCrudResource<Equipment> 
 			DelegatingResourceDescription description = new DelegatingResourceDescription();
 			description.addProperty("id");
 			description.addProperty("uuid");
-			description.addProperty("department");
 			description.addProperty("equipmentType");
+			description.addProperty("site");
+			description.addProperty("name");
 			description.addProperty("serialNumber");
-			description.addProperty("acquisitionDate");
-			description.addProperty("equipmentStatus");
-			description.addProperty("designation");
-			description.addProperty("localization");
-			description.addProperty("lastModifiedDate");
-			description.addProperty("equipmentWeight");
-			description.addProperty("volume");
-			description.addProperty("acquisitionValue");
-			description.addProperty("tracking");
-			description.addProperty("inService");
-			description.addProperty("operatingState");
+			description.addProperty("type");
+			description.addProperty("model");
+			description.addProperty("supplier");
+			description.addProperty("power");
+			description.addProperty("aftersaleservice");
+			description.addProperty("responsibleperson");
+			description.addProperty("serviceStatus");
+			description.addProperty("useraffectedto");
+			description.addProperty("replacementcomponent");
+			description.addProperty("manuals");
 			description.addProperty("commisionningYear");
-			description.addProperty("comments");
-			description.addProperty("providerId");
+			description.addProperty("acquisitionDate");
+			description.addProperty("acquisitionValue");
+			description.addProperty("acquisitionMode");
+			description.addProperty("volume");
+			description.addProperty("weight");
+			description.addProperty("comment");
+			description.addProperty("lastmodified");
+			description.addProperty("creation");
 			description.addLink("ref", ".?v=" + RestConstants.REPRESENTATION_REF);
 			description.addSelfLink();
 			return description;
@@ -69,23 +75,29 @@ public class EquipmentRequestResource extends DelegatingCrudResource<Equipment> 
 			DelegatingResourceDescription description = new DelegatingResourceDescription();
 			description.addProperty("id");
 			description.addProperty("uuid");
-			description.addProperty("department");
 			description.addProperty("equipmentType");
+			description.addProperty("site");
+			description.addProperty("name");
 			description.addProperty("serialNumber");
-			description.addProperty("acquisitionDate");
-			description.addProperty("equipmentStatus");
-			description.addProperty("designation");
-			description.addProperty("localization");
-			description.addProperty("lastModifiedDate");
-			description.addProperty("equipmentWeight");
-			description.addProperty("volume");
-			description.addProperty("acquisitionValue");
-			description.addProperty("tracking");
-			description.addProperty("inService");
-			description.addProperty("operatingState");
+			description.addProperty("type");
+			description.addProperty("model");
+			description.addProperty("supplier");
+			description.addProperty("power");
+			description.addProperty("aftersaleservice");
+			description.addProperty("responsibleperson");
+			description.addProperty("serviceStatus");
+			description.addProperty("useraffectedto");
+			description.addProperty("replacementcomponent");
+			description.addProperty("manuals");
 			description.addProperty("commisionningYear");
-			description.addProperty("comments");
-			description.addProperty("providerId");
+			description.addProperty("acquisitionDate");
+			description.addProperty("acquisitionValue");
+			description.addProperty("acquisitionMode");
+			description.addProperty("volume");
+			description.addProperty("weight");
+			description.addProperty("comment");
+			description.addProperty("lastmodified");
+			description.addProperty("creation");
 			description.addLink("full", ".?v=" + RestConstants.REPRESENTATION_FULL);
 			description.addLink("ref", ".?v=" + RestConstants.REPRESENTATION_REF);
 			description.addSelfLink();
@@ -94,23 +106,29 @@ public class EquipmentRequestResource extends DelegatingCrudResource<Equipment> 
 			DelegatingResourceDescription description = new DelegatingResourceDescription();
 			description.addProperty("id");
 			description.addProperty("uuid");
-			description.addProperty("department");
 			description.addProperty("equipmentType");
+			description.addProperty("site");
+			description.addProperty("name");
 			description.addProperty("serialNumber");
-			description.addProperty("acquisitionDate");
-			description.addProperty("equipmentStatus");
-			description.addProperty("designation");
-			description.addProperty("localization");
-			description.addProperty("lastModifiedDate");
-			description.addProperty("equipmentWeight");
-			description.addProperty("volume");
-			description.addProperty("acquisitionValue");
-			description.addProperty("tracking");
-			description.addProperty("inService");
-			description.addProperty("operatingState");
+			description.addProperty("type");
+			description.addProperty("model");
+			description.addProperty("supplier");
+			description.addProperty("power");
+			description.addProperty("aftersaleservice");
+			description.addProperty("responsibleperson");
+			description.addProperty("serviceStatus");
+			description.addProperty("useraffectedto");
+			description.addProperty("replacementcomponent");
+			description.addProperty("manuals");
 			description.addProperty("commisionningYear");
-			description.addProperty("comments");
-			description.addProperty("providerId");
+			description.addProperty("acquisitionDate");
+			description.addProperty("acquisitionValue");
+			description.addProperty("acquisitionMode");
+			description.addProperty("volume");
+			description.addProperty("weight");
+			description.addProperty("comment");
+			description.addProperty("lastmodified");
+			description.addProperty("creation");
 			description.addSelfLink();
 			return description;
 		}
@@ -126,8 +144,8 @@ public class EquipmentRequestResource extends DelegatingCrudResource<Equipment> 
 	
 	@Override
 	protected PageableResult doSearch(RequestContext context) {
-		String value = context.getParameter("fullName");
-		List<Equipment> equipmentList = Context.getService(GmaoService.class).doSearch(Equipment.class, "fullName", value,
+		String value = context.getParameter("name");
+		List<Equipment> equipmentList = Context.getService(GmaoService.class).doSearch(Equipment.class, "name", value,
 		    context.getLimit(), context.getStartIndex());
 		return new AlreadyPaged<Equipment>(context, equipmentList, false);
 	}
@@ -146,8 +164,8 @@ public class EquipmentRequestResource extends DelegatingCrudResource<Equipment> 
 	@Override
 	public Object create(SimpleObject propertiesToCreate, RequestContext context) throws ResponseException {
 		try {
-			if (propertiesToCreate.get("designation") == null || propertiesToCreate.get("serialNumber") == null) {
-				throw new ConversionException("Required properties: designation, serialNumber");
+			if (propertiesToCreate.get("name") == null || propertiesToCreate.get("serialNumber") == null) {
+				throw new ConversionException("Required properties: name, serialNumber");
 			}
 			
 			Equipment equipment = this.constructEquipment(null, propertiesToCreate);
@@ -185,18 +203,17 @@ public class EquipmentRequestResource extends DelegatingCrudResource<Equipment> 
 	
 	private Equipment constructEquipment(String uuid, SimpleObject properties) throws ParseException {
 		Equipment equipment;
-		Department department = null;
+		Site site = null;
 		DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		if (properties.get("department") != null) {
-			Integer departementID = properties.get("department");
-			department = (Department) Context.getService(GmaoService.class).getEntityByid(Department.class, "departmentId",
-			    departementID);
+		if (properties.get("site") != null) {
+			Integer siteId = properties.get("site");
+			site = (Site) Context.getService(GmaoService.class).getEntityByid(Site.class, "id", siteId);
 		}
 		EquipmentType equipmentType = null;
 		if (properties.get("equipmentType") != null) {
 			Integer equipmentTypeId = properties.get("equipmentType");
-			equipmentType = (EquipmentType) Context.getService(GmaoService.class).getEntityByid(EquipmentType.class,
-			    "equipmentTypeId", equipmentTypeId);
+			equipmentType = (EquipmentType) Context.getService(GmaoService.class).getEntityByid(EquipmentType.class, "id",
+			    equipmentTypeId);
 		}
 		
 		if (uuid != null) {
@@ -204,114 +221,90 @@ public class EquipmentRequestResource extends DelegatingCrudResource<Equipment> 
 			if (equipment == null) {
 				throw new IllegalPropertyException("Equipement Type not exist");
 			}
-			
-			if (properties.get("serialNumber") != null) {
-				equipment.setSerialNumber((String) properties.get("serialNumber"));
-			}
-			
-			if (properties.get("designation") != null) {
-				equipment.setDesignation((String) properties.get("designation"));
-			}
-			
-			if (properties.get("acquisitionDate") != null) {
-				equipment.setAcquisitionDate(simpleDateFormat.parse(properties.get("acquisitionDate").toString()));
-			}
-			
-			if (properties.get("equipmentStatus") != null) {
-				equipment.setEquipmentStatus(new Integer(properties.get("equipmentStatus").toString()));
-			}
-			
-			if (properties.get("localization") != null) {
-				equipment.setLocalization((String) properties.get("localization"));
-			} else {
-				equipment.setLocalization("");
-			}
-			
-			if (properties.get("equipmentWeight") != null) {
-				equipment.setEquipmentWeight(new Double(properties.get("equipmentWeight").toString()));
-			}
-			
-			if (properties.get("volume") != null) {
-				equipment.setVolume(new Double(properties.get("volume").toString()));
-			}
-			
-			if (properties.get("acquisitionValue") != null) {
-				equipment.setAcquisitionValue(new Double(properties.get("acquisitionValue").toString()));
-			}
-			
-			if (properties.get("tracking") != null) {
-				equipment.setTracking(new Integer(properties.get("tracking").toString()));
-			}
-			
-			if (properties.get("inService") != null) {
-				equipment.setInService((Boolean) properties.get("inService"));
-			}
-			
-			if (properties.get("operatingState") != null) {
-				equipment.setOperatingState(new Integer(properties.get("operatingState").toString()));
-			}
-			
-			if (properties.get("commisionningYear") != null) {
-				equipment.setCommisionningYear(new Integer(properties.get("commisionningYear").toString()));
-			}
-			
-			if (properties.get("providerId") != null) {
-				equipment.setProviderId(new Integer(properties.get("providerId").toString()));
-			}
-			
-			if (properties.get("comments") != null) {
-				equipment.setComments((String) properties.get("comments"));
-			}
-			
-			equipment.setDepartment(department);
-			equipment.setEquipmentType(equipmentType);
-			
 		} else {
 			equipment = new Equipment();
-			if (properties.get("designation") == null || properties.get("serialNumber") == null) {
-				throw new IllegalPropertyException("Required parameters: designation, serialNumber");
-			}
-			equipment.setSerialNumber((String) properties.get("serialNumber"));
-			equipment.setDesignation((String) properties.get("designation"));
-			equipment.setAcquisitionDate(simpleDateFormat.parse(properties.get("acquisitionDate").toString()));
-			equipment.setEquipmentStatus(new Integer(properties.get("equipmentStatus").toString()));
-			
-			if (properties.get("localization") != null) {
-				equipment.setLocalization((String) properties.get("localization"));
-			} else {
-				equipment.setLocalization("");
-			}
-			
-			if (properties.get("equipmentWeight") != null) {
-				equipment.setEquipmentWeight(new Double(properties.get("equipmentWeight").toString()));
-			}
-			
-			if (properties.get("volume") != null) {
-				equipment.setVolume(new Double(properties.get("volume").toString()));
-			}
-			
-			//equipment.setAcquisitionValue(new Double(properties.get("acquisitionValue").toString()));
-			
-			//equipment.setTracking(new Integer(properties.get("tracking").toString()));
-			
-			equipment.setInService((Boolean) properties.get("inService"));
-			
-			//equipment.setOperatingState(new Integer(properties.get("operatingState").toString()));
-			
-			if (properties.get("commisionningYear") != null) {
-                            equipment.setCommisionningYear(new Integer(properties.get("commisionningYear").toString()));
-			}
-			
-			//equipment.setProviderId(new Integer(properties.get("providerId").toString()));
-			if (properties.get("comments") != null) {
-				equipment.setComments((String) properties.get("comments"));
-			} else {
-				equipment.setComments("");
-			}
-			
-			equipment.setDepartment(department);
-			equipment.setEquipmentType(equipmentType);
 		}
+		
+		if (properties.get("serialNumber") != null) {
+			equipment.setSerialNumber((String) properties.get("serialNumber"));
+		}
+		
+		if (properties.get("name") != null) {
+			equipment.setName((String) properties.get("name"));
+		}
+		
+		if (properties.get("acquisitionDate") != null) {
+			equipment.setAcquisitionDate(simpleDateFormat.parse(properties.get("acquisitionDate").toString()));
+		}
+		
+		if (properties.get("type") != null) {
+			equipment.setType(properties.get("type").toString());
+		}
+		
+		if (properties.get("model") != null) {
+			equipment.setModel(properties.get("model").toString());
+		}
+		
+		if (properties.get("supplier") != null) {
+			equipment.setSupplier(properties.get("supplier").toString());
+		}
+		
+		if (properties.get("power") != null) {
+			equipment.setPower(properties.get("power").toString());
+		}
+		
+		if (properties.get("aftersaleservice") != null) {
+			equipment.setAftersaleservice(Boolean.valueOf(properties.get("aftersaleservice").toString()));
+		}
+		
+		if (properties.get("responsibleperson") != null) {
+			equipment.setResponsibleperson(properties.get("responsibleperson").toString());
+		}
+		
+		if (properties.get("serviceStatus") != null) {
+			equipment.setServiceStatus(new Integer(properties.get("serviceStatus").toString()));
+		}
+		
+		if (properties.get("useraffectedto") != null) {
+			equipment.setUseraffectedto(properties.get("useraffectedto").toString());
+		}
+		
+		if (properties.get("replacementcomponent") != null) {
+			equipment.setReplacementcomponent(properties.get("replacementcomponent").toString());
+		}
+		
+		if (properties.get("manuals") != null) {
+			equipment.setManuals(Boolean.valueOf(properties.get("manuals").toString()));
+		}
+		
+		if (properties.get("commisionningYear") != null) {
+			equipment.setCommisionningYear(new Integer(properties.get("commisionningYear").toString()));
+		}
+		
+		if (properties.get("acquisitionValue") != null) {
+			equipment.setAcquisitionValue(new Double(properties.get("acquisitionValue").toString()));
+		}
+		
+		if (properties.get("acquisitionMode") != null) {
+			equipment.setAcquisitionMode(properties.get("acquisitionMode").toString());
+		}
+		
+		if (properties.get("volume") != null) {
+			equipment.setVolume(new Double(properties.get("volume").toString()));
+		}
+		
+		if (properties.get("weight") != null) {
+			equipment.setVolume(new Double(properties.get("weight").toString()));
+		}
+		
+		if (properties.get("comment") != null) {
+			equipment.setComment((String) properties.get("comment"));
+		}
+		
+		equipment.setLastmodified(new Date());
+		
+		equipment.setSite(site);
+		equipment.setEquipmentType(equipmentType);
 		
 		return equipment;
 	}

@@ -17,7 +17,6 @@ import org.openmrs.module.webservices.rest.web.response.ResponseException;
 import java.util.List;
 import org.openmrs.module.savicsgmao.api.service.GmaoService;
 import org.openmrs.module.savicsgmao.api.entity.District;
-import org.openmrs.module.savicsgmao.api.entity.Region;
 import org.openmrs.module.savicsgmao.rest.v1_0.resource.GmaoRest;
 import org.openmrs.module.webservices.rest.web.representation.DefaultRepresentation;
 import org.openmrs.module.webservices.rest.web.representation.FullRepresentation;
@@ -39,9 +38,9 @@ public class DistrictRequestResource extends DataDelegatingCrudResource<District
 			System.out.println("");
 			description.addProperty("id");
 			description.addProperty("uuid");
-			description.addProperty("districtName");
-			description.addProperty("districtCode");
-			description.addProperty("region");
+			description.addProperty("name");
+			description.addProperty("code");
+			description.addProperty("regionid");
 			description.addLink("ref", ".?v=" + RestConstants.REPRESENTATION_REF);
 			description.addSelfLink();
 			return description;
@@ -49,9 +48,9 @@ public class DistrictRequestResource extends DataDelegatingCrudResource<District
 			DelegatingResourceDescription description = new DelegatingResourceDescription();
 			description.addProperty("id");
 			description.addProperty("uuid");
-			description.addProperty("districtName");
-			description.addProperty("districtCode");
-			description.addProperty("region");
+			description.addProperty("name");
+			description.addProperty("code");
+			description.addProperty("regionid");
 			description.addLink("full", ".?v=" + RestConstants.REPRESENTATION_FULL);
 			description.addLink("ref", ".?v=" + RestConstants.REPRESENTATION_REF);
 			description.addSelfLink();
@@ -60,8 +59,9 @@ public class DistrictRequestResource extends DataDelegatingCrudResource<District
 			DelegatingResourceDescription description = new DelegatingResourceDescription();
 			description.addProperty("id");
 			description.addProperty("uuid");
-			description.addProperty("districtName");
-			description.addProperty("districtCode");
+			description.addProperty("name");
+			description.addProperty("code");
+			description.addProperty("regionid");
 			description.addSelfLink();
 			return description;
 		}
@@ -79,8 +79,8 @@ public class DistrictRequestResource extends DataDelegatingCrudResource<District
 	
 	@Override
 	protected PageableResult doSearch(RequestContext context) {
-		String value = context.getParameter("districtName");
-		List<District> districtList = Context.getService(GmaoService.class).doSearch(District.class, "districtName", value,
+		String value = context.getParameter("name");
+		List<District> districtList = Context.getService(GmaoService.class).doSearch(District.class, "name", value,
 		    context.getLimit(), context.getStartIndex());
 		return new AlreadyPaged<District>(context, districtList, false);
 	}
@@ -98,12 +98,9 @@ public class DistrictRequestResource extends DataDelegatingCrudResource<District
 	
 	@Override
 	public Object create(SimpleObject propertiesToCreate, RequestContext context) throws ResponseException {
-		if (propertiesToCreate.get("districtName") == null || propertiesToCreate.get("districtCode") == null) {
-			throw new ConversionException("Required properties: districtName, districtCode");
+		if (propertiesToCreate.get("name") == null || propertiesToCreate.get("code") == null) {
+			throw new ConversionException("Required properties: name, code");
 		}
-		System.out.println("-----------------------------");
-		System.out.println(propertiesToCreate);
-		System.out.println();
 		District district = this.constructDistrict(null, propertiesToCreate);
 		Context.getService(GmaoService.class).upsert(district);
 		return ConversionUtil.convertToRepresentation(district, context.getRepresentation());
@@ -128,36 +125,33 @@ public class DistrictRequestResource extends DataDelegatingCrudResource<District
 	
 	private District constructDistrict(String uuid, SimpleObject properties) {
 		District district;
-		Region region = null;
-		System.out.println(">>>>Region ID " + properties.get("region"));
-		if (properties.get("region") != null) {
-			Integer regionId = properties.get("region");
-			region = (Region) Context.getService(GmaoService.class).getEntityByid(Region.class, "regionId", regionId);
-		}
+		
 		if (uuid != null) {
 			district = (District) Context.getService(GmaoService.class).getEntityByUuid(District.class, uuid);
 			if (district == null) {
 				throw new IllegalPropertyException("district not exist");
 			}
 			
-			if (properties.get("districtName") != null) {
-				district.setDistrictName((String) properties.get("districtName"));
+			if (properties.get("name") != null) {
+				district.setName((String) properties.get("name"));
 			}
 			
-			if (properties.get("districtCode") != null) {
-				district.setDistrictCode((String) properties.get("districtCode"));
+			if (properties.get("code") != null) {
+				district.setCode((String) properties.get("code"));
 			}
 			
-			district.setRegion(region);
+			if (properties.get("regionid") != null) {
+				district.setRegionid(new Integer(properties.get("regionid").toString()));
+			}
+			
 		} else {
 			district = new District();
-			if (properties.get("districtName") == null || properties.get("districtCode") == null) {
-				throw new IllegalPropertyException("Required parameters: districtName, districtCode");
+			if (properties.get("name") == null || properties.get("code") == null) {
+				throw new IllegalPropertyException("Required parameters: name, code");
 			}
-			district.setDistrictName((String) properties.get("districtName"));
-			district.setDistrictCode((String) properties.get("districtCode"));
-			district.setRegion(region);
-			System.out.println("region = " + region);
+			district.setName((String) properties.get("name"));
+			district.setCode((String) properties.get("code"));
+			district.setRegionid(new Integer(properties.get("regionid").toString()));
 		}
 		
 		return district;

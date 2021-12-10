@@ -54,22 +54,17 @@
         
 	<!-- Maps hibernate file's, if present -->
         <mappingFiles>
-            Agent.hbm.xml
-            Department.hbm.xml
             District.hbm.xml
+            Healthcenter.hbm.xml
+            Service.hbm.xml
             Equipment.hbm.xml
             EquipmentType.hbm.xml
-            EquipmentOperation.hbm.xml
-            EquipmentOperationItem.hbm.xml
             Maintenance.hbm.xml
-            MaintenanceReason.hbm.xml
             MaintenanceRequest.hbm.xml
-            MaintenanceTask.hbm.xml
             MaintenanceType.hbm.xml
-            Planification.hbm.xml
-            Region.hbm.xml
-            SiteLocation.hbm.xml
-            Task.hbm.xml
+            Mouvement.hbm.xml
+            
+            Site.hbm.xml
         </mappingFiles>
 	
 	

@@ -1,5 +1,9 @@
 package org.openmrs.module.savicsgmao.web.resource;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.webservices.rest.SimpleObject;
 import org.openmrs.module.webservices.rest.web.ConversionUtil;
@@ -16,20 +20,24 @@ import org.openmrs.module.webservices.rest.web.response.IllegalPropertyException
 import org.openmrs.module.webservices.rest.web.response.ResponseException;
 
 import java.util.List;
-import org.openmrs.module.savicsgmao.api.entity.District;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.openmrs.module.savicsgmao.api.entity.Equipment;
+import org.openmrs.module.savicsgmao.api.entity.Healthcenter;
+import org.openmrs.module.savicsgmao.api.entity.Mouvement;
+import org.openmrs.module.savicsgmao.api.entity.Site;
 import org.openmrs.module.savicsgmao.api.service.GmaoService;
-import org.openmrs.module.savicsgmao.api.entity.SiteLocation;
 import org.openmrs.module.savicsgmao.rest.v1_0.resource.GmaoRest;
 import org.openmrs.module.webservices.rest.web.representation.DefaultRepresentation;
 import org.openmrs.module.webservices.rest.web.representation.FullRepresentation;
 import org.openmrs.module.webservices.rest.web.representation.RefRepresentation;
 
-@Resource(name = RestConstants.VERSION_1 + GmaoRest.GMAO_NAMESPACE + "/siteLocation", supportedClass = SiteLocation.class, supportedOpenmrsVersions = { "2.*.*" })
-public class SiteLocationRequestResource extends DelegatingCrudResource<SiteLocation> {
+@Resource(name = RestConstants.VERSION_1 + GmaoRest.GMAO_NAMESPACE + "/mouvement", supportedClass = Mouvement.class, supportedOpenmrsVersions = { "2.*.*" })
+public class MouvementRequestResource extends DelegatingCrudResource<Mouvement> {
 	
 	@Override
-	public SiteLocation newDelegate() {
-		return new SiteLocation();
+	public Mouvement newDelegate() {
+		return new Mouvement();
 	}
 	
 	@Override
@@ -37,20 +45,38 @@ public class SiteLocationRequestResource extends DelegatingCrudResource<SiteLoca
 		if (rep instanceof DefaultRepresentation) {
 			DelegatingResourceDescription description = new DelegatingResourceDescription();
 			description.addProperty("id");
+			description.addProperty("equipment");
 			description.addProperty("uuid");
-			description.addProperty("locationName");
-			description.addProperty("locationCode");
-			description.addProperty("district");
+			description.addProperty("siteByDestinationId");
+			description.addProperty("SiteBySourceId");
+			description.addProperty("type");
+			description.addProperty("date");
+			description.addProperty("motif");
+			description.addProperty("localapproval");
+			description.addProperty("localapprover");
+			description.addProperty("centralapproval");
+			description.addProperty("centralapprover");
+			description.addProperty("creation");
+			description.addProperty("lastmodified");
 			description.addLink("ref", ".?v=" + RestConstants.REPRESENTATION_REF);
 			description.addSelfLink();
 			return description;
 		} else if (rep instanceof FullRepresentation) {
 			DelegatingResourceDescription description = new DelegatingResourceDescription();
 			description.addProperty("id");
+			description.addProperty("equipment");
 			description.addProperty("uuid");
-			description.addProperty("locationName");
-			description.addProperty("locationCode");
-			description.addProperty("district");
+			description.addProperty("siteByDestinationId");
+			description.addProperty("SiteBySourceId");
+			description.addProperty("type");
+			description.addProperty("date");
+			description.addProperty("motif");
+			description.addProperty("localapproval");
+			description.addProperty("localapprover");
+			description.addProperty("centralapproval");
+			description.addProperty("centralapprover");
+			description.addProperty("creation");
+			description.addProperty("lastmodified");
 			description.addLink("full", ".?v=" + RestConstants.REPRESENTATION_FULL);
 			description.addLink("ref", ".?v=" + RestConstants.REPRESENTATION_REF);
 			description.addSelfLink();
@@ -58,10 +84,19 @@ public class SiteLocationRequestResource extends DelegatingCrudResource<SiteLoca
 		} else if (rep instanceof RefRepresentation) {
 			DelegatingResourceDescription description = new DelegatingResourceDescription();
 			description.addProperty("id");
+			description.addProperty("equipment");
 			description.addProperty("uuid");
-			description.addProperty("locationName");
-			description.addProperty("locationCode");
-			description.addProperty("district");
+			description.addProperty("siteByDestinationId");
+			description.addProperty("SiteBySourceId");
+			description.addProperty("type");
+			description.addProperty("date");
+			description.addProperty("motif");
+			description.addProperty("localapproval");
+			description.addProperty("localapprover");
+			description.addProperty("centralapproval");
+			description.addProperty("centralapprover");
+			description.addProperty("creation");
+			description.addProperty("lastmodified");
 			description.addSelfLink();
 			return description;
 		}
@@ -70,101 +105,146 @@ public class SiteLocationRequestResource extends DelegatingCrudResource<SiteLoca
 	
 	@Override
 	protected PageableResult doGetAll(RequestContext context) throws ResponseException {
-		List<SiteLocation> siteLocationList = Context.getService(GmaoService.class).getAll(SiteLocation.class,
-		    context.getLimit(), context.getStartIndex());
-		return new AlreadyPaged<SiteLocation>(context, siteLocationList, false);
+		List<Mouvement> mouvementList = Context.getService(GmaoService.class).getAll(Mouvement.class, context.getLimit(),
+		    context.getStartIndex());
+		return new AlreadyPaged<Mouvement>(context, mouvementList, false);
 	}
 	
 	@Override
 	protected PageableResult doSearch(RequestContext context) {
-		String value = context.getParameter("locationName");
-		List<SiteLocation> siteLocationList = Context.getService(GmaoService.class).doSearch(SiteLocation.class,
-		    "locationName", value, context.getLimit(), context.getStartIndex());
-		return new AlreadyPaged<SiteLocation>(context, siteLocationList, false);
+		String value = context.getParameter("name");
+		List<Mouvement> mouvementList = Context.getService(GmaoService.class).doSearch(Mouvement.class, "name", value,
+		    context.getLimit(), context.getStartIndex());
+		return new AlreadyPaged<Mouvement>(context, mouvementList, false);
 	}
 	
 	@Override
-	public SiteLocation getByUniqueId(String uuid) {
+	public Mouvement getByUniqueId(String uuid) {
 		
-		return (SiteLocation) Context.getService(GmaoService.class).getEntityByUuid(SiteLocation.class, uuid);
+		return (Mouvement) Context.getService(GmaoService.class).getEntityByUuid(Mouvement.class, uuid);
 	}
 	
 	@Override
-	public SiteLocation save(SiteLocation siteLocation) {
-		return (SiteLocation) Context.getService(GmaoService.class).upsert(siteLocation);
+	public Mouvement save(Mouvement mouvement) {
+		return (Mouvement) Context.getService(GmaoService.class).upsert(mouvement);
 	}
 	
 	@Override
 	public Object create(SimpleObject propertiesToCreate, RequestContext context) throws ResponseException {
-		if (propertiesToCreate.get("locationName") == null || propertiesToCreate.get("locationCode") == null) {
-			throw new ConversionException("Required properties: locationName, locationCode");
+		try {
+			if (propertiesToCreate.get("name") == null) {
+				throw new ConversionException("Required properties: name");
+			}
+			
+			Mouvement mouvement = this.constructMouvement(null, propertiesToCreate);
+			Context.getService(GmaoService.class).upsert(mouvement);
+			return ConversionUtil.convertToRepresentation(mouvement, context.getRepresentation());
 		}
-		
-		SiteLocation siteLocation = this.constructSiteLocation(null, propertiesToCreate);
-		Context.getService(GmaoService.class).upsert(siteLocation);
-		return ConversionUtil.convertToRepresentation(siteLocation, context.getRepresentation());
+		catch (ParseException ex) {
+			Logger.getLogger(MouvementRequestResource.class.getName()).log(Level.SEVERE, null, ex);
+			return null;
+		}
 	}
 	
 	@Override
 	public Object update(String uuid, SimpleObject propertiesToUpdate, RequestContext context) throws ResponseException {
-		SiteLocation siteLocation = this.constructSiteLocation(uuid, propertiesToUpdate);
-		Context.getService(GmaoService.class).upsert(siteLocation);
-		return ConversionUtil.convertToRepresentation(siteLocation, context.getRepresentation());
+		try {
+			Mouvement mouvement = this.constructMouvement(uuid, propertiesToUpdate);
+			Context.getService(GmaoService.class).upsert(mouvement);
+			return ConversionUtil.convertToRepresentation(mouvement, context.getRepresentation());
+		}
+		catch (ParseException ex) {
+			Logger.getLogger(MouvementRequestResource.class.getName()).log(Level.SEVERE, null, ex);
+			return null;
+		}
 	}
 	
 	@Override
-	protected void delete(SiteLocation siteLocation, String reason, RequestContext context) throws ResponseException {
-		Context.getService(GmaoService.class).delete(siteLocation);
+	protected void delete(Mouvement mouvement, String reason, RequestContext context) throws ResponseException {
+		Context.getService(GmaoService.class).delete(mouvement);
 	}
 	
 	@Override
-	public void purge(SiteLocation siteLocation, RequestContext context) throws ResponseException {
-		Context.getService(GmaoService.class).delete(siteLocation);
+	public void purge(Mouvement mouvement, RequestContext context) throws ResponseException {
+		Context.getService(GmaoService.class).delete(mouvement);
 	}
 	
-	private SiteLocation constructSiteLocation(String uuid, SimpleObject properties) {
-		SiteLocation siteLocation;
+	private Mouvement constructMouvement(String uuid, SimpleObject properties) throws ParseException {
+		Healthcenter healthcenter = null;
+		Mouvement mouvement;
+		DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		
-		District district = null;
-		if (properties.get("district") != null) {
-			Integer districtId = properties.get("district");
-			district = (District) Context.getService(GmaoService.class).getEntityByid(District.class, "districtId",
-			    districtId);
+		Site siteByDestination = null;
+		if (properties.get("siteByDestination") != null) {
+			Integer siteByDestinationId = properties.get("siteByDestination");
+			siteByDestination = (Site) Context.getService(GmaoService.class).getEntityByid(Site.class, "id",
+			    siteByDestinationId);
+		}
+		
+		Site siteBySource = null;
+		if (properties.get("siteBySource") != null) {
+			Integer siteBySourceId = properties.get("siteBySource");
+			siteBySource = (Site) Context.getService(GmaoService.class).getEntityByid(Site.class, "id", siteBySourceId);
+		}
+		
+		Equipment equipment = null;
+		if (properties.get("equipment") != null) {
+			Integer equipementId = properties.get("equipment");
+			equipment = (Equipment) Context.getService(GmaoService.class).getEntityByid(Equipment.class, "id", equipementId);
 		}
 		
 		if (uuid != null) {
-			siteLocation = (SiteLocation) Context.getService(GmaoService.class).getEntityByUuid(SiteLocation.class, uuid);
-			if (siteLocation == null) {
-				throw new IllegalPropertyException("siteLocation not exist");
-			}
-			
-			if (properties.get("locationName") != null) {
-				siteLocation.setLocationName((String) properties.get("locationName"));
-			}
-			
-			if (properties.get("locationCode") != null) {
-				siteLocation.setLocationCode((String) properties.get("locationCode"));
-			}
-			
-			if (properties.get("districtId") != null) {
-				siteLocation.setDistrict(district);
+			mouvement = (Mouvement) Context.getService(GmaoService.class).getEntityByUuid(Mouvement.class, uuid);
+			if (mouvement == null) {
+				throw new IllegalPropertyException("mouvement not exist");
 			}
 		} else {
-			siteLocation = new SiteLocation();
-			if (properties.get("locationName") == null || properties.get("locationCode") == null) {
-				throw new IllegalPropertyException("Required parameters: locationName, locationCode");
+			mouvement = new Mouvement();
+			if (properties.get("equipment") == null || properties.get("siteByDestinationId") == null
+			        || properties.get("SiteBySourceId") == null) {
+				throw new IllegalPropertyException("Required parameters: equipment, siteByDestination, SiteBySource");
 			}
-			siteLocation.setLocationName((String) properties.get("locationName"));
-			siteLocation.setLocationCode((String) properties.get("locationCode"));
-			siteLocation.setDistrict(district);
+			mouvement.setCreation(new Date());
 		}
 		
-		return siteLocation;
+		if (properties.get("type") != null) {
+			mouvement.setType(Integer.valueOf(properties.get("type").toString()));
+		}
+		
+		if (properties.get("date") != null) {
+			mouvement.setDate(simpleDateFormat.parse(properties.get("date").toString()));
+		}
+		
+		if (properties.get("localapproval") != null) {
+			mouvement.setLocalapproval(simpleDateFormat.parse(properties.get("localapproval").toString()));
+		}
+		
+		if (properties.get("localapprover") != null) {
+			mouvement.setLocalapprover(properties.get("localapprover").toString());
+		}
+		
+		if (properties.get("centralapproval") != null) {
+			mouvement.setLocalapproval(simpleDateFormat.parse(properties.get("centralapproval").toString()));
+		}
+		
+		if (properties.get("centralapprover") != null) {
+			mouvement.setLocalapprover(properties.get("centralapprover").toString());
+		}
+		
+		if (properties.get("motif") != null) {
+			mouvement.setMotif(properties.get("motif").toString());
+		}
+		
+		mouvement.setSiteBySourceId(siteBySource);
+		mouvement.setSiteByDestinationId(siteByDestination);
+		mouvement.setLastmodified(new Date());
+		
+		return mouvement;
 	}
 	
 	@Override
 	public String getUri(Object instance) {
-		return RestConstants.URI_PREFIX + "/siteLocation";
+		return RestConstants.URI_PREFIX + "/mouvement";
 	}
 	
 }

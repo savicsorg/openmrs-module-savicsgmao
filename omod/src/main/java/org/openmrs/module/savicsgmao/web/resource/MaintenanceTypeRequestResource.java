@@ -1,5 +1,6 @@
 package org.openmrs.module.savicsgmao.web.resource;
 
+import java.util.Date;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.webservices.rest.SimpleObject;
 import org.openmrs.module.webservices.rest.web.ConversionUtil;
@@ -35,13 +36,11 @@ public class MaintenanceTypeRequestResource extends DelegatingCrudResource<Maint
 		DelegatingResourceDescription description = new DelegatingResourceDescription();
 		if (rep instanceof DefaultRepresentation || rep instanceof FullRepresentation) {
 			description.addProperty("uuid");
-			description.addProperty("typeCode");
-			description.addProperty("typeName");
+			description.addProperty("name");
 			description.addLink("full", ".?v=" + RestConstants.REPRESENTATION_FULL);
 		} else {
 			description.addProperty("uuid");
-			description.addProperty("typeCode");
-			description.addProperty("typeName");
+			description.addProperty("name");
 			description.addLink("full", ".?v=" + RestConstants.REPRESENTATION_FULL);
 		}
 		return description;
@@ -56,9 +55,9 @@ public class MaintenanceTypeRequestResource extends DelegatingCrudResource<Maint
 	
 	@Override
 	protected PageableResult doSearch(RequestContext context) {
-		String value = context.getParameter("typeName");
+		String value = context.getParameter("name");
 		List<MaintenanceType> maintenanceTypeList = Context.getService(GmaoService.class).doSearch(MaintenanceType.class,
-		    "typeName", value, context.getLimit(), context.getStartIndex());
+		    "name", value, context.getLimit(), context.getStartIndex());
 		return new AlreadyPaged<MaintenanceType>(context, maintenanceTypeList, false);
 	}
 	
@@ -75,8 +74,8 @@ public class MaintenanceTypeRequestResource extends DelegatingCrudResource<Maint
 	
 	@Override
 	public Object create(SimpleObject propertiesToCreate, RequestContext context) throws ResponseException {
-		if (propertiesToCreate.get("typeName") == null || propertiesToCreate.get("typeCode") == null) {
-			throw new ConversionException("Required properties: typeName, typeCode");
+		if (propertiesToCreate.get("name") == null || propertiesToCreate.get("code") == null) {
+			throw new ConversionException("Required properties: name, code");
 		}
 		
 		MaintenanceType maintenanceType = this.constructDepartment(null, propertiesToCreate);
@@ -110,22 +109,18 @@ public class MaintenanceTypeRequestResource extends DelegatingCrudResource<Maint
 				throw new IllegalPropertyException("maintenanceType not exist");
 			}
 			
-			if (properties.get("typeName") != null) {
-				maintenanceType.setTypeName((String) properties.get("typeName"));
+			if (properties.get("name") != null) {
+				maintenanceType.setName((String) properties.get("name"));
 			}
 			
-			if (properties.get("typeCode") != null) {
-				maintenanceType.setTypeCode((String) properties.get("typeCode"));
-			}
 		} else {
 			maintenanceType = new MaintenanceType();
-			if (properties.get("typeName") == null || properties.get("typeCode") == null) {
-				throw new IllegalPropertyException("Required parameters: typeName, typeCode");
+			if (properties.get("name") == null) {
+				throw new IllegalPropertyException("Required parameters: name");
 			}
-			maintenanceType.setTypeName((String) properties.get("typeName"));
-			maintenanceType.setTypeCode((String) properties.get("typeCode"));
+			maintenanceType.setName((String) properties.get("name"));
+			
 		}
-		
 		return maintenanceType;
 	}
 	

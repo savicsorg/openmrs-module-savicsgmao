@@ -1,5 +1,6 @@
 package org.openmrs.module.savicsgmao.web.resource;
 
+import java.util.Date;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.webservices.rest.SimpleObject;
 import org.openmrs.module.webservices.rest.web.ConversionUtil;
@@ -16,20 +17,20 @@ import org.openmrs.module.webservices.rest.web.response.IllegalPropertyException
 import org.openmrs.module.webservices.rest.web.response.ResponseException;
 
 import java.util.List;
-import org.openmrs.module.savicsgmao.api.entity.District;
+import org.openmrs.module.savicsgmao.api.entity.Service;
+import org.openmrs.module.savicsgmao.api.entity.Site;
 import org.openmrs.module.savicsgmao.api.service.GmaoService;
-import org.openmrs.module.savicsgmao.api.entity.SiteLocation;
 import org.openmrs.module.savicsgmao.rest.v1_0.resource.GmaoRest;
 import org.openmrs.module.webservices.rest.web.representation.DefaultRepresentation;
 import org.openmrs.module.webservices.rest.web.representation.FullRepresentation;
 import org.openmrs.module.webservices.rest.web.representation.RefRepresentation;
 
-@Resource(name = RestConstants.VERSION_1 + GmaoRest.GMAO_NAMESPACE + "/siteLocation", supportedClass = SiteLocation.class, supportedOpenmrsVersions = { "2.*.*" })
-public class SiteLocationRequestResource extends DelegatingCrudResource<SiteLocation> {
+@Resource(name = RestConstants.VERSION_1 + GmaoRest.GMAO_NAMESPACE + "/site", supportedClass = Site.class, supportedOpenmrsVersions = { "2.*.*" })
+public class SiteRequestResource extends DelegatingCrudResource<Site> {
 	
 	@Override
-	public SiteLocation newDelegate() {
-		return new SiteLocation();
+	public Site newDelegate() {
+		return new Site();
 	}
 	
 	@Override
@@ -38,9 +39,11 @@ public class SiteLocationRequestResource extends DelegatingCrudResource<SiteLoca
 			DelegatingResourceDescription description = new DelegatingResourceDescription();
 			description.addProperty("id");
 			description.addProperty("uuid");
-			description.addProperty("locationName");
-			description.addProperty("locationCode");
-			description.addProperty("district");
+			description.addProperty("name");
+			description.addProperty("code");
+			description.addProperty("service");
+			description.addProperty("lastmodified");
+			description.addProperty("creation");
 			description.addLink("ref", ".?v=" + RestConstants.REPRESENTATION_REF);
 			description.addSelfLink();
 			return description;
@@ -48,9 +51,11 @@ public class SiteLocationRequestResource extends DelegatingCrudResource<SiteLoca
 			DelegatingResourceDescription description = new DelegatingResourceDescription();
 			description.addProperty("id");
 			description.addProperty("uuid");
-			description.addProperty("locationName");
-			description.addProperty("locationCode");
-			description.addProperty("district");
+			description.addProperty("name");
+			description.addProperty("code");
+			description.addProperty("service");
+			description.addProperty("lastmodified");
+			description.addProperty("creation");
 			description.addLink("full", ".?v=" + RestConstants.REPRESENTATION_FULL);
 			description.addLink("ref", ".?v=" + RestConstants.REPRESENTATION_REF);
 			description.addSelfLink();
@@ -59,9 +64,11 @@ public class SiteLocationRequestResource extends DelegatingCrudResource<SiteLoca
 			DelegatingResourceDescription description = new DelegatingResourceDescription();
 			description.addProperty("id");
 			description.addProperty("uuid");
-			description.addProperty("locationName");
-			description.addProperty("locationCode");
-			description.addProperty("district");
+			description.addProperty("name");
+			description.addProperty("code");
+			description.addProperty("service");
+			description.addProperty("lastmodified");
+			description.addProperty("creation");
 			description.addSelfLink();
 			return description;
 		}
@@ -70,101 +77,101 @@ public class SiteLocationRequestResource extends DelegatingCrudResource<SiteLoca
 	
 	@Override
 	protected PageableResult doGetAll(RequestContext context) throws ResponseException {
-		List<SiteLocation> siteLocationList = Context.getService(GmaoService.class).getAll(SiteLocation.class,
-		    context.getLimit(), context.getStartIndex());
-		return new AlreadyPaged<SiteLocation>(context, siteLocationList, false);
+		List<Site> siteList = Context.getService(GmaoService.class).getAll(Site.class, context.getLimit(),
+		    context.getStartIndex());
+		return new AlreadyPaged<Site>(context, siteList, false);
 	}
 	
 	@Override
 	protected PageableResult doSearch(RequestContext context) {
-		String value = context.getParameter("locationName");
-		List<SiteLocation> siteLocationList = Context.getService(GmaoService.class).doSearch(SiteLocation.class,
-		    "locationName", value, context.getLimit(), context.getStartIndex());
-		return new AlreadyPaged<SiteLocation>(context, siteLocationList, false);
+		String value = context.getParameter("name");
+		List<Site> siteList = Context.getService(GmaoService.class).doSearch(Site.class, "name", value, context.getLimit(),
+		    context.getStartIndex());
+		return new AlreadyPaged<Site>(context, siteList, false);
 	}
 	
 	@Override
-	public SiteLocation getByUniqueId(String uuid) {
+	public Site getByUniqueId(String uuid) {
 		
-		return (SiteLocation) Context.getService(GmaoService.class).getEntityByUuid(SiteLocation.class, uuid);
+		return (Site) Context.getService(GmaoService.class).getEntityByUuid(Site.class, uuid);
 	}
 	
 	@Override
-	public SiteLocation save(SiteLocation siteLocation) {
-		return (SiteLocation) Context.getService(GmaoService.class).upsert(siteLocation);
+	public Site save(Site site) {
+		return (Site) Context.getService(GmaoService.class).upsert(site);
 	}
 	
 	@Override
 	public Object create(SimpleObject propertiesToCreate, RequestContext context) throws ResponseException {
-		if (propertiesToCreate.get("locationName") == null || propertiesToCreate.get("locationCode") == null) {
-			throw new ConversionException("Required properties: locationName, locationCode");
+		if (propertiesToCreate.get("name") == null) {
+			throw new ConversionException("Required properties: name");
 		}
 		
-		SiteLocation siteLocation = this.constructSiteLocation(null, propertiesToCreate);
-		Context.getService(GmaoService.class).upsert(siteLocation);
-		return ConversionUtil.convertToRepresentation(siteLocation, context.getRepresentation());
+		Site site = this.constructSite(null, propertiesToCreate);
+		Context.getService(GmaoService.class).upsert(site);
+		return ConversionUtil.convertToRepresentation(site, context.getRepresentation());
 	}
 	
 	@Override
 	public Object update(String uuid, SimpleObject propertiesToUpdate, RequestContext context) throws ResponseException {
-		SiteLocation siteLocation = this.constructSiteLocation(uuid, propertiesToUpdate);
-		Context.getService(GmaoService.class).upsert(siteLocation);
-		return ConversionUtil.convertToRepresentation(siteLocation, context.getRepresentation());
+		Site site = this.constructSite(uuid, propertiesToUpdate);
+		Context.getService(GmaoService.class).upsert(site);
+		return ConversionUtil.convertToRepresentation(site, context.getRepresentation());
 	}
 	
 	@Override
-	protected void delete(SiteLocation siteLocation, String reason, RequestContext context) throws ResponseException {
-		Context.getService(GmaoService.class).delete(siteLocation);
+	protected void delete(Site site, String reason, RequestContext context) throws ResponseException {
+		Context.getService(GmaoService.class).delete(site);
 	}
 	
 	@Override
-	public void purge(SiteLocation siteLocation, RequestContext context) throws ResponseException {
-		Context.getService(GmaoService.class).delete(siteLocation);
+	public void purge(Site site, RequestContext context) throws ResponseException {
+		Context.getService(GmaoService.class).delete(site);
 	}
 	
-	private SiteLocation constructSiteLocation(String uuid, SimpleObject properties) {
-		SiteLocation siteLocation;
+	private Site constructSite(String uuid, SimpleObject properties) {
+		Site site;
 		
-		District district = null;
-		if (properties.get("district") != null) {
-			Integer districtId = properties.get("district");
-			district = (District) Context.getService(GmaoService.class).getEntityByid(District.class, "districtId",
-			    districtId);
+		Service service = null;
+		if (properties.get("service") != null) {
+			Integer serviceId = properties.get("service");
+			service = (Service) Context.getService(GmaoService.class).getEntityByid(Service.class, "id", serviceId);
 		}
 		
 		if (uuid != null) {
-			siteLocation = (SiteLocation) Context.getService(GmaoService.class).getEntityByUuid(SiteLocation.class, uuid);
-			if (siteLocation == null) {
-				throw new IllegalPropertyException("siteLocation not exist");
+			site = (Site) Context.getService(GmaoService.class).getEntityByUuid(Site.class, uuid);
+			if (site == null) {
+				throw new IllegalPropertyException("site not exist");
 			}
 			
-			if (properties.get("locationName") != null) {
-				siteLocation.setLocationName((String) properties.get("locationName"));
+			if (properties.get("name") != null) {
+				site.setName((String) properties.get("name"));
 			}
 			
-			if (properties.get("locationCode") != null) {
-				siteLocation.setLocationCode((String) properties.get("locationCode"));
+			if (properties.get("code") != null) {
+				site.setCode((String) properties.get("code"));
 			}
 			
-			if (properties.get("districtId") != null) {
-				siteLocation.setDistrict(district);
+			if (properties.get("serviceId") != null) {
+				site.setService(service);
 			}
 		} else {
-			siteLocation = new SiteLocation();
-			if (properties.get("locationName") == null || properties.get("locationCode") == null) {
-				throw new IllegalPropertyException("Required parameters: locationName, locationCode");
+			site = new Site();
+			if (properties.get("name") == null) {
+				throw new IllegalPropertyException("Required parameters: name");
 			}
-			siteLocation.setLocationName((String) properties.get("locationName"));
-			siteLocation.setLocationCode((String) properties.get("locationCode"));
-			siteLocation.setDistrict(district);
+			site.setName((String) properties.get("name"));
+			site.setCode((String) properties.get("code"));
+			site.setService(service);
 		}
+		site.setLastmodified(new Date());
 		
-		return siteLocation;
+		return site;
 	}
 	
 	@Override
 	public String getUri(Object instance) {
-		return RestConstants.URI_PREFIX + "/siteLocation";
+		return RestConstants.URI_PREFIX + "/site";
 	}
 	
 }

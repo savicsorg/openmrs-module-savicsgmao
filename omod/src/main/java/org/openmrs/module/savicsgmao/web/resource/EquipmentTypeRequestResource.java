@@ -36,12 +36,12 @@ public class EquipmentTypeRequestResource extends DelegatingCrudResource<Equipme
 		if (rep instanceof DefaultRepresentation || rep instanceof FullRepresentation) {
 			description.addProperty("id");
 			description.addProperty("uuid");
-			description.addProperty("typeName");
+			description.addProperty("name");
 			description.addLink("full", ".?v=" + RestConstants.REPRESENTATION_FULL);
 		} else {
 			description.addProperty("id");
 			description.addProperty("uuid");
-			description.addProperty("typeName");
+			description.addProperty("name");
 			description.addLink("full", ".?v=" + RestConstants.REPRESENTATION_FULL);
 		}
 		return description;
@@ -56,9 +56,9 @@ public class EquipmentTypeRequestResource extends DelegatingCrudResource<Equipme
 	
 	@Override
 	protected PageableResult doSearch(RequestContext context) {
-		String value = context.getParameter("typeName");
-		List<EquipmentType> equipmentTypeList = Context.getService(GmaoService.class).doSearch(EquipmentType.class,
-		    "typeName", value, context.getLimit(), context.getStartIndex());
+		String value = context.getParameter("name");
+		List<EquipmentType> equipmentTypeList = Context.getService(GmaoService.class).doSearch(EquipmentType.class, "name",
+		    value, context.getLimit(), context.getStartIndex());
 		return new AlreadyPaged<EquipmentType>(context, equipmentTypeList, false);
 	}
 	
@@ -75,8 +75,8 @@ public class EquipmentTypeRequestResource extends DelegatingCrudResource<Equipme
 	
 	@Override
 	public Object create(SimpleObject propertiesToCreate, RequestContext context) throws ResponseException {
-		if (propertiesToCreate.get("typeName") == null || propertiesToCreate.get("typeName") == null) {
-			throw new ConversionException("Required properties: typeName");
+		if (propertiesToCreate.get("name") == null || propertiesToCreate.get("name") == null) {
+			throw new ConversionException("Required properties: name");
 		}
 		
 		EquipmentType equipmentType = this.constructEquipmentType(null, propertiesToCreate);
@@ -109,15 +109,15 @@ public class EquipmentTypeRequestResource extends DelegatingCrudResource<Equipme
 				throw new IllegalPropertyException("equipmentType not exist");
 			}
 			
-			if (properties.get("typeName") != null) {
-				equipmentType.setTypeName((String) properties.get("typeName"));
+			if (properties.get("name") != null) {
+				equipmentType.setName((String) properties.get("name"));
 			}
 		} else {
 			equipmentType = new EquipmentType();
-			if (properties.get("typeName") == null || properties.get("typeName") == null) {
-				throw new IllegalPropertyException("Required parameters: typeName");
+			if (properties.get("name") == null || properties.get("name") == null) {
+				throw new IllegalPropertyException("Required parameters: name");
 			}
-			equipmentType.setTypeName((String) properties.get("typeName"));
+			equipmentType.setName((String) properties.get("name"));
 		}
 		
 		return equipmentType;
