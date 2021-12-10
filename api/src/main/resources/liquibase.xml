@@ -6,7 +6,7 @@
    
     <changeSet author="anatoleabe (generated)" id="1639051760881-1">
         <createTable tableName="gmao_district">
-            <column name="id" type="INT">
+            <column autoIncrement="true" name="id" type="INT">
                 <constraints primaryKey="true"/>
             </column>
             <column name="uuid" type="VARCHAR(38)">
@@ -23,7 +23,7 @@
     </changeSet>
     <changeSet author="anatoleabe (generated)" id="1639051760881-2">
         <createTable tableName="gmao_equipment">
-            <column name="id" type="INT">
+            <column autoIncrement="true" name="id" type="INT">
                 <constraints primaryKey="true"/>
             </column>
             <column name="equipment_type_id" type="INT">
@@ -68,7 +68,7 @@
     </changeSet>
     <changeSet author="anatoleabe (generated)" id="1639051760881-3">
         <createTable tableName="gmao_equipment_type">
-            <column name="id" type="INT">
+            <column autoIncrement="true" name="id" type="INT">
                 <constraints primaryKey="true"/>
             </column>
             <column name="uuid" type="VARCHAR(38)">
@@ -81,7 +81,7 @@
     </changeSet>
     <changeSet author="anatoleabe (generated)" id="1639051760881-4">
         <createTable tableName="gmao_healthcenter">
-            <column name="id" type="INT">
+            <column autoIncrement="true" name="id" type="INT">
                 <constraints primaryKey="true"/>
             </column>
             <column name="distrct_id" type="INT">
@@ -102,7 +102,7 @@
     </changeSet>
     <changeSet author="anatoleabe (generated)" id="1639051760881-5">
         <createTable tableName="gmao_maintenance">
-            <column name="id" type="INT">
+            <column autoIncrement="true" name="id" type="INT">
                 <constraints primaryKey="true"/>
             </column>
             <column name="maintenance_requested_id" type="INT"/>
@@ -135,7 +135,7 @@
     </changeSet>
     <changeSet author="anatoleabe (generated)" id="1639051760881-6">
         <createTable tableName="gmao_maintenance_request">
-            <column name="id" type="INT">
+            <column autoIncrement="true" name="id" type="INT">
                 <constraints primaryKey="true"/>
             </column>
             <column name="equipment_id" type="INT">
@@ -165,7 +165,7 @@
     </changeSet>
     <changeSet author="anatoleabe (generated)" id="1639051760881-7">
         <createTable tableName="gmao_maintenance_type">
-            <column name="id" type="INT">
+            <column autoIncrement="true" name="id" type="INT">
                 <constraints primaryKey="true"/>
             </column>
             <column name="uuid" type="VARCHAR(38)">
@@ -178,7 +178,7 @@
     </changeSet>
     <changeSet author="anatoleabe (generated)" id="1639051760881-8">
         <createTable tableName="gmao_mouvement">
-            <column name="id" type="INT">
+            <column autoIncrement="true" name="id" type="INT">
                 <constraints primaryKey="true"/>
             </column>
             <column name="equipment_id" type="INT">
@@ -212,7 +212,7 @@
     </changeSet>
     <changeSet author="anatoleabe (generated)" id="1639051760881-9">
         <createTable tableName="gmao_service">
-            <column name="id" type="INT">
+            <column autoIncrement="true" name="id" type="INT">
                 <constraints primaryKey="true"/>
             </column>
             <column name="healthcenter_id" type="INT">
@@ -233,7 +233,7 @@
     </changeSet>
     <changeSet author="anatoleabe (generated)" id="1639051760881-10">
         <createTable tableName="gmao_site">
-            <column name="id" type="INT">
+            <column autoIncrement="true" name="id" type="INT">
                 <constraints primaryKey="true"/>
             </column>
             <column name="service_id" type="INT">
