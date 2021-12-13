@@ -48,7 +48,7 @@ public class MouvementRequestResource extends DelegatingCrudResource<Mouvement> 
 			description.addProperty("equipment");
 			description.addProperty("uuid");
 			description.addProperty("siteByDestinationId");
-			description.addProperty("SiteBySourceId");
+			description.addProperty("siteBySourceId");
 			description.addProperty("type");
 			description.addProperty("date");
 			description.addProperty("motif");
@@ -67,7 +67,7 @@ public class MouvementRequestResource extends DelegatingCrudResource<Mouvement> 
 			description.addProperty("equipment");
 			description.addProperty("uuid");
 			description.addProperty("siteByDestinationId");
-			description.addProperty("SiteBySourceId");
+			description.addProperty("siteBySourceId");
 			description.addProperty("type");
 			description.addProperty("date");
 			description.addProperty("motif");
@@ -87,7 +87,7 @@ public class MouvementRequestResource extends DelegatingCrudResource<Mouvement> 
 			description.addProperty("equipment");
 			description.addProperty("uuid");
 			description.addProperty("siteByDestinationId");
-			description.addProperty("SiteBySourceId");
+			description.addProperty("siteBySourceId");
 			description.addProperty("type");
 			description.addProperty("date");
 			description.addProperty("motif");
@@ -201,7 +201,7 @@ public class MouvementRequestResource extends DelegatingCrudResource<Mouvement> 
 		} else {
 			mouvement = new Mouvement();
 			if (properties.get("equipment") == null || properties.get("siteByDestinationId") == null
-			        || properties.get("SiteBySourceId") == null) {
+			        || properties.get("siteBySourceId") == null) {
 				throw new IllegalPropertyException("Required parameters: equipment, siteByDestination, SiteBySource");
 			}
 			mouvement.setCreation(new Date());

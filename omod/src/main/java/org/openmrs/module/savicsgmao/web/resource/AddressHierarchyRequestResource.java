@@ -86,18 +86,34 @@ public class AddressHierarchyRequestResource extends DelegatingCrudResource<Addr
 	@Override
 	protected PageableResult doSearch(RequestContext context) {
 		String level = context.getParameter("level");
-		List<AddressHierarchyEntry> agentList;
+		String parent = context.getParameter("parent");
+		int l = 0;
+		int p = 0;
 		if (level != null) {
-			
-			agentList = Context.getService(GmaoService.class).doSearch(AddressHierarchyEntry.class, "level.levelId", level,
-			    context.getLimit(), context.getStartIndex());
-		} else {
-			String parent = context.getParameter("parent");
-			agentList = Context.getService(GmaoService.class).doSearch(AddressHierarchyEntry.class,
-			    "parent.addressHierarchyEntryId", parent, context.getLimit(), context.getStartIndex());
+			l = new Integer(level);
+		}
+		if (parent != null) {
+			p = new Integer(parent);
 		}
 		
-		return new AlreadyPaged<AddressHierarchyEntry>(context, agentList, false);
+		List<AddressHierarchyEntry> agentList = Context.getService(GmaoService.class).getAll(AddressHierarchyEntry.class,
+		    context.getLimit(), context.getStartIndex());
+		List<AddressHierarchyEntry> agentListFiltered = new ArrayList<AddressHierarchyEntry>();
+		
+		for (AddressHierarchyEntry entry : agentList) {
+			
+			if (level != null && entry != null && entry.getLevel() != null && l == entry.getLevel().getLevelId()) {
+				agentListFiltered.add(entry);
+			} else if (parent != null && entry != null && entry.getParent() != null
+			        && p == entry.getParent().getAddressHierarchyLevel().getLevelId()) {
+				agentListFiltered.add(entry);
+			}
+		}
+		
+		if (level == null && parent == null) {
+			return new AlreadyPaged<AddressHierarchyEntry>(context, agentList, false);
+		}
+		return new AlreadyPaged<AddressHierarchyEntry>(context, agentListFiltered, false);
 	}
 	
 	@Override
