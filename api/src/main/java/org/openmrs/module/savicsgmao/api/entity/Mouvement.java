@@ -16,7 +16,7 @@ public class Mouvement extends BaseOpenmrsData implements java.io.Serializable {
 	
 	private Site siteByDestinationId;
 	
-	private Site SiteBySourceId;
+	private Site siteBySourceId;
 	
 	private String uuid;
 	
@@ -46,7 +46,7 @@ public class Mouvement extends BaseOpenmrsData implements java.io.Serializable {
 		this.id = id;
 		this.equipment = Equipment;
 		this.siteByDestinationId = SiteByDestinationId;
-		this.SiteBySourceId = SiteBySourceId;
+		this.siteBySourceId = siteBySourceId;
 		this.uuid = uuid;
 		this.type = type;
 		this.date = date;
@@ -59,7 +59,7 @@ public class Mouvement extends BaseOpenmrsData implements java.io.Serializable {
 		this.id = id;
 		this.equipment = Equipment;
 		this.siteByDestinationId = SiteByDestinationId;
-		this.SiteBySourceId = SiteBySourceId;
+		this.siteBySourceId = SiteBySourceId;
 		this.uuid = uuid;
 		this.type = type;
 		this.date = date;
@@ -99,11 +99,11 @@ public class Mouvement extends BaseOpenmrsData implements java.io.Serializable {
 	}
 	
 	public Site getSiteBySourceId() {
-		return this.SiteBySourceId;
+		return this.siteBySourceId;
 	}
 	
 	public void setSiteBySourceId(Site SiteBySourceId) {
-		this.SiteBySourceId = SiteBySourceId;
+		this.siteBySourceId = SiteBySourceId;
 	}
 	
 	@Override
