@@ -6,7 +6,7 @@
     <class name="org.openmrs.module.savicsgmao.api.entity.EquipmentType" table="gmao_equipment_type" >
         <id name="id" type="java.lang.Integer">
             <column name="id" />
-            <generator class="assigned" />
+            <generator class="identity" />
         </id>
         <property name="uuid" type="string">
             <column name="uuid" length="38" not-null="true" />

@@ -106,16 +106,6 @@ public class Mouvement extends BaseOpenmrsData implements java.io.Serializable {
 		this.siteBySourceId = SiteBySourceId;
 	}
 	
-	@Override
-	public String getUuid() {
-		return this.uuid;
-	}
-	
-	@Override
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
-	}
-	
 	public int getType() {
 		return this.type;
 	}

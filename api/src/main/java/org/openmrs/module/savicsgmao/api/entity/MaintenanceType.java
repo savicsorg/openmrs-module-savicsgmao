@@ -45,16 +45,6 @@ public class MaintenanceType extends BaseOpenmrsData implements java.io.Serializ
 		this.id = id;
 	}
 	
-	@Override
-	public String getUuid() {
-		return this.uuid;
-	}
-	
-	@Override
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
-	}
-	
 	public String getName() {
 		return this.name;
 	}

@@ -69,16 +69,6 @@ public class Healthcenter extends BaseOpenmrsData implements java.io.Serializabl
 		this.district = district;
 	}
 	
-	@Override
-	public String getUuid() {
-		return this.uuid;
-	}
-	
-	@Override
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
-	}
-	
 	public String getName() {
 		return this.name;
 	}

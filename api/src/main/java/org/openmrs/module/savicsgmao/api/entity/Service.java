@@ -69,16 +69,6 @@ public class Service extends BaseOpenmrsData implements java.io.Serializable {
 		this.healthcenter = Healthcenter;
 	}
 	
-	@Override
-	public String getUuid() {
-		return this.uuid;
-	}
-	
-	@Override
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
-	}
-	
 	public String getName() {
 		return this.name;
 	}

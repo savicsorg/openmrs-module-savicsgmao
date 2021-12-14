@@ -29,14 +29,6 @@ public class District extends BaseOpenmrsData implements java.io.Serializable {
 		this.code = code;
 	}
 	
-	//	public District(int id, String uuid, String name, String code, Integer regionid, Set healthcenters) {
-	//		this.id = id;
-	//		this.uuid = uuid;
-	//		this.name = name;
-	//		this.code = code;
-	//		this.regionid = regionid;
-	//		this.healthcenters = healthcenters;
-	//	}
 	public Integer getId() {
 		return this.id;
 	}
@@ -68,12 +60,4 @@ public class District extends BaseOpenmrsData implements java.io.Serializable {
 	public void setRegionid(Integer regionid) {
 		this.regionid = regionid;
 	}
-	
-	//	public Set getHealthcenters() {
-	//		return this.healthcenters;
-	//	}
-	//	
-	//	public void setHealthcenters(Set Healthcenters) {
-	//		this.healthcenters = Healthcenters;
-	//	}
 }

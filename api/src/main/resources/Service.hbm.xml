@@ -6,7 +6,7 @@
     <class name="org.openmrs.module.savicsgmao.api.entity.Service" table="gmao_service">
         <id name="id" type="java.lang.Integer">
             <column name="id" />
-            <generator class="assigned" />
+            <generator class="identity" />
         </id>
         <many-to-one name="healthcenter" class="org.openmrs.module.savicsgmao.api.entity.Healthcenter" fetch="select">
             <column name="healthcenter_id" not-null="true" />

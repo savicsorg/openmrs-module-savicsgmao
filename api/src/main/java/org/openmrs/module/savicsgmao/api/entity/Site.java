@@ -89,16 +89,6 @@ public class Site extends BaseOpenmrsData implements java.io.Serializable {
 		this.code = code;
 	}
 	
-	@Override
-	public String getUuid() {
-		return this.uuid;
-	}
-	
-	@Override
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
-	}
-	
 	public Date getLastmodified() {
 		return this.lastmodified;
 	}

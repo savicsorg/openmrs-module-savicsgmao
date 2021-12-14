@@ -82,16 +82,6 @@ public class MaintenanceRequest extends BaseOpenmrsData implements java.io.Seria
 		this.equipment = Equipment;
 	}
 	
-	@Override
-	public String getUuid() {
-		return this.uuid;
-	}
-	
-	@Override
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
-	}
-	
 	public String getRequestedby() {
 		return this.requestedby;
 	}

@@ -43,16 +43,6 @@ public class EquipmentType extends BaseOpenmrsData implements java.io.Serializab
 		this.id = id;
 	}
 	
-	@Override
-	public String getUuid() {
-		return this.uuid;
-	}
-	
-	@Override
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
-	}
-	
 	public String getName() {
 		return this.name;
 	}

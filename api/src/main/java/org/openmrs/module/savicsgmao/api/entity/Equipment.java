@@ -142,16 +142,6 @@ public class Equipment extends BaseOpenmrsData implements java.io.Serializable {
 		this.site = Site;
 	}
 	
-	@Override
-	public String getUuid() {
-		return this.uuid;
-	}
-	
-	@Override
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
-	}
-	
 	public String getName() {
 		return this.name;
 	}
