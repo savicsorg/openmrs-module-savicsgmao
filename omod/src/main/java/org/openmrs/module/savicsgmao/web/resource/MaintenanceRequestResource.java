@@ -182,8 +182,8 @@ public class MaintenanceRequestResource extends DelegatingCrudResource<Maintenan
 		MaintenanceRequest maintenanceRequest = null;
 		if (properties.get("maintenanceRequest") != null) {
 			Integer id = properties.get("maintenanceRequest");
-			maintenanceType = (MaintenanceType) Context.getService(GmaoService.class).getEntityByid(
-			    MaintenanceRequest.class, "id", id);
+			maintenanceType = (MaintenanceType) Context.getService(GmaoService.class).getEntityByid(MaintenanceType.class,
+			    "id", id);
 		}
 		
 		if (uuid != null) {

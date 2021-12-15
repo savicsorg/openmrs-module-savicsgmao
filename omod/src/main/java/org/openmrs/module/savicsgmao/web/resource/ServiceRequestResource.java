@@ -135,7 +135,7 @@ public class ServiceRequestResource extends DelegatingCrudResource<Service> {
 		
 		if (properties.get("healthcenter") != null) {
 			Integer healthcenterId = properties.get("healthcenter");
-			healthcenter = (Healthcenter) Context.getService(GmaoService.class).getEntityByid(Service.class, "id",
+			healthcenter = (Healthcenter) Context.getService(GmaoService.class).getEntityByid(Healthcenter.class, "id",
 			    healthcenterId);
 		}
 		
