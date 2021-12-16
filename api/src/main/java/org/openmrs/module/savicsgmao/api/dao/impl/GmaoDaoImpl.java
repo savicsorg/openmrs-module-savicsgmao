@@ -10,6 +10,7 @@ import java.lang.reflect.Method;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.openmrs.api.APIException;
 import org.openmrs.api.db.hibernate.DbSession;
@@ -91,7 +92,7 @@ public class GmaoDaoImpl<T extends Serializable> implements GmaoDao<T> {
 	public List doSearch(Class t, String key, String value, Integer limit, Integer offset) {
 		getSession().createCriteria(t).list();
 		Criteria criteria = getSession().createCriteria(t);
-		criteria.add(Restrictions.eq(key, value));
+		criteria.add(Restrictions.like(key, value, MatchMode.ANYWHERE));
 		return criteria.list();
 	}
 	
