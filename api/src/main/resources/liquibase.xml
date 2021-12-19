@@ -347,7 +347,7 @@
         <addForeignKeyConstraint baseColumnNames="service_id" baseTableName="gmao_site" constraintName="fk_gmao_site_gmao_service" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="gmao_service" />
     </changeSet>
     <changeSet author="enokby" id="enokby-20211219-1">
-       <preConditions onFail="MARK_RAN">
+        <preConditions onFail="MARK_RAN">
             <sqlCheck expectedResult="0">select count(*) from gmao_maintenance_type;</sqlCheck>
         </preConditions>
         <insert tableName="gmao_maintenance_type">
