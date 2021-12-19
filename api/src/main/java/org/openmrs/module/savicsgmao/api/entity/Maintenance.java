@@ -156,19 +156,19 @@ public class Maintenance extends BaseOpenmrsData implements java.io.Serializable
 		this.doneby = doneby;
 	}
 	
-	public String getTaskName() {
+	public String getTaskname() {
 		return this.taskname;
 	}
 	
-	public void setTaskName(String taskname) {
+	public void setTaskname(String taskname) {
 		this.taskname = taskname;
 	}
 	
-	public String getTaskDescription() {
+	public String getTaskdescription() {
 		return this.taskdescription;
 	}
 	
-	public void setTaskDescription(String taskdescription) {
+	public void setTaskdescription(String taskdescription) {
 		this.taskdescription = taskdescription;
 	}
 	

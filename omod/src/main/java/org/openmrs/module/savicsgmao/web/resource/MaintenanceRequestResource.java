@@ -224,11 +224,11 @@ public class MaintenanceRequestResource extends DelegatingCrudResource<Maintenan
 		}
 		
 		if (properties.get("taskname") != null) {
-			maintenance.setTaskName((String) properties.get("taskname"));
+			maintenance.setTaskname((String) properties.get("taskname"));
 		}
 		
 		if (properties.get("taskdescription") != null) {
-			maintenance.setTaskDescription((String) properties.get("taskdescription"));
+			maintenance.setTaskdescription((String) properties.get("taskdescription"));
 		}
 		
 		if (properties.get("startdate") != null) {
