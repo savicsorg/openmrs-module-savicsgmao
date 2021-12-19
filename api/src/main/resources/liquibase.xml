@@ -346,4 +346,19 @@
     <changeSet author="anatoleabe (generated)" id="1639051760881-34">
         <addForeignKeyConstraint baseColumnNames="service_id" baseTableName="gmao_site" constraintName="fk_gmao_site_gmao_service" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="gmao_service" />
     </changeSet>
+    <changeSet author="enokby" id="enokby-20211219-1">
+       <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">select count(*) from gmao_maintenance_type;</sqlCheck>
+        </preConditions>
+        <insert tableName="gmao_maintenance_type">
+            <column name="name" value="Préventive"/>
+            <column name="id" value="1"/>
+            <column name="uuid" value="b0000001-d22b-493e-98e8-4d1de0621a8v"/>
+        </insert>
+        <insert tableName="gmao_maintenance_type">
+            <column name="name" value="Curative"/>
+            <column name="id" value="2"/>
+            <column name="uuid" value="b0000002-d22b-493e-98e8-4d1de0621a8v"/>
+        </insert>
+    </changeSet>
 </databaseChangeLog>

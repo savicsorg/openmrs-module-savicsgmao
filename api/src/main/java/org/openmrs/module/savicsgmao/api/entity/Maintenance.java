@@ -31,8 +31,10 @@ public class Maintenance extends BaseOpenmrsData implements java.io.Serializable
 	private short status;
 	
 	private String doneby;
-        private String taskname;
-        private String taskdescription;
+	
+	private String taskname;
+	
+	private String taskdescription;
 	
 	private Date lastmodified;
 	
@@ -54,8 +56,8 @@ public class Maintenance extends BaseOpenmrsData implements java.io.Serializable
 	}
 	
 	public Maintenance(int id, Equipment Equipment, MaintenanceRequest MaintenanceRequest, MaintenanceType MaintenanceType,
-	    String uuid, String name, String description, Date startdate, Date enddate, short status, String doneby,String taskname,
-	    String taskdescription, Date lastmodified, Date creation) {
+	    String uuid, String name, String description, Date startdate, Date enddate, short status, String doneby,
+	    String taskname, String taskdescription, Date lastmodified, Date creation) {
 		this.id = id;
 		this.equipment = Equipment;
 		this.maintenanceRequest = MaintenanceRequest;
@@ -67,8 +69,8 @@ public class Maintenance extends BaseOpenmrsData implements java.io.Serializable
 		this.enddate = enddate;
 		this.status = status;
 		this.doneby = doneby;
-                this.taskname = taskname;
-                this.taskdescription = taskdescription;
+		this.taskname = taskname;
+		this.taskdescription = taskdescription;
 		this.lastmodified = lastmodified;
 		this.creation = creation;
 	}
@@ -153,16 +155,16 @@ public class Maintenance extends BaseOpenmrsData implements java.io.Serializable
 	public void setDoneby(String doneby) {
 		this.doneby = doneby;
 	}
-        
-        public String getTaskName() {
+	
+	public String getTaskName() {
 		return this.taskname;
 	}
 	
 	public void setTaskName(String taskname) {
 		this.taskname = taskname;
 	}
-        
-        public String getTaskDescription() {
+	
+	public String getTaskDescription() {
 		return this.taskdescription;
 	}
 	

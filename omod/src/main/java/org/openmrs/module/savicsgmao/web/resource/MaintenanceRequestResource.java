@@ -53,6 +53,8 @@ public class MaintenanceRequestResource extends DelegatingCrudResource<Maintenan
 			description.addProperty("enddate");
 			description.addProperty("status");
 			description.addProperty("doneby");
+			description.addProperty("taskname");
+			description.addProperty("taskdescription");
 			description.addProperty("equipment");
 			description.addProperty("lastmodified");
 			description.addProperty("creation");
@@ -71,6 +73,8 @@ public class MaintenanceRequestResource extends DelegatingCrudResource<Maintenan
 			description.addProperty("enddate");
 			description.addProperty("status");
 			description.addProperty("doneby");
+			description.addProperty("taskname");
+			description.addProperty("taskdescription");
 			description.addProperty("equipment");
 			description.addProperty("lastmodified");
 			description.addProperty("creation");
@@ -90,6 +94,8 @@ public class MaintenanceRequestResource extends DelegatingCrudResource<Maintenan
 			description.addProperty("enddate");
 			description.addProperty("status");
 			description.addProperty("doneby");
+			description.addProperty("taskname");
+			description.addProperty("taskdescription");
 			description.addProperty("equipment");
 			description.addProperty("lastmodified");
 			description.addProperty("creation");
@@ -108,8 +114,8 @@ public class MaintenanceRequestResource extends DelegatingCrudResource<Maintenan
 	
 	@Override
 	protected PageableResult doSearch(RequestContext context) {
-		String value = context.getParameter("name");
-		List<Maintenance> maintenanceList = Context.getService(GmaoService.class).doSearch(Maintenance.class, "designation",
+		String value = context.getParameter("doneby");
+		List<Maintenance> maintenanceList = Context.getService(GmaoService.class).doSearch(Maintenance.class, "doneby",
 		    value, context.getLimit(), context.getStartIndex());
 		return new AlreadyPaged<Maintenance>(context, maintenanceList, false);
 	}
@@ -128,8 +134,8 @@ public class MaintenanceRequestResource extends DelegatingCrudResource<Maintenan
 	@Override
 	public Object create(SimpleObject propertiesToCreate, RequestContext context) throws ResponseException {
 		try {
-			if (propertiesToCreate.get("name") == null) {
-				throw new ConversionException("Required properties: name");
+			if (propertiesToCreate.get("doneby") == null) {
+				throw new ConversionException("Required properties: doneby");
 			}
 			
 			Maintenance maintenance = this.constructMaintenance(null, propertiesToCreate);
@@ -215,6 +221,14 @@ public class MaintenanceRequestResource extends DelegatingCrudResource<Maintenan
 		
 		if (properties.get("doneby") != null) {
 			maintenance.setDoneby((String) properties.get("doneby"));
+		}
+		
+		if (properties.get("taskname") != null) {
+			maintenance.setTaskName((String) properties.get("taskname"));
+		}
+		
+		if (properties.get("taskdescription") != null) {
+			maintenance.setTaskDescription((String) properties.get("taskdescription"));
 		}
 		
 		if (properties.get("startdate") != null) {
