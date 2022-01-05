@@ -108,7 +108,7 @@ public class MaintenanceRequestsExport {
 			createCell(row, columnCount++, item.getPriority(), style);
 			createCell(row, columnCount++, item.getEquipment().getName(), style);
 			createCell(row, columnCount++, item.getMotif(), style);
-			createCell(row, columnCount++, item.getDateCreated() + "", style);
+			createCell(row, columnCount++, item.getCreation() + "", style);
 			
 		}
 	}
