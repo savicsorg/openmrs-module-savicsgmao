@@ -1,5 +1,8 @@
 package org.openmrs.module.savicsgmao.web.resource;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.webservices.rest.SimpleObject;
@@ -17,6 +20,8 @@ import org.openmrs.module.webservices.rest.web.response.IllegalPropertyException
 import org.openmrs.module.webservices.rest.web.response.ResponseException;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.openmrs.module.savicsgmao.api.entity.Equipment;
 import org.openmrs.module.savicsgmao.api.service.GmaoService;
 import org.openmrs.module.savicsgmao.api.entity.MaintenanceRequest;
@@ -112,20 +117,32 @@ public class MaintenanceRequestRequestResource extends DelegatingCrudResource<Ma
 	
 	@Override
 	public Object create(SimpleObject propertiesToCreate, RequestContext context) throws ResponseException {
-		if (propertiesToCreate.get("registerNumber") == null) {
-			throw new ConversionException("Required properties: registerNumber");
+		try {
+			if (propertiesToCreate.get("registerNumber") == null) {
+				throw new ConversionException("Required properties: registerNumber");
+			}
+			
+			MaintenanceRequest maintenanceRequest = this.constructAgent(null, propertiesToCreate);
+			Context.getService(GmaoService.class).upsert(maintenanceRequest);
+			return ConversionUtil.convertToRepresentation(maintenanceRequest, context.getRepresentation());
 		}
-		
-		MaintenanceRequest maintenanceRequest = this.constructAgent(null, propertiesToCreate);
-		Context.getService(GmaoService.class).upsert(maintenanceRequest);
-		return ConversionUtil.convertToRepresentation(maintenanceRequest, context.getRepresentation());
+		catch (ParseException ex) {
+			Logger.getLogger(MaintenanceRequestRequestResource.class.getName()).log(Level.SEVERE, null, ex);
+			return null;
+		}
 	}
 	
 	@Override
 	public Object update(String uuid, SimpleObject propertiesToUpdate, RequestContext context) throws ResponseException {
-		MaintenanceRequest maintenanceRequest = this.constructAgent(uuid, propertiesToUpdate);
-		Context.getService(GmaoService.class).upsert(maintenanceRequest);
-		return ConversionUtil.convertToRepresentation(maintenanceRequest, context.getRepresentation());
+		try {
+			MaintenanceRequest maintenanceRequest = this.constructAgent(uuid, propertiesToUpdate);
+			Context.getService(GmaoService.class).upsert(maintenanceRequest);
+			return ConversionUtil.convertToRepresentation(maintenanceRequest, context.getRepresentation());
+		}
+		catch (ParseException ex) {
+			Logger.getLogger(MaintenanceRequestRequestResource.class.getName()).log(Level.SEVERE, null, ex);
+			return null;
+		}
 	}
 	
 	@Override
@@ -139,8 +156,9 @@ public class MaintenanceRequestRequestResource extends DelegatingCrudResource<Ma
 		Context.getService(GmaoService.class).delete(maintenanceRequest);
 	}
 	
-	private MaintenanceRequest constructAgent(String uuid, SimpleObject properties) {
+	private MaintenanceRequest constructAgent(String uuid, SimpleObject properties) throws ParseException {
 		MaintenanceRequest maintenanceRequest;
+		DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		
 		Equipment equipment = null;
 		if (properties.get("equipment") != null) {
@@ -183,7 +201,12 @@ public class MaintenanceRequestRequestResource extends DelegatingCrudResource<Ma
 		if (properties.get("natureOfWork") != null) {
 			maintenanceRequest.setNatureOfWork((String) properties.get("natureOfWork"));
 		}
-		equipment.setLastmodified(new Date());
+		
+		if (properties.get("creation") != null) {
+			maintenanceRequest.setCreation(simpleDateFormat.parse(properties.get("creation").toString()));
+		}
+		
+		maintenanceRequest.setLastmodified(new Date());
 		
 		if (properties.get("equipment") != null) {
 			maintenanceRequest.setEquipment(equipment);

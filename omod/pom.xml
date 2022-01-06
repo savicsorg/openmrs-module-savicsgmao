@@ -131,7 +131,7 @@
             <artifactId>legacyui-omod</artifactId>
             <scope>provided</scope>
         </dependency>
-
+        
     </dependencies>
 
     <build>
