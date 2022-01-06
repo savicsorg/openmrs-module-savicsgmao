@@ -1,10 +1,19 @@
 package org.openmrs.module.savicsgmao.api.entity;
 
 // Generated Dec 9, 2021 11:58:16 AM by Hibernate Tools 4.3.1
-
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import org.apache.commons.io.IOUtils;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.openmrs.BaseOpenmrsData;
 
 /**
@@ -102,12 +111,36 @@ public class MaintenanceRequest extends BaseOpenmrsData implements java.io.Seria
 		return this.natureOfWork;
 	}
 	
+	public String getNatureOfWorkDisplay(String id) throws FileNotFoundException, IOException, ParseException {
+		String value = "";
+		if ("1".equals(id)) {
+			value = "Maintenance";
+		} else if ("2".equals(id)) {
+			value = "Réparration";
+		} else if ("3".equals(id)) {
+			value = "Travail";
+		} else if ("4".equals(id)) {
+			value = "Autre";
+		}
+		return value;
+	}
+	
 	public void setNatureOfWork(String natureOfWork) {
 		this.natureOfWork = natureOfWork;
 	}
 	
 	public int getPriority() {
 		return this.priority;
+	}
+	
+	public String getPriorityDisplay(int id) throws FileNotFoundException, IOException, ParseException {
+		String value = "";
+		if (id == 1) {
+			value = "Normale";
+		} else if (id == 2) {
+			value = "Urgent";
+		}
+		return value;
 	}
 	
 	public void setPriority(int priority) {

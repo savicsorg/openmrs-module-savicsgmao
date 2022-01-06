@@ -5,8 +5,11 @@
  */
 package org.openmrs.module.savicsgmao.export;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.poi.ss.usermodel.BorderStyle;
@@ -19,6 +22,7 @@ import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.json.simple.parser.ParseException;
 import org.openmrs.messagesource.MessageSourceService;
 import org.openmrs.module.savicsgmao.api.entity.MaintenanceRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,16 +103,24 @@ public class MaintenanceRequestsExport {
 		style.setBorderLeft(BorderStyle.THIN);
 		
 		for (MaintenanceRequest item : listMaintenanceRequests) {
-			Row row = sheet.createRow(rowCount++);
-			int columnCount = 0;
-			
-			createCell(row, columnCount++, item.getRegisterNumber(), style);
-			createCell(row, columnCount++, item.getNatureOfWork(), style);
-			createCell(row, columnCount++, item.getRequestedby(), style);
-			createCell(row, columnCount++, item.getPriority(), style);
-			createCell(row, columnCount++, item.getEquipment().getName(), style);
-			createCell(row, columnCount++, item.getMotif(), style);
-			createCell(row, columnCount++, item.getCreation() + "", style);
+			try {
+				Row row = sheet.createRow(rowCount++);
+				int columnCount = 0;
+				
+				createCell(row, columnCount++, item.getRegisterNumber(), style);
+				createCell(row, columnCount++, item.getNatureOfWorkDisplay(item.getNatureOfWork()), style);
+				createCell(row, columnCount++, item.getRequestedby(), style);
+				createCell(row, columnCount++, item.getPriorityDisplay(item.getPriority()), style);
+				createCell(row, columnCount++, item.getEquipment().getName(), style);
+				createCell(row, columnCount++, item.getMotif(), style);
+				createCell(row, columnCount++, item.getCreation() + "", style);
+			}
+			catch (IOException ex) {
+				Logger.getLogger(MaintenanceRequestsExport.class.getName()).log(Level.SEVERE, null, ex);
+			}
+			catch (ParseException ex) {
+				Logger.getLogger(MaintenanceRequestsExport.class.getName()).log(Level.SEVERE, null, ex);
+			}
 			
 		}
 	}
