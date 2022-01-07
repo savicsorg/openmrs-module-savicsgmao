@@ -188,8 +188,8 @@ public class MaintenanceRequestResource extends DelegatingCrudResource<Maintenan
 		MaintenanceRequest maintenanceRequest = null;
 		if (properties.get("maintenanceRequest") != null) {
 			Integer id = properties.get("maintenanceRequest");
-			maintenanceType = (MaintenanceType) Context.getService(GmaoService.class).getEntityByid(MaintenanceType.class,
-			    "id", id);
+			maintenanceRequest = (MaintenanceRequest) Context.getService(GmaoService.class).getEntityByid(
+			    MaintenanceRequest.class, "id", id);
 		}
 		
 		if (uuid != null) {
@@ -221,14 +221,6 @@ public class MaintenanceRequestResource extends DelegatingCrudResource<Maintenan
 		
 		if (properties.get("doneby") != null) {
 			maintenance.setDoneby((String) properties.get("doneby"));
-		}
-		
-		if (properties.get("taskname") != null) {
-			maintenance.setTaskname((String) properties.get("taskname"));
-		}
-		
-		if (properties.get("taskdescription") != null) {
-			maintenance.setTaskdescription((String) properties.get("taskdescription"));
 		}
 		
 		if (properties.get("startdate") != null) {

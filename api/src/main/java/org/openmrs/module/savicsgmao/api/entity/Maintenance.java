@@ -32,10 +32,6 @@ public class Maintenance extends BaseOpenmrsData implements java.io.Serializable
 	
 	private String doneby;
 	
-	private String taskname;
-	
-	private String taskdescription;
-	
 	private Date lastmodified;
 	
 	private Date creation;
@@ -69,8 +65,6 @@ public class Maintenance extends BaseOpenmrsData implements java.io.Serializable
 		this.enddate = enddate;
 		this.status = status;
 		this.doneby = doneby;
-		this.taskname = taskname;
-		this.taskdescription = taskdescription;
 		this.lastmodified = lastmodified;
 		this.creation = creation;
 	}
@@ -154,22 +148,6 @@ public class Maintenance extends BaseOpenmrsData implements java.io.Serializable
 	
 	public void setDoneby(String doneby) {
 		this.doneby = doneby;
-	}
-	
-	public String getTaskname() {
-		return this.taskname;
-	}
-	
-	public void setTaskname(String taskname) {
-		this.taskname = taskname;
-	}
-	
-	public String getTaskdescription() {
-		return this.taskdescription;
-	}
-	
-	public void setTaskdescription(String taskdescription) {
-		this.taskdescription = taskdescription;
 	}
 	
 	public Date getLastmodified() {

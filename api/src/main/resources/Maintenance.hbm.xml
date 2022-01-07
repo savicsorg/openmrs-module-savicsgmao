@@ -38,12 +38,6 @@
         <property name="doneby" type="string">
             <column name="doneby" length="32" />
         </property>
-        <property name="taskname" type="string">
-            <column name="taskname" length="255" />
-        </property>
-        <property name="taskdescription" type="string">
-            <column name="taskdescription" length="255" />
-        </property>
         <property name="lastmodified" type="timestamp">
             <column name="lastmodified" length="19" />
         </property>

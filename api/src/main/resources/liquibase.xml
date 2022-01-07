@@ -128,9 +128,7 @@
             <column name="status" type="SMALLINT">
                 <constraints nullable="false"/>
             </column>
-            <column name="doneby" type="VARCHAR(32)"/>
-            <column name="taskname" type="VARCHAR(255)"/>
-            <column name="taskdescription" type="VARCHAR(255)"/>
+            <column name="doneby" type="VARCHAR(255)"/>
             <column name="lastmodified" type="datetime"/>
             <column name="creation" type="datetime"/>
         </createTable>
