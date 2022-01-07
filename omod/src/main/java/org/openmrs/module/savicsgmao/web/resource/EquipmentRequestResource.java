@@ -59,7 +59,7 @@ public class EquipmentRequestResource extends DelegatingCrudResource<Equipment> 
 			description.addProperty("useraffectedto");
 			description.addProperty("replacementcomponent");
 			description.addProperty("manuals");
-			description.addProperty("explain");
+			description.addProperty("explainMore");
 			description.addProperty("tracking");
 			description.addProperty("commisionningYear");
 			description.addProperty("acquisitionDate");
@@ -85,7 +85,7 @@ public class EquipmentRequestResource extends DelegatingCrudResource<Equipment> 
 			description.addProperty("model");
 			description.addProperty("supplier");
 			description.addProperty("power");
-			description.addProperty("explain");
+			description.addProperty("explainMore");
 			description.addProperty("tracking");
 			description.addProperty("aftersaleservice");
 			description.addProperty("responsibleperson");
@@ -118,7 +118,7 @@ public class EquipmentRequestResource extends DelegatingCrudResource<Equipment> 
 			description.addProperty("model");
 			description.addProperty("supplier");
 			description.addProperty("power");
-			description.addProperty("explain");
+			description.addProperty("explainMore");
 			description.addProperty("tracking");
 			description.addProperty("aftersaleservice");
 			description.addProperty("responsibleperson");
