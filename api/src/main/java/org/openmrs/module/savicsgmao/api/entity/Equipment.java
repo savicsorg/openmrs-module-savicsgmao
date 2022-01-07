@@ -38,9 +38,13 @@ public class Equipment extends BaseOpenmrsData implements java.io.Serializable {
 	
 	private String useraffectedto;
 	
-	private String replacementcomponent;
+	private String explain;
 	
-	private Boolean manuals;
+	private Integer replacementcomponent;
+	
+	private Integer manuals;
+	
+	private Integer tracking;
 	
 	private Integer commisionningYear;
 	
@@ -83,7 +87,7 @@ public class Equipment extends BaseOpenmrsData implements java.io.Serializable {
 	
 	public Equipment(int id, EquipmentType EquipmentType, Site Site, String uuid, String name, String serialNumber,
 	    String type, String model, String supplier, String power, Boolean aftersaleservice, String responsibleperson,
-	    int serviceStatus, String useraffectedto, String replacementcomponent, Boolean manuals, Integer commisionningYear,
+	    int serviceStatus, String useraffectedto, Integer replacementcomponent, Integer manuals, Integer commisionningYear,
 	    Date acquisitionDate, Double acquisitionValue, String acquisitionMode, Double volume, Double weight, String comment,
 	    Date lastmodified, Date creation, Set MaintenanceRequests, Set Mouvements, Set Maintenances) {
 		this.id = id;
@@ -222,20 +226,36 @@ public class Equipment extends BaseOpenmrsData implements java.io.Serializable {
 		this.useraffectedto = useraffectedto;
 	}
 	
-	public String getReplacementcomponent() {
+	public Integer getReplacementcomponent() {
 		return this.replacementcomponent;
 	}
 	
-	public void setReplacementcomponent(String replacementcomponent) {
+	public void setReplacementcomponent(Integer replacementcomponent) {
 		this.replacementcomponent = replacementcomponent;
 	}
 	
-	public Boolean getManuals() {
+	public Integer getManuals() {
 		return this.manuals;
 	}
 	
-	public void setManuals(Boolean manuals) {
+	public void setManuals(Integer manuals) {
 		this.manuals = manuals;
+	}
+	
+	public String getExplain() {
+		return explain;
+	}
+	
+	public void setExplain(String explain) {
+		this.explain = explain;
+	}
+	
+	public Integer getTracking() {
+		return tracking;
+	}
+	
+	public void setTracking(Integer tracking) {
+		this.tracking = tracking;
 	}
 	
 	public Integer getCommisionningYear() {

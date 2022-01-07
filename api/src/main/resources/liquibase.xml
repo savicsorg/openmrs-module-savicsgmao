@@ -45,14 +45,16 @@
             <column name="model" type="VARCHAR(32)"/>
             <column name="supplier" type="VARCHAR(32)"/>
             <column name="power" type="VARCHAR(32)"/>
+            <column name="explain" type="VARCHAR(256)"/>
             <column name="aftersaleservice" type="BIT"/>
             <column name="responsibleperson" type="VARCHAR(32)"/>
             <column name="service_status" type="INT">
                 <constraints nullable="false"/>
             </column>
             <column name="useraffectedto" type="VARCHAR(32)"/>
-            <column name="replacementcomponent" type="VARCHAR(32)"/>
-            <column name="manuals" type="BIT"/>
+            <column name="replacementcomponent" type="INT"/>
+            <column name="manuals" type="INT"/>
+            <column name="tracking" type="INT"/>
             <column name="commisionning_year" type="INT"/>
             <column name="acquisition_date" type="datetime"/>
             <column name="acquisition_value" type="DOUBLE"/>

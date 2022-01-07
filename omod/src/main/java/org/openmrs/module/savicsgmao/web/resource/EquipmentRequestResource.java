@@ -59,6 +59,8 @@ public class EquipmentRequestResource extends DelegatingCrudResource<Equipment> 
 			description.addProperty("useraffectedto");
 			description.addProperty("replacementcomponent");
 			description.addProperty("manuals");
+			description.addProperty("explain");
+			description.addProperty("tracking");
 			description.addProperty("commisionningYear");
 			description.addProperty("acquisitionDate");
 			description.addProperty("acquisitionValue");
@@ -83,6 +85,8 @@ public class EquipmentRequestResource extends DelegatingCrudResource<Equipment> 
 			description.addProperty("model");
 			description.addProperty("supplier");
 			description.addProperty("power");
+			description.addProperty("explain");
+			description.addProperty("tracking");
 			description.addProperty("aftersaleservice");
 			description.addProperty("responsibleperson");
 			description.addProperty("serviceStatus");
@@ -114,6 +118,8 @@ public class EquipmentRequestResource extends DelegatingCrudResource<Equipment> 
 			description.addProperty("model");
 			description.addProperty("supplier");
 			description.addProperty("power");
+			description.addProperty("explain");
+			description.addProperty("tracking");
 			description.addProperty("aftersaleservice");
 			description.addProperty("responsibleperson");
 			description.addProperty("serviceStatus");
@@ -270,11 +276,15 @@ public class EquipmentRequestResource extends DelegatingCrudResource<Equipment> 
 		}
 		
 		if (properties.get("replacementcomponent") != null) {
-			equipment.setReplacementcomponent(properties.get("replacementcomponent").toString());
+			equipment.setReplacementcomponent(new Integer(properties.get("replacementcomponent").toString()));
+		}
+		
+		if (properties.get("tracking") != null) {
+			equipment.setTracking(Integer.valueOf(properties.get("tracking").toString()));
 		}
 		
 		if (properties.get("manuals") != null) {
-			equipment.setManuals(Boolean.valueOf(properties.get("manuals").toString()));
+			equipment.setManuals(Integer.valueOf(properties.get("manuals").toString()));
 		}
 		
 		if (properties.get("commisionningYear") != null) {
@@ -283,6 +293,10 @@ public class EquipmentRequestResource extends DelegatingCrudResource<Equipment> 
 		
 		if (properties.get("acquisitionValue") != null) {
 			equipment.setAcquisitionValue(new Double(properties.get("acquisitionValue").toString()));
+		}
+		
+		if (properties.get("explain") != null) {
+			equipment.setExplain(properties.get("explain").toString());
 		}
 		
 		if (properties.get("acquisitionMode") != null) {
