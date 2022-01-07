@@ -295,8 +295,8 @@ public class EquipmentRequestResource extends DelegatingCrudResource<Equipment> 
 			equipment.setAcquisitionValue(new Double(properties.get("acquisitionValue").toString()));
 		}
 		
-		if (properties.get("explain") != null) {
-			equipment.setExplain(properties.get("explain").toString());
+		if (properties.get("explainMore") != null) {
+			equipment.setExplainMore(properties.get("explainMore").toString());
 		}
 		
 		if (properties.get("acquisitionMode") != null) {
