@@ -61,9 +61,7 @@
             <column name="acquisition_mode" type="VARCHAR(32)"/>
             <column name="volume" type="DOUBLE"/>
             <column name="weight" type="DOUBLE"/>
-            <column name="comment" type="TEXT">
-                <constraints nullable="false"/>
-            </column>
+            <column name="comment" type="TEXT"/>
             <column name="lastmodified" type="datetime"/>
             <column name="creation" type="datetime"/>
         </createTable>
