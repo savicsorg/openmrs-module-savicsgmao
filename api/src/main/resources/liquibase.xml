@@ -45,7 +45,7 @@
             <column name="model" type="VARCHAR(32)"/>
             <column name="supplier" type="VARCHAR(32)"/>
             <column name="power" type="VARCHAR(32)"/>
-            <column name="explain" type="VARCHAR(256)"/>
+            <column name="explainMore" type="VARCHAR(256)"/>
             <column name="aftersaleservice" type="BIT"/>
             <column name="responsibleperson" type="VARCHAR(32)"/>
             <column name="service_status" type="INT">

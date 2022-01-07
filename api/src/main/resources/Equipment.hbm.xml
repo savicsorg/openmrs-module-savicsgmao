@@ -50,8 +50,8 @@
         <property name="replacementcomponent" type="java.lang.Integer">
             <column name="replacementcomponent"  />
         </property>
-        <property name="explain" type="string">
-            <column name="explain" length="256" />
+        <property name="explainMore" type="string">
+            <column name="explainMore" length="256" />
         </property>
         <property name="manuals" type="java.lang.Integer">
             <column name="manuals" />

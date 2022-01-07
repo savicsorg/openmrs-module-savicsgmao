@@ -38,7 +38,7 @@ public class Equipment extends BaseOpenmrsData implements java.io.Serializable {
 	
 	private String useraffectedto;
 	
-	private String explain;
+	private String explainMore;
 	
 	private Integer replacementcomponent;
 	
@@ -242,12 +242,12 @@ public class Equipment extends BaseOpenmrsData implements java.io.Serializable {
 		this.manuals = manuals;
 	}
 	
-	public String getExplain() {
-		return explain;
+	public String getExplainMore() {
+		return explainMore;
 	}
 	
-	public void setExplain(String explain) {
-		this.explain = explain;
+	public void setExplainMore(String explain) {
+		this.explainMore = explain;
 	}
 	
 	public Integer getTracking() {
