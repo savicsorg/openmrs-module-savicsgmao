@@ -66,13 +66,30 @@ public class EquipmentExport {
 		cellStyle.setFont(font);
 		
 		int index = 0;
-		createCell(row, index++, "Numéro de régistre", cellStyle);
-		createCell(row, index++, "Nature du travail", cellStyle);
-		createCell(row, index++, "Demandeur", cellStyle);
-		createCell(row, index++, "Priorité", cellStyle);
-		createCell(row, index++, "Equipement", cellStyle);
-		createCell(row, index++, "Raison", cellStyle);
-		createCell(row, index++, "Date", cellStyle);
+		createCell(row, index++, "Nom de l'équipement", cellStyle);
+		createCell(row, index++, "Numéro de série", cellStyle);
+		createCell(row, index++, "Type d'équipement", cellStyle);
+		createCell(row, index++, "Model", cellStyle);
+		createCell(row, index++, "Puissance requise", cellStyle);
+		createCell(row, index++, "Service après-vente", cellStyle);
+		createCell(row, index++, "Personne responsable", cellStyle);
+		createCell(row, index++, "Utilisateur", cellStyle);
+		createCell(row, index++, "Status", cellStyle);
+		createCell(row, index++, "Composants de remplacement", cellStyle);
+		createCell(row, index++, "Explication", cellStyle);
+		createCell(row, index++, "Manuels disponibles", cellStyle);
+		createCell(row, index++, "Region", cellStyle);
+		createCell(row, index++, "District", cellStyle);
+		createCell(row, index++, "HD/CSI", cellStyle);
+		createCell(row, index++, "Departement HD/CSI", cellStyle);
+		createCell(row, index++, "Site", cellStyle);
+		createCell(row, index++, "Date d'acquisition", cellStyle);
+		createCell(row, index++, "Année de mise en service", cellStyle);
+		createCell(row, index++, "Valeur d'acquisition", cellStyle);
+		createCell(row, index++, "Mode d'acquisition", cellStyle);
+		createCell(row, index++, "Suivi", cellStyle);
+		createCell(row, index++, "Poids", cellStyle);
+		createCell(row, index++, "Volume", cellStyle);
 	}
 	
 	private void createCell(Row row, int columnCount, Object value, CellStyle style) {
@@ -103,24 +120,33 @@ public class EquipmentExport {
 		style.setBorderLeft(BorderStyle.THIN);
 		
 		for (Equipment item : equipments) {
-//			try {
-//				Row row = sheet.createRow(rowCount++);
-//				int columnCount = 0;
-//				
-//				createCell(row, columnCount++, item.getRegisterNumber(), style);
-//				createCell(row, columnCount++, item.getNatureOfWorkDisplay(item.getNatureOfWork()), style);
-//				createCell(row, columnCount++, item.getRequestedby(), style);
-//				createCell(row, columnCount++, item.getPriorityDisplay(item.getPriority()), style);
-//				createCell(row, columnCount++, item.getEquipment().getName(), style);
-//				createCell(row, columnCount++, item.getMotif(), style);
-//				createCell(row, columnCount++, item.getCreation() + "", style);
-//			}
-//			catch (IOException ex) {
-//				Logger.getLogger(EquipmentExport.class.getName()).log(Level.SEVERE, null, ex);
-//			}
-//			catch (ParseException ex) {
-//				Logger.getLogger(EquipmentExport.class.getName()).log(Level.SEVERE, null, ex);
-//			}
+			Row row = sheet.createRow(rowCount++);
+			int columnCount = 0;
+			createCell(row, columnCount++, item.getName(), style);
+			createCell(row, columnCount++, item.getSerialNumber(), style);
+			createCell(row, columnCount++, item.getEquipmentType().getName(), style);
+			createCell(row, columnCount++, item.getModel(), style);
+			createCell(row, columnCount++, item.getPower(), style);
+			createCell(row, columnCount++, item.getAftersaleservice(), style);
+			createCell(row, columnCount++, item.getResponsibleperson() + "", style);
+			createCell(row, columnCount++, item.getUseraffectedto() + "", style);
+			createCell(row, columnCount++, item.getServiceStatus() + "", style);
+			createCell(row, columnCount++, item.getReplacementcomponent() + "", style);
+			createCell(row, columnCount++, item.getExplainMore() + "", style);
+			createCell(row, columnCount++, item.getManuals() + "", style);
+			createCell(row, columnCount++, item.getSite().getService().getHealthcenter().getDistrict().getRegionid() + "",
+			    style);
+			createCell(row, columnCount++, item.getSite().getService().getHealthcenter().getDistrict().getName() + "", style);
+			createCell(row, columnCount++, item.getSite().getService().getHealthcenter().getName() + "", style);
+			createCell(row, columnCount++, item.getSite().getService().getName() + "", style);
+			createCell(row, columnCount++, item.getSite().getName() + "", style);
+			createCell(row, columnCount++, item.getAcquisitionDate() + "", style);
+			createCell(row, columnCount++, item.getCommisionningYear() + "", style);
+			createCell(row, columnCount++, item.getAcquisitionValue() + "", style);
+			createCell(row, columnCount++, item.getAcquisitionMode() + "", style);
+			createCell(row, columnCount++, item.getTracking() + "", style);
+			createCell(row, columnCount++, item.getWeight() + "", style);
+			createCell(row, columnCount++, item.getVolume() + "", style);
 			
 		}
 	}
