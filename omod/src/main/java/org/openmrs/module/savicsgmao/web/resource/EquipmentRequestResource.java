@@ -308,7 +308,7 @@ public class EquipmentRequestResource extends DelegatingCrudResource<Equipment> 
 		}
 		
 		if (properties.get("weight") != null) {
-			equipment.setVolume(new Double(properties.get("weight").toString()));
+			equipment.setWeight(new Double(properties.get("weight").toString()));
 		}
 		
 		if (properties.get("comment") != null) {
