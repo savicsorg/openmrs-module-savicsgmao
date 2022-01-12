@@ -41,7 +41,7 @@ public class EquipmentController {
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/rest/" + RestConstants.VERSION_1 + GmaoRest.GMAO_NAMESPACE
 	        + "/equipment/export")
-	public void exportToExcel(HttpServletResponse response, HttpServletRequest request) throws IOException {
+	public void exportToExcel(HttpServletResponse response, HttpServletRequest request) throws IOException, Exception {
 		response.setContentType("application/octet-stream");
 		DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
 		String currentDateTime = dateFormatter.format(new Date());

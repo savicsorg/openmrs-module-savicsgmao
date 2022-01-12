@@ -7,8 +7,6 @@ package org.openmrs.module.savicsgmao.export;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.poi.ss.usermodel.BorderStyle;
@@ -21,11 +19,11 @@ import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.json.simple.parser.ParseException;
 import org.openmrs.messagesource.MessageSourceService;
 import org.openmrs.module.savicsgmao.api.entity.Equipment;
-import org.openmrs.module.savicsgmao.api.entity.MaintenanceRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+//import net.sf.json.JSONObject;
+//import net.sf.json.JSONSerializer;
 
 /**
  * @author anatoleabe
@@ -47,7 +45,7 @@ public class EquipmentExport {
 	}
 	
 	private void writeHeaderLine() {
-		sheet = workbook.createSheet("Liste des demandes de maintenance");
+		sheet = workbook.createSheet("Liste des équipements");
 		
 		Row row = sheet.createRow(0);
 		XSSFFont font = workbook.createFont();
@@ -107,7 +105,7 @@ public class EquipmentExport {
 		cell.setCellStyle(style);
 	}
 	
-	private void writeDataLines() {
+	private void writeDataLines() throws Exception {
 		int rowCount = 1;
 		
 		CellStyle style = workbook.createCellStyle();
@@ -127,13 +125,13 @@ public class EquipmentExport {
 			createCell(row, columnCount++, item.getEquipmentType().getName(), style);
 			createCell(row, columnCount++, item.getModel(), style);
 			createCell(row, columnCount++, item.getPower(), style);
-			createCell(row, columnCount++, item.getAftersaleservice(), style);
+			createCell(row, columnCount++, item.getAftersaleserviceDisplay(item.getAftersaleservice()), style);
 			createCell(row, columnCount++, item.getResponsibleperson() + "", style);
 			createCell(row, columnCount++, item.getUseraffectedto() + "", style);
-			createCell(row, columnCount++, item.getServiceStatus() + "", style);
-			createCell(row, columnCount++, item.getReplacementcomponent() + "", style);
+			createCell(row, columnCount++, item.getServiceStatusDisplay(item.getServiceStatus()) + "", style);
+			createCell(row, columnCount++, item.getReplacementcomponentDisplay(item.getReplacementcomponent()) + "", style);
 			createCell(row, columnCount++, item.getExplainMore() + "", style);
-			createCell(row, columnCount++, item.getManuals() + "", style);
+			createCell(row, columnCount++, item.getManualsDisplay(item.getManuals()) + "", style);
 			createCell(row, columnCount++, item.getSite().getService().getHealthcenter().getDistrict().getRegionid() + "",
 			    style);
 			createCell(row, columnCount++, item.getSite().getService().getHealthcenter().getDistrict().getName() + "", style);
@@ -143,15 +141,15 @@ public class EquipmentExport {
 			createCell(row, columnCount++, item.getAcquisitionDate() + "", style);
 			createCell(row, columnCount++, item.getCommisionningYear() + "", style);
 			createCell(row, columnCount++, item.getAcquisitionValue() + "", style);
-			createCell(row, columnCount++, item.getAcquisitionMode() + "", style);
-			createCell(row, columnCount++, item.getTracking() + "", style);
+			createCell(row, columnCount++, item.getAcquisitionModeDisplay(item.getAcquisitionMode()) + "", style);
+			createCell(row, columnCount++, item.getTrackingDisplay(item.getTracking())+ "", style);
 			createCell(row, columnCount++, item.getWeight() + "", style);
 			createCell(row, columnCount++, item.getVolume() + "", style);
 			
 		}
 	}
 	
-	public void export(HttpServletResponse response) throws IOException {
+	public void export(HttpServletResponse response) throws IOException, Exception {
 		writeHeaderLine();
 		writeDataLines();
 		
