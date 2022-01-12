@@ -53,8 +53,6 @@ public class MaintenanceRequestResource extends DelegatingCrudResource<Maintenan
 			description.addProperty("enddate");
 			description.addProperty("status");
 			description.addProperty("doneby");
-			description.addProperty("taskname");
-			description.addProperty("taskdescription");
 			description.addProperty("equipment");
 			description.addProperty("lastmodified");
 			description.addProperty("creation");
@@ -73,8 +71,6 @@ public class MaintenanceRequestResource extends DelegatingCrudResource<Maintenan
 			description.addProperty("enddate");
 			description.addProperty("status");
 			description.addProperty("doneby");
-			description.addProperty("taskname");
-			description.addProperty("taskdescription");
 			description.addProperty("equipment");
 			description.addProperty("lastmodified");
 			description.addProperty("creation");
@@ -88,14 +84,12 @@ public class MaintenanceRequestResource extends DelegatingCrudResource<Maintenan
 			description.addProperty("uuid");
 			description.addProperty("maintenanceType");
 			description.addProperty("maintenanceRequest");
-			description.addProperty("name");
-			description.addProperty("description");
 			description.addProperty("startdate");
 			description.addProperty("enddate");
 			description.addProperty("status");
 			description.addProperty("doneby");
-			description.addProperty("taskname");
-			description.addProperty("taskdescription");
+			description.addProperty("name");
+			description.addProperty("description");
 			description.addProperty("equipment");
 			description.addProperty("lastmodified");
 			description.addProperty("creation");
