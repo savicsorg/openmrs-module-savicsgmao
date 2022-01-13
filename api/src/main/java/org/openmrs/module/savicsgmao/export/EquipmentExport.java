@@ -142,7 +142,7 @@ public class EquipmentExport {
 			createCell(row, columnCount++, item.getCommisionningYear() + "", style);
 			createCell(row, columnCount++, item.getAcquisitionValue() + "", style);
 			createCell(row, columnCount++, item.getAcquisitionModeDisplay(item.getAcquisitionMode()) + "", style);
-			createCell(row, columnCount++, item.getTrackingDisplay(item.getTracking())+ "", style);
+			createCell(row, columnCount++, item.getTrackingDisplay(item.getTracking()) + "", style);
 			createCell(row, columnCount++, item.getWeight() + "", style);
 			createCell(row, columnCount++, item.getVolume() + "", style);
 			
