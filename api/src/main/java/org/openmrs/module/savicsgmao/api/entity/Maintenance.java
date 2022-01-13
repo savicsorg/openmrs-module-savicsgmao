@@ -138,6 +138,15 @@ public class Maintenance extends BaseOpenmrsData implements java.io.Serializable
 		return this.status;
 	}
 	
+	public String getStatusDisplay(short s) {
+            if (s== 1){
+                return "En cours";
+            }else{
+                return "Terminé";
+            }
+		
+	}
+	
 	public void setStatus(short status) {
 		this.status = status;
 	}

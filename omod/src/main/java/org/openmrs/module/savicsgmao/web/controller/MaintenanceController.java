@@ -9,19 +9,19 @@
  */
 package org.openmrs.module.savicsgmao.web.controller;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.openmrs.module.savicsgmao.api.entity.Maintenance;
 import org.springframework.stereotype.Controller;
 import org.openmrs.module.savicsgmao.api.entity.MaintenanceRequest;
 import org.openmrs.module.savicsgmao.api.service.GmaoService;
+import org.openmrs.module.savicsgmao.export.MaintenanceExport;
 import org.openmrs.module.savicsgmao.export.MaintenanceRequestsExport;
 import org.openmrs.module.savicsgmao.rest.v1_0.resource.GmaoRest;
 import org.openmrs.module.webservices.rest.web.RestConstants;
@@ -54,6 +54,23 @@ public class MaintenanceController {
 		List<MaintenanceRequest> maintenanceRequestList = gmaoService.getAll(MaintenanceRequest.class);
 		
 		MaintenanceRequestsExport excelExporter = new MaintenanceRequestsExport(maintenanceRequestList);
+		
+		excelExporter.export(response);
+	}
+	@RequestMapping(method = RequestMethod.GET, value = "/rest/" + RestConstants.VERSION_1 + GmaoRest.GMAO_NAMESPACE
+	        + "/maintenances/export")
+	public void exportMaintenanceListToExcel(HttpServletResponse response) throws IOException {
+		response.setContentType("application/octet-stream");
+		DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+		String currentDateTime = dateFormatter.format(new Date());
+		
+		String headerKey = "Content-Disposition";
+		String headerValue = "attachment; filename=Maintenance_Requests_" + currentDateTime + ".xlsx";
+		response.setHeader(headerKey, headerValue);
+		
+		List<Maintenance> maintenanceList = gmaoService.getAll(Maintenance.class);
+		
+		MaintenanceExport excelExporter = new MaintenanceExport(maintenanceList);
 		
 		excelExporter.export(response);
 	}
