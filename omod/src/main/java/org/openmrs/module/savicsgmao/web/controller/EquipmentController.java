@@ -9,20 +9,19 @@
  */
 package org.openmrs.module.savicsgmao.web.controller;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.openmrs.module.savicsgmao.api.entity.Equipment;
 import org.springframework.stereotype.Controller;
-import org.openmrs.module.savicsgmao.api.entity.MaintenanceRequest;
 import org.openmrs.module.savicsgmao.api.service.GmaoService;
-import org.openmrs.module.savicsgmao.export.MaintenanceRequestsExport;
+import org.openmrs.module.savicsgmao.export.EquipmentExport;
 import org.openmrs.module.savicsgmao.rest.v1_0.resource.GmaoRest;
 import org.openmrs.module.webservices.rest.web.RestConstants;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +32,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @author anatoleabe The main controller.
  */
 @Controller
-public class MaintenanceController {
+public class EquipmentController {
 	
 	protected final Log log = LogFactory.getLog(getClass());
 	
@@ -41,8 +40,8 @@ public class MaintenanceController {
 	GmaoService gmaoService;
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/rest/" + RestConstants.VERSION_1 + GmaoRest.GMAO_NAMESPACE
-	        + "/maintenancerequests/export")
-	public void exportToExcel(HttpServletResponse response) throws IOException {
+	        + "/equipment/export")
+	public void exportToExcel(HttpServletResponse response, HttpServletRequest request) throws IOException, Exception {
 		response.setContentType("application/octet-stream");
 		DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
 		String currentDateTime = dateFormatter.format(new Date());
@@ -51,9 +50,9 @@ public class MaintenanceController {
 		String headerValue = "attachment; filename=Maintenance_Requests_" + currentDateTime + ".xlsx";
 		response.setHeader(headerKey, headerValue);
 		
-		List<MaintenanceRequest> maintenanceRequestList = gmaoService.getAll(MaintenanceRequest.class);
+		List<Equipment> ecs = gmaoService.getAll(Equipment.class);
 		
-		MaintenanceRequestsExport excelExporter = new MaintenanceRequestsExport(maintenanceRequestList);
+		EquipmentExport excelExporter = new EquipmentExport(ecs);
 		
 		excelExporter.export(response);
 	}

@@ -200,9 +200,9 @@ public class MouvementRequestResource extends DelegatingCrudResource<Mouvement> 
 			}
 		} else {
 			mouvement = new Mouvement();
-			if (properties.get("equipment") == null || properties.get("siteByDestinationId") == null
-			        || properties.get("siteBySourceId") == null) {
-				throw new IllegalPropertyException("Required parameters: equipment, siteByDestination, SiteBySource");
+			if (properties.get("equipment") == null || properties.get("siteByDestination") == null
+			        || properties.get("siteBySource") == null) {
+				throw new IllegalPropertyException("Required parameters: equipment, siteByDestination, siteBySource");
 			}
 			mouvement.setCreation(new Date());
 		}

@@ -13,7 +13,7 @@
     <description>API project for Savics Gmao Module</description>
     
     <dependencies>
-	<dependency>
+        <dependency>
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-core</artifactId>
             <version>3.6.3</version>
@@ -56,9 +56,9 @@
 				
         <!-- End OpenMRS core -->
         <dependency>
-                <groupId>org.openmrs.module</groupId>
-                <artifactId>addresshierarchy-api</artifactId>
-                <scope>provided</scope>
+            <groupId>org.openmrs.module</groupId>
+            <artifactId>addresshierarchy-api</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.ict4h</groupId>
@@ -77,7 +77,7 @@
             <scope>provided</scope>
         </dependency>
         
-                        <!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
+        <!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>

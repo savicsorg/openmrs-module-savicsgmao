@@ -86,7 +86,7 @@ public class MaintenanceRequestsExport {
 		cell.setCellStyle(style);
 	}
 	
-	private void writeDataLines() {
+	private void writeDataLines() throws IOException {
 		int rowCount = 1;
 		
 		CellStyle style = workbook.createCellStyle();
@@ -103,9 +103,9 @@ public class MaintenanceRequestsExport {
 			int columnCount = 0;
 			
 			createCell(row, columnCount++, item.getRegisterNumber(), style);
-			createCell(row, columnCount++, item.getNatureOfWork(), style);
+			createCell(row, columnCount++, item.getNatureOfWorkDisplay(item.getNatureOfWork()), style);
 			createCell(row, columnCount++, item.getRequestedby(), style);
-			createCell(row, columnCount++, item.getPriority(), style);
+			createCell(row, columnCount++, item.getPriorityDisplay(item.getPriority()), style);
 			createCell(row, columnCount++, item.getEquipment().getName(), style);
 			createCell(row, columnCount++, item.getMotif(), style);
 			createCell(row, columnCount++, item.getCreation() + "", style);

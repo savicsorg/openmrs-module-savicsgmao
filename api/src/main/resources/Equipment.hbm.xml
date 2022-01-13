@@ -47,11 +47,17 @@
         <property name="useraffectedto" type="string">
             <column name="useraffectedto" length="32" />
         </property>
-        <property name="replacementcomponent" type="string">
-            <column name="replacementcomponent" length="32" />
+        <property name="replacementcomponent" type="java.lang.Integer">
+            <column name="replacementcomponent"  />
         </property>
-        <property name="manuals" type="java.lang.Boolean">
+        <property name="explainMore" type="string">
+            <column name="explainMore" length="256" />
+        </property>
+        <property name="manuals" type="java.lang.Integer">
             <column name="manuals" />
+        </property>
+        <property name="tracking" type="java.lang.Integer">
+            <column name="tracking" />
         </property>
         <property name="commisionningYear" type="java.lang.Integer">
             <column name="commisionning_year" />
@@ -72,7 +78,7 @@
             <column name="weight" precision="13" />
         </property>
         <property name="comment" type="string">
-            <column name="comment" length="65535" not-null="true" />
+            <column name="comment" length="65535" />
         </property>
         <property name="lastmodified" type="timestamp">
             <column name="lastmodified" length="19" />
