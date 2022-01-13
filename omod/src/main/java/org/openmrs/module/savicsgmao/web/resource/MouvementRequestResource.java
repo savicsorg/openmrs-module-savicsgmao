@@ -238,6 +238,7 @@ public class MouvementRequestResource extends DelegatingCrudResource<Mouvement> 
 		mouvement.setSiteBySourceId(siteBySource);
 		mouvement.setSiteByDestinationId(siteByDestination);
 		mouvement.setLastmodified(new Date());
+		mouvement.setEquipment(equipment);
 		
 		return mouvement;
 	}
