@@ -132,8 +132,8 @@ public class MouvementRequestResource extends DelegatingCrudResource<Mouvement> 
 	@Override
 	public Object create(SimpleObject propertiesToCreate, RequestContext context) throws ResponseException {
 		try {
-			if (propertiesToCreate.get("name") == null) {
-				throw new ConversionException("Required properties: name");
+			if (propertiesToCreate.get("siteBySource") == null) {
+				throw new ConversionException("Required properties: siteBySource");
 			}
 			
 			Mouvement mouvement = this.constructMouvement(null, propertiesToCreate);
