@@ -53,7 +53,7 @@ public class Maintenance extends BaseOpenmrsData implements java.io.Serializable
 	
 	public Maintenance(int id, Equipment Equipment, MaintenanceRequest MaintenanceRequest, MaintenanceType MaintenanceType,
 	    String uuid, String name, String description, Date startdate, Date enddate, short status, String doneby,
-	    Date lastmodified, Date creation) {
+	    String taskname, String taskdescription, Date lastmodified, Date creation) {
 		this.id = id;
 		this.equipment = Equipment;
 		this.maintenanceRequest = MaintenanceRequest;

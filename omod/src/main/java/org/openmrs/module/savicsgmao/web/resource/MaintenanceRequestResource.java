@@ -84,12 +84,12 @@ public class MaintenanceRequestResource extends DelegatingCrudResource<Maintenan
 			description.addProperty("uuid");
 			description.addProperty("maintenanceType");
 			description.addProperty("maintenanceRequest");
-			description.addProperty("name");
-			description.addProperty("description");
 			description.addProperty("startdate");
 			description.addProperty("enddate");
 			description.addProperty("status");
 			description.addProperty("doneby");
+			description.addProperty("name");
+			description.addProperty("description");
 			description.addProperty("equipment");
 			description.addProperty("lastmodified");
 			description.addProperty("creation");
@@ -108,8 +108,8 @@ public class MaintenanceRequestResource extends DelegatingCrudResource<Maintenan
 	
 	@Override
 	protected PageableResult doSearch(RequestContext context) {
-		String value = context.getParameter("name");
-		List<Maintenance> maintenanceList = Context.getService(GmaoService.class).doSearch(Maintenance.class, "designation",
+		String value = context.getParameter("doneby");
+		List<Maintenance> maintenanceList = Context.getService(GmaoService.class).doSearch(Maintenance.class, "doneby",
 		    value, context.getLimit(), context.getStartIndex());
 		return new AlreadyPaged<Maintenance>(context, maintenanceList, false);
 	}
@@ -128,8 +128,8 @@ public class MaintenanceRequestResource extends DelegatingCrudResource<Maintenan
 	@Override
 	public Object create(SimpleObject propertiesToCreate, RequestContext context) throws ResponseException {
 		try {
-			if (propertiesToCreate.get("name") == null) {
-				throw new ConversionException("Required properties: name");
+			if (propertiesToCreate.get("doneby") == null) {
+				throw new ConversionException("Required properties: doneby");
 			}
 			
 			Maintenance maintenance = this.constructMaintenance(null, propertiesToCreate);
@@ -182,8 +182,8 @@ public class MaintenanceRequestResource extends DelegatingCrudResource<Maintenan
 		MaintenanceRequest maintenanceRequest = null;
 		if (properties.get("maintenanceRequest") != null) {
 			Integer id = properties.get("maintenanceRequest");
-			maintenanceType = (MaintenanceType) Context.getService(GmaoService.class).getEntityByid(MaintenanceType.class,
-			    "id", id);
+			maintenanceRequest = (MaintenanceRequest) Context.getService(GmaoService.class).getEntityByid(
+			    MaintenanceRequest.class, "id", id);
 		}
 		
 		if (uuid != null) {
