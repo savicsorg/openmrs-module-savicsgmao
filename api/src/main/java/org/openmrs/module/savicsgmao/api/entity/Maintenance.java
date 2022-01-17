@@ -139,11 +139,11 @@ public class Maintenance extends BaseOpenmrsData implements java.io.Serializable
 	}
 	
 	public String getStatusDisplay(short s) {
-            if (s== 1){
-                return "En cours";
-            }else{
-                return "Terminé";
-            }
+		if (s == 1) {
+			return "En cours";
+		} else {
+			return "Terminé";
+		}
 		
 	}
 	
