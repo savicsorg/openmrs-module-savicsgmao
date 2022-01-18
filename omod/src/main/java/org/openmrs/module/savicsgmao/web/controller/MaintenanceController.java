@@ -57,6 +57,7 @@ public class MaintenanceController {
 		
 		excelExporter.export(response);
 	}
+	
 	@RequestMapping(method = RequestMethod.GET, value = "/rest/" + RestConstants.VERSION_1 + GmaoRest.GMAO_NAMESPACE
 	        + "/maintenances/export")
 	public void exportMaintenanceListToExcel(HttpServletResponse response) throws IOException {

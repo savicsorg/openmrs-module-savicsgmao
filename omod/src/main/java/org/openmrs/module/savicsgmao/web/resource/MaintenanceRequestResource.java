@@ -48,6 +48,7 @@ public class MaintenanceRequestResource extends DelegatingCrudResource<Maintenan
 			description.addProperty("maintenanceType");
 			description.addProperty("maintenanceRequest");
 			description.addProperty("name");
+			description.addProperty("reason");
 			description.addProperty("description");
 			description.addProperty("startdate");
 			description.addProperty("enddate");
@@ -66,6 +67,7 @@ public class MaintenanceRequestResource extends DelegatingCrudResource<Maintenan
 			description.addProperty("maintenanceType");
 			description.addProperty("maintenanceRequest");
 			description.addProperty("name");
+			description.addProperty("reason");
 			description.addProperty("description");
 			description.addProperty("startdate");
 			description.addProperty("enddate");
@@ -89,6 +91,7 @@ public class MaintenanceRequestResource extends DelegatingCrudResource<Maintenan
 			description.addProperty("status");
 			description.addProperty("doneby");
 			description.addProperty("name");
+			description.addProperty("reason");
 			description.addProperty("description");
 			description.addProperty("equipment");
 			description.addProperty("lastmodified");
@@ -215,6 +218,10 @@ public class MaintenanceRequestResource extends DelegatingCrudResource<Maintenan
 		
 		if (properties.get("doneby") != null) {
 			maintenance.setDoneby((String) properties.get("doneby"));
+		}
+		
+		if (properties.get("reason") != null) {
+			maintenance.setReason((String) properties.get("reason"));
 		}
 		
 		if (properties.get("startdate") != null) {

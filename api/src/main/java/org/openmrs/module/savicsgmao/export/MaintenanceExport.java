@@ -108,15 +108,14 @@ public class MaintenanceExport {
 			Row row = sheet.createRow(rowCount++);
 			int columnCount = 0;
 			
+			createCell(row, columnCount++, item.getEquipment().getName(), style);
 			createCell(row, columnCount++, item.getEquipment().getSerialNumber(), style);
-			createCell(row, columnCount++, item.getEquipment().getName(), style);
-			createCell(row, columnCount++, item.getEquipment().getSite().getService().getName(), style);
 			createCell(row, columnCount++, item.getEquipment().getSite().getName(), style);
-			createCell(row, columnCount++, item.getEquipment().getName(), style);
+			createCell(row, columnCount++, item.getEquipment().getSite().getService().getName(), style);
 			createCell(row, columnCount++, item.getMaintenanceType().getName(), style);
 			createCell(row, columnCount++, item.getDoneby(), style);
-			createCell(row, columnCount++, "", style);
-			createCell(row, columnCount++, "" + "", style);
+			createCell(row, columnCount++, item.getReason(), style);
+			createCell(row, columnCount++, item.getName(), style);
 			createCell(row, columnCount++, item.getDescription() + "", style);
 			createCell(row, columnCount++, item.getStartdate() + "", style);
 			createCell(row, columnCount++, item.getEnddate() + "", style);

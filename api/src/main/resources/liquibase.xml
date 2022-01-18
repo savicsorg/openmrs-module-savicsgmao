@@ -359,4 +359,11 @@
             <column name="uuid" value="b0000002-d22b-493e-98e8-4d1de0621a8v"/>
         </insert>
     </changeSet>
+    
+    <changeSet author="anatoleabe" id="1639051760881-35"> 
+        <addColumn tableName="gmao_maintenance" >
+            <column name="reason" type="VARCHAR(255)"/>
+        </addColumn>  
+    </changeSet>
+    
 </databaseChangeLog>
