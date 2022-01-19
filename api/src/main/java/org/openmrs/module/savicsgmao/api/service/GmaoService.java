@@ -21,29 +21,35 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 public interface GmaoService<T extends Serializable> extends OpenmrsService {
-	
-	@Transactional(readOnly = true)
-	public List<T> getAll(Class<T> t) throws APIException;
-	
-	@Transactional(readOnly = true)
-	public List<T> getAll(Class<T> t, Integer limit, Integer offset) throws APIException;
-	
-	@Transactional(readOnly = true)
-	public List<T> doSearch(Class<T> t, String key, String value, Integer limit, Integer offset) throws APIException;
-	
-	@Transactional(readOnly = true)
-	T getEntity(Class<T> t, Object id) throws APIException;
-	
-	@Transactional(readOnly = true)
-	T getEntityByUuid(Class<T> t, String uuid) throws APIException;
-	
-	@Transactional(readOnly = true)
-	T getEntityByid(Class<T> t, String idName, Integer id) throws APIException;
-	
-	@Transactional
-	T upsert(T entity) throws APIException;
-	
-	@Transactional
-	void delete(final T entity) throws APIException;
-	
+
+    @Transactional(readOnly = true)
+    public List<T> getAll(Class<T> t) throws APIException;
+
+    @Transactional(readOnly = true)
+    public List<T> getAll(Class<T> t, Integer limit, Integer offset) throws APIException;
+
+    @Transactional(readOnly = true)
+    public List<T> doSearch(Class<T> t, String key, String value, Integer limit, Integer offset) throws APIException;
+
+    @Transactional(readOnly = true)
+    T getEntity(Class<T> t, Object id) throws APIException;
+
+    @Transactional(readOnly = true)
+    T getEntityByUuid(Class<T> t, String uuid) throws APIException;
+
+    @Transactional(readOnly = true)
+    T getEntityByid(Class<T> t, String idName, Integer id) throws APIException;
+
+    @Transactional
+    T upsert(T entity) throws APIException;
+
+    @Transactional
+    void delete(final T entity) throws APIException;
+
+    @Transactional(readOnly = true)
+    public Long doCount(Class<T> t) throws APIException;
+
+    @Transactional(readOnly = true)
+    public Long doCount(Class<T> t, String key, String value) throws APIException;
+
 }
