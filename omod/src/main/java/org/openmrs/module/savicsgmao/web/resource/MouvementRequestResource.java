@@ -24,6 +24,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.openmrs.module.savicsgmao.api.entity.Equipment;
 import org.openmrs.module.savicsgmao.api.entity.Healthcenter;
+import org.openmrs.module.savicsgmao.api.entity.Maintenance;
 import org.openmrs.module.savicsgmao.api.entity.Mouvement;
 import org.openmrs.module.savicsgmao.api.entity.Site;
 import org.openmrs.module.savicsgmao.api.service.GmaoService;
@@ -107,7 +108,9 @@ public class MouvementRequestResource extends DelegatingCrudResource<Mouvement> 
 	protected PageableResult doGetAll(RequestContext context) throws ResponseException {
 		List<Mouvement> mouvementList = Context.getService(GmaoService.class).getAll(Mouvement.class, context.getLimit(),
 		    context.getStartIndex());
-		return new AlreadyPaged<Mouvement>(context, mouvementList, false);
+		Long count = Context.getService(GmaoService.class).doCount(Mouvement.class);
+		boolean hasMore = count > context.getStartIndex() + context.getLimit();
+		return new AlreadyPaged<Mouvement>(context, mouvementList, hasMore, count);
 	}
 	
 	@Override
@@ -115,7 +118,9 @@ public class MouvementRequestResource extends DelegatingCrudResource<Mouvement> 
 		String value = context.getParameter("name");
 		List<Mouvement> mouvementList = Context.getService(GmaoService.class).doSearch(Mouvement.class, "name", value,
 		    context.getLimit(), context.getStartIndex());
-		return new AlreadyPaged<Mouvement>(context, mouvementList, false);
+		Long count = Context.getService(GmaoService.class).doCount(Mouvement.class, "name", value);
+		Boolean hasMore = count > context.getStartIndex() + context.getLimit();
+		return new AlreadyPaged<Mouvement>(context, mouvementList, hasMore, count);
 	}
 	
 	@Override

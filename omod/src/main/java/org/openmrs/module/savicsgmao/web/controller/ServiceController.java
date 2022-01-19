@@ -10,19 +10,14 @@
 package org.openmrs.module.savicsgmao.web.controller;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.savicsgmao.api.entity.Equipment;
+import org.openmrs.module.savicsgmao.api.entity.Service;
 import org.springframework.stereotype.Controller;
 import org.openmrs.module.savicsgmao.api.service.GmaoService;
-import org.openmrs.module.savicsgmao.export.EquipmentExport;
 import org.openmrs.module.savicsgmao.rest.v1_0.resource.GmaoRest;
 import org.openmrs.module.webservices.rest.web.RestConstants;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +28,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @author anatoleabe The main controller.
  */
 @Controller
-public class EquipmentController {
+public class ServiceController {
 	
 	protected final Log log = LogFactory.getLog(getClass());
 	
@@ -41,27 +36,9 @@ public class EquipmentController {
 	GmaoService gmaoService;
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/rest/" + RestConstants.VERSION_1 + GmaoRest.GMAO_NAMESPACE
-	        + "/equipment/export")
-	public void exportToExcel(HttpServletResponse response, HttpServletRequest request) throws IOException, Exception {
-		response.setContentType("application/octet-stream");
-		DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
-		String currentDateTime = dateFormatter.format(new Date());
-		
-		String headerKey = "Content-Disposition";
-		String headerValue = "attachment; filename=Maintenance_Requests_" + currentDateTime + ".xlsx";
-		response.setHeader(headerKey, headerValue);
-		
-		List<Equipment> ecs = gmaoService.getAll(Equipment.class);
-		
-		EquipmentExport excelExporter = new EquipmentExport(ecs);
-		
-		excelExporter.export(response);
-	}
-	
-	@RequestMapping(method = RequestMethod.GET, value = "/rest/" + RestConstants.VERSION_1 + GmaoRest.GMAO_NAMESPACE
-	        + "/equipment/count")
+	        + "/service/count")
 	public void doCount(HttpServletResponse response, HttpServletRequest request) throws IOException {
-		Long count = Context.getService(GmaoService.class).doCount(Equipment.class);
+		Long count = Context.getService(GmaoService.class).doCount(Service.class);
 		String content = "{\"count\":" + count + "}";
 		response.setContentType("application/json");
 		response.setContentLength(content.length());

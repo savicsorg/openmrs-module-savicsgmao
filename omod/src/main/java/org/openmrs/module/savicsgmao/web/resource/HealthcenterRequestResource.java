@@ -18,6 +18,7 @@ import org.openmrs.module.webservices.rest.web.response.ResponseException;
 
 import java.util.List;
 import org.openmrs.module.savicsgmao.api.entity.District;
+import org.openmrs.module.savicsgmao.api.entity.EquipmentType;
 import org.openmrs.module.savicsgmao.api.entity.Service;
 import org.openmrs.module.savicsgmao.api.entity.Healthcenter;
 import org.openmrs.module.savicsgmao.api.service.GmaoService;
@@ -80,7 +81,9 @@ public class HealthcenterRequestResource extends DelegatingCrudResource<Healthce
 	protected PageableResult doGetAll(RequestContext context) throws ResponseException {
 		List<Healthcenter> siteList = Context.getService(GmaoService.class).getAll(Healthcenter.class, context.getLimit(),
 		    context.getStartIndex());
-		return new AlreadyPaged<Healthcenter>(context, siteList, false);
+		Long count = Context.getService(GmaoService.class).doCount(Healthcenter.class);
+		boolean hasMore = count > context.getStartIndex() + context.getLimit();
+		return new AlreadyPaged<Healthcenter>(context, siteList, hasMore, count);
 	}
 	
 	@Override
@@ -88,7 +91,10 @@ public class HealthcenterRequestResource extends DelegatingCrudResource<Healthce
 		String value = context.getParameter("name");
 		List<Healthcenter> siteList = Context.getService(GmaoService.class).doSearch(Healthcenter.class, "name", value,
 		    context.getLimit(), context.getStartIndex());
-		return new AlreadyPaged<Healthcenter>(context, siteList, false);
+		
+		Long count = Context.getService(GmaoService.class).doCount(Healthcenter.class, "name", value);
+		Boolean hasMore = count > context.getStartIndex() + context.getLimit();
+		return new AlreadyPaged<Healthcenter>(context, siteList, hasMore, count);
 	}
 	
 	@Override

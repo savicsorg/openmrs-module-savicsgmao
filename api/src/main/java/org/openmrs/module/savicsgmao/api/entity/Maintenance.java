@@ -32,6 +32,10 @@ public class Maintenance extends BaseOpenmrsData implements java.io.Serializable
 	
 	private String doneby;
 	
+	private String reason;
+	
+	private String task;
+	
 	private Date lastmodified;
 	
 	private Date creation;
@@ -173,6 +177,22 @@ public class Maintenance extends BaseOpenmrsData implements java.io.Serializable
 	
 	public void setCreation(Date creation) {
 		this.creation = creation;
+	}
+	
+	public String getReason() {
+		return reason;
+	}
+	
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
+	
+	public String getTask() {
+		return task;
+	}
+	
+	public void setTask(String task) {
+		this.task = task;
 	}
 	
 }

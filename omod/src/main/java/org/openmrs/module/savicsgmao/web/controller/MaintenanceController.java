@@ -14,9 +14,12 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.openmrs.api.context.Context;
+import org.openmrs.module.savicsgmao.api.entity.Equipment;
 import org.openmrs.module.savicsgmao.api.entity.Maintenance;
 import org.springframework.stereotype.Controller;
 import org.openmrs.module.savicsgmao.api.entity.MaintenanceRequest;
@@ -74,5 +77,15 @@ public class MaintenanceController {
 		MaintenanceExport excelExporter = new MaintenanceExport(maintenanceList);
 		
 		excelExporter.export(response);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/rest/" + RestConstants.VERSION_1 + GmaoRest.GMAO_NAMESPACE
+	        + "/maintenances/count")
+	public void doCount(HttpServletResponse response, HttpServletRequest request) throws IOException {
+		Long count = Context.getService(GmaoService.class).doCount(Maintenance.class);
+		String content = "{\"count\":" + count + "}";
+		response.setContentType("application/json");
+		response.setContentLength(content.length());
+		response.getWriter().write(content);
 	}
 }

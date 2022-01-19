@@ -70,11 +70,11 @@ public class DistrictRequestResource extends DataDelegatingCrudResource<District
 	
 	@Override
 	protected PageableResult doGetAll(RequestContext context) throws ResponseException {
-		System.out.println("---- doGetAll ");
 		List<District> districtList = Context.getService(GmaoService.class).getAll(District.class, context.getLimit(),
 		    context.getStartIndex());
-		System.out.println(districtList.toString());
-		return new AlreadyPaged<District>(context, districtList, false);
+		Long count = Context.getService(GmaoService.class).doCount(District.class);
+		boolean hasMore = count > context.getStartIndex() + context.getLimit();
+		return new AlreadyPaged<District>(context, districtList, hasMore, count);
 	}
 	
 	@Override

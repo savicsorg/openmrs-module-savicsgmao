@@ -11,6 +11,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.openmrs.api.APIException;
 import org.openmrs.api.db.hibernate.DbSession;
@@ -132,5 +133,20 @@ public class GmaoDaoImpl<T extends Serializable> implements GmaoDao<T> {
 		Criteria criteria = session.createCriteria(t);
 		criteria.add(Restrictions.eq(idName, id));
 		return (T) criteria.uniqueResult();
+	}
+	
+	@Override
+	public Long doCount(Class<T> t, String key, String value) throws APIException {
+		Criteria crit = getSession().createCriteria(t);
+		crit.setProjection(Projections.rowCount());
+		crit.add(Restrictions.eq(key, value));
+		return (Long) crit.uniqueResult();
+	}
+	
+	@Override
+	public Long doCount(Class<T> t) throws APIException {
+		Criteria crit = getSession().createCriteria(t);
+		crit.setProjection(Projections.rowCount());
+		return (Long) crit.uniqueResult();
 	}
 }

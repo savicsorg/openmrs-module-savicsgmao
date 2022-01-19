@@ -79,7 +79,9 @@ public class SiteRequestResource extends DelegatingCrudResource<Site> {
 	protected PageableResult doGetAll(RequestContext context) throws ResponseException {
 		List<Site> siteList = Context.getService(GmaoService.class).getAll(Site.class, context.getLimit(),
 		    context.getStartIndex());
-		return new AlreadyPaged<Site>(context, siteList, false);
+		Long count = Context.getService(GmaoService.class).doCount(Service.class);
+		boolean hasMore = count > context.getStartIndex() + context.getLimit();
+		return new AlreadyPaged<Site>(context, siteList, hasMore, count);
 	}
 	
 	@Override
@@ -87,7 +89,9 @@ public class SiteRequestResource extends DelegatingCrudResource<Site> {
 		String value = context.getParameter("name");
 		List<Site> siteList = Context.getService(GmaoService.class).doSearch(Site.class, "name", value, context.getLimit(),
 		    context.getStartIndex());
-		return new AlreadyPaged<Site>(context, siteList, false);
+		Long count = Context.getService(GmaoService.class).doCount(Site.class, "name", value);
+		Boolean hasMore = count > context.getStartIndex() + context.getLimit();
+		return new AlreadyPaged<Site>(context, siteList, hasMore, count);
 	}
 	
 	@Override

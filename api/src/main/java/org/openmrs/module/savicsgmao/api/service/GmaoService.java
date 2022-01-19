@@ -46,4 +46,10 @@ public interface GmaoService<T extends Serializable> extends OpenmrsService {
 	@Transactional
 	void delete(final T entity) throws APIException;
 	
+	@Transactional(readOnly = true)
+	public Long doCount(Class<T> t) throws APIException;
+	
+	@Transactional(readOnly = true)
+	public Long doCount(Class<T> t, String key, String value) throws APIException;
+	
 }

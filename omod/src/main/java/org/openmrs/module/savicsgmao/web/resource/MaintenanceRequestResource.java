@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.openmrs.module.savicsgmao.api.entity.Equipment;
+import org.openmrs.module.savicsgmao.api.entity.Healthcenter;
 import org.openmrs.module.savicsgmao.api.service.GmaoService;
 import org.openmrs.module.savicsgmao.api.entity.Maintenance;
 import org.openmrs.module.savicsgmao.api.entity.MaintenanceRequest;
@@ -48,6 +49,7 @@ public class MaintenanceRequestResource extends DelegatingCrudResource<Maintenan
 			description.addProperty("maintenanceType");
 			description.addProperty("maintenanceRequest");
 			description.addProperty("name");
+			description.addProperty("reason");
 			description.addProperty("description");
 			description.addProperty("startdate");
 			description.addProperty("enddate");
@@ -66,6 +68,7 @@ public class MaintenanceRequestResource extends DelegatingCrudResource<Maintenan
 			description.addProperty("maintenanceType");
 			description.addProperty("maintenanceRequest");
 			description.addProperty("name");
+			description.addProperty("reason");
 			description.addProperty("description");
 			description.addProperty("startdate");
 			description.addProperty("enddate");
@@ -89,6 +92,7 @@ public class MaintenanceRequestResource extends DelegatingCrudResource<Maintenan
 			description.addProperty("status");
 			description.addProperty("doneby");
 			description.addProperty("name");
+			description.addProperty("reason");
 			description.addProperty("description");
 			description.addProperty("equipment");
 			description.addProperty("lastmodified");
@@ -103,7 +107,9 @@ public class MaintenanceRequestResource extends DelegatingCrudResource<Maintenan
 	protected PageableResult doGetAll(RequestContext context) throws ResponseException {
 		List<Maintenance> maintenanceList = Context.getService(GmaoService.class).getAll(Maintenance.class,
 		    context.getLimit(), context.getStartIndex());
-		return new AlreadyPaged<Maintenance>(context, maintenanceList, false);
+		Long count = Context.getService(GmaoService.class).doCount(Maintenance.class);
+		boolean hasMore = count > context.getStartIndex() + context.getLimit();
+		return new AlreadyPaged<Maintenance>(context, maintenanceList, hasMore, count);
 	}
 	
 	@Override
@@ -111,7 +117,9 @@ public class MaintenanceRequestResource extends DelegatingCrudResource<Maintenan
 		String value = context.getParameter("doneby");
 		List<Maintenance> maintenanceList = Context.getService(GmaoService.class).doSearch(Maintenance.class, "doneby",
 		    value, context.getLimit(), context.getStartIndex());
-		return new AlreadyPaged<Maintenance>(context, maintenanceList, false);
+		Long count = Context.getService(GmaoService.class).doCount(Healthcenter.class, "doneby", value);
+		Boolean hasMore = count > context.getStartIndex() + context.getLimit();
+		return new AlreadyPaged<Maintenance>(context, maintenanceList, hasMore, count);
 	}
 	
 	@Override
@@ -215,6 +223,10 @@ public class MaintenanceRequestResource extends DelegatingCrudResource<Maintenan
 		
 		if (properties.get("doneby") != null) {
 			maintenance.setDoneby((String) properties.get("doneby"));
+		}
+		
+		if (properties.get("reason") != null) {
+			maintenance.setReason((String) properties.get("reason"));
 		}
 		
 		if (properties.get("startdate") != null) {

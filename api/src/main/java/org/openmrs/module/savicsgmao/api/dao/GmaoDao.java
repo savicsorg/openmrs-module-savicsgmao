@@ -45,4 +45,9 @@ public interface GmaoDao<T extends Serializable> {
 	@Transactional
 	void delete(final T entity) throws APIException;
 	
+	@Transactional(readOnly = true)
+	public Long doCount(Class<T> t, String key, String value) throws APIException;
+	
+	@Transactional(readOnly = true)
+	public Long doCount(Class<T> t) throws APIException;
 }

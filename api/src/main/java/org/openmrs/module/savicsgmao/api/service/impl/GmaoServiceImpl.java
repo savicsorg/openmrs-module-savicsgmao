@@ -79,4 +79,14 @@ public class GmaoServiceImpl<T extends Serializable> extends BaseOpenmrsService 
 	public Serializable getEntityByid(Class t, String idName, Integer id) throws APIException {
 		return (T) this.dao.getEntityByid(t, idName, id);
 	}
+	
+	@Override
+	public Long doCount(Class t) throws APIException {
+		return this.dao.doCount(t);
+	}
+	
+	@Override
+	public Long doCount(Class t, String key, String value) throws APIException {
+		return this.dao.doCount(t, key, value);
+	}
 }
