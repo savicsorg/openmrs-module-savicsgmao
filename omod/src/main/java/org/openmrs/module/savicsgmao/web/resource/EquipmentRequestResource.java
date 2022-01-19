@@ -22,6 +22,7 @@ import org.openmrs.module.webservices.rest.web.response.ResponseException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.openmrs.module.savicsgmao.api.entity.District;
 import org.openmrs.module.savicsgmao.api.service.GmaoService;
 import org.openmrs.module.savicsgmao.api.entity.Equipment;
 import org.openmrs.module.savicsgmao.api.entity.EquipmentType;
@@ -145,7 +146,9 @@ public class EquipmentRequestResource extends DelegatingCrudResource<Equipment> 
 	protected PageableResult doGetAll(RequestContext context) throws ResponseException {
 		List<Equipment> equipmentList = Context.getService(GmaoService.class).getAll(Equipment.class, context.getLimit(),
 		    context.getStartIndex());
-		return new AlreadyPaged<Equipment>(context, equipmentList, false);
+		Long count = Context.getService(GmaoService.class).doCount(Equipment.class);
+		boolean hasMore = count > context.getStartIndex() + context.getLimit();
+		return new AlreadyPaged<Equipment>(context, equipmentList, hasMore, count);
 	}
 	
 	@Override
@@ -153,7 +156,11 @@ public class EquipmentRequestResource extends DelegatingCrudResource<Equipment> 
 		String value = context.getParameter("name");
 		List<Equipment> equipmentList = Context.getService(GmaoService.class).doSearch(Equipment.class, "name", value,
 		    context.getLimit(), context.getStartIndex());
-		return new AlreadyPaged<Equipment>(context, equipmentList, false);
+		equipmentList = Context.getService(GmaoService.class).doSearch(Equipment.class, "name", value, context.getLimit(),
+		    context.getStartIndex());
+		Long count = Context.getService(GmaoService.class).doCount(Equipment.class, "name", value);
+		Boolean hasMore = count > context.getStartIndex() + context.getLimit();
+		return new AlreadyPaged<Equipment>(context, equipmentList, hasMore, count);
 	}
 	
 	@Override

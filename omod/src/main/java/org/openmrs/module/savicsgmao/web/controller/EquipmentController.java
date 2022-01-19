@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.openmrs.api.context.Context;
 import org.openmrs.module.savicsgmao.api.entity.Equipment;
 import org.springframework.stereotype.Controller;
 import org.openmrs.module.savicsgmao.api.service.GmaoService;
@@ -55,5 +56,15 @@ public class EquipmentController {
 		EquipmentExport excelExporter = new EquipmentExport(ecs);
 		
 		excelExporter.export(response);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/rest/" + RestConstants.VERSION_1 + GmaoRest.GMAO_NAMESPACE
+	        + "/equipment/count")
+	public void doCount(HttpServletResponse response, HttpServletRequest request) throws IOException {
+		Long count = Context.getService(GmaoService.class).doCount(Equipment.class);
+		String content = "{\"count\":" + count + "}";
+		response.setContentType("application/json");
+		response.setContentLength(content.length());
+		response.getWriter().write(content);
 	}
 }

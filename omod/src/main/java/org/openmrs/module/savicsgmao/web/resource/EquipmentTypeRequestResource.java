@@ -16,6 +16,7 @@ import org.openmrs.module.webservices.rest.web.response.IllegalPropertyException
 import org.openmrs.module.webservices.rest.web.response.ResponseException;
 
 import java.util.List;
+import org.openmrs.module.savicsgmao.api.entity.Equipment;
 import org.openmrs.module.savicsgmao.api.service.GmaoService;
 import org.openmrs.module.savicsgmao.api.entity.EquipmentType;
 import org.openmrs.module.savicsgmao.rest.v1_0.resource.GmaoRest;
@@ -51,7 +52,9 @@ public class EquipmentTypeRequestResource extends DelegatingCrudResource<Equipme
 	protected PageableResult doGetAll(RequestContext context) throws ResponseException {
 		List<EquipmentType> equipmentTypeList = Context.getService(GmaoService.class).getAll(EquipmentType.class,
 		    context.getLimit(), context.getStartIndex());
-		return new AlreadyPaged<EquipmentType>(context, equipmentTypeList, false);
+		Long count = Context.getService(GmaoService.class).doCount(EquipmentType.class);
+		boolean hasMore = count > context.getStartIndex() + context.getLimit();
+		return new AlreadyPaged<EquipmentType>(context, equipmentTypeList, hasMore, count);
 	}
 	
 	@Override
@@ -59,7 +62,10 @@ public class EquipmentTypeRequestResource extends DelegatingCrudResource<Equipme
 		String value = context.getParameter("name");
 		List<EquipmentType> equipmentTypeList = Context.getService(GmaoService.class).doSearch(EquipmentType.class, "name",
 		    value, context.getLimit(), context.getStartIndex());
-		return new AlreadyPaged<EquipmentType>(context, equipmentTypeList, false);
+		
+		Long count = Context.getService(GmaoService.class).doCount(EquipmentType.class, "name", value);
+		Boolean hasMore = count > context.getStartIndex() + context.getLimit();
+		return new AlreadyPaged<EquipmentType>(context, equipmentTypeList, hasMore, count);
 	}
 	
 	@Override

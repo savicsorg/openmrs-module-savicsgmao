@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.openmrs.module.savicsgmao.api.entity.Equipment;
+import org.openmrs.module.savicsgmao.api.entity.Healthcenter;
 import org.openmrs.module.savicsgmao.api.service.GmaoService;
 import org.openmrs.module.savicsgmao.api.entity.MaintenanceRequest;
 import org.openmrs.module.savicsgmao.rest.v1_0.resource.GmaoRest;
@@ -93,7 +94,9 @@ public class MaintenanceRequestRequestResource extends DelegatingCrudResource<Ma
 	protected PageableResult doGetAll(RequestContext context) throws ResponseException {
 		List<MaintenanceRequest> maintenanceRequestList = Context.getService(GmaoService.class).getAll(
 		    MaintenanceRequest.class, context.getLimit(), context.getStartIndex());
-		return new AlreadyPaged<MaintenanceRequest>(context, maintenanceRequestList, false);
+		Long count = Context.getService(GmaoService.class).doCount(MaintenanceRequest.class);
+		boolean hasMore = count > context.getStartIndex() + context.getLimit();
+		return new AlreadyPaged<MaintenanceRequest>(context, maintenanceRequestList, hasMore, count);
 	}
 	
 	@Override
@@ -101,7 +104,9 @@ public class MaintenanceRequestRequestResource extends DelegatingCrudResource<Ma
 		String value = context.getParameter("registerNumber");
 		List<MaintenanceRequest> maintenanceRequestList = Context.getService(GmaoService.class).doSearch(
 		    MaintenanceRequest.class, "registerNumber", value, context.getLimit(), context.getStartIndex());
-		return new AlreadyPaged<MaintenanceRequest>(context, maintenanceRequestList, false);
+		Long count = Context.getService(GmaoService.class).doCount(MaintenanceRequest.class, "registerNumber", value);
+		Boolean hasMore = count > context.getStartIndex() + context.getLimit();
+		return new AlreadyPaged<MaintenanceRequest>(context, maintenanceRequestList, hasMore, count);
 	}
 	
 	@Override
