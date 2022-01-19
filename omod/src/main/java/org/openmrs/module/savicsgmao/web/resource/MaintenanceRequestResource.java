@@ -167,7 +167,7 @@ public class MaintenanceRequestResource extends DelegatingCrudResource<Maintenan
 	
 	private Maintenance constructMaintenance(String uuid, SimpleObject properties) throws ParseException {
 		Maintenance maintenance;
-		DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Equipment equipment = null;
 		if (properties.get("equipment") != null) {
 			Integer equipementId = properties.get("equipment");
