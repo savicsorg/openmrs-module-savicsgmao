@@ -3,6 +3,8 @@ package org.openmrs.module.savicsgmao.web.resource;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Date;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.webservices.rest.SimpleObject;
 import org.openmrs.module.webservices.rest.web.ConversionUtil;
@@ -19,6 +21,7 @@ import org.openmrs.module.webservices.rest.web.response.IllegalPropertyException
 import org.openmrs.module.webservices.rest.web.response.ResponseException;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.openmrs.module.savicsgmao.api.entity.Equipment;
@@ -175,7 +178,7 @@ public class MaintenanceRequestResource extends DelegatingCrudResource<Maintenan
 	
 	private Maintenance constructMaintenance(String uuid, SimpleObject properties) throws ParseException {
 		Maintenance maintenance;
-		DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
 		Equipment equipment = null;
 		if (properties.get("equipment") != null) {
 			Integer equipementId = properties.get("equipment");
@@ -230,11 +233,13 @@ public class MaintenanceRequestResource extends DelegatingCrudResource<Maintenan
 		}
 		
 		if (properties.get("startdate") != null) {
-			maintenance.setStartdate(simpleDateFormat.parse(properties.get("startdate").toString()));
+			Date startdate = simpleDateFormat.parse(properties.get("startdate").toString());
+			maintenance.setStartdate(startdate);
 		}
 		
 		if (properties.get("enddate") != null) {
-			maintenance.setEnddate(simpleDateFormat.parse(properties.get("enddate").toString()));
+			Date enddate = simpleDateFormat.parse(properties.get("enddate").toString());
+			maintenance.setEnddate(enddate);
 		}
 		
 		if (properties.get("status") != null) {
