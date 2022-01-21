@@ -40,6 +40,9 @@
         <property name="centralapprover" type="string">
             <column name="centralapprover" length="32" />
         </property>
+        <property name="status" type="string">
+            <column name="status" length="10" />
+        </property>
         <property name="creation" type="timestamp">
             <column name="creation" length="19" />
         </property>

@@ -1,7 +1,6 @@
 package org.openmrs.module.savicsgmao.api.entity;
 
 // Generated Dec 9, 2021 11:58:16 AM by Hibernate Tools 4.3.1
-
 import java.util.Date;
 import org.openmrs.BaseOpenmrsData;
 
@@ -33,6 +32,8 @@ public class Mouvement extends BaseOpenmrsData implements java.io.Serializable {
 	private Date centralapproval;
 	
 	private String centralapprover;
+	
+	private String status;
 	
 	private Date creation;
 	
@@ -178,4 +179,11 @@ public class Mouvement extends BaseOpenmrsData implements java.io.Serializable {
 		this.lastmodified = lastmodified;
 	}
 	
+	public String getStatus() {
+		return status;
+	}
+	
+	public void setStatus(String status) {
+		this.status = status;
+	}
 }

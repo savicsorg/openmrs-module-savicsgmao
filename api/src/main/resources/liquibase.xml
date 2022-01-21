@@ -366,4 +366,10 @@
         </addColumn>  
     </changeSet>
     
+    <changeSet author="anatoleabe" id="1639051760881-36"> 
+        <addColumn tableName="gmao_mouvement" >
+            <column name="status" type="VARCHAR(10)"/>
+        </addColumn>  
+    </changeSet>
+    
 </databaseChangeLog>
