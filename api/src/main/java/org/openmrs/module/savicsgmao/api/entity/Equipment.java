@@ -227,16 +227,18 @@ public class Equipment extends BaseOpenmrsData implements java.io.Serializable {
 	public String getServiceStatusDisplay(Integer id) {
 		String value = "";
 		if (1 == id) {
-			value = "Disposé et en service";
+			value = "Fonctionnel et en service";
 		} else if (2 == id) {
-			value = "Disposé mais pas en service";
+			value = "Fonctionnel et hors service";
 		} else if (3 == id) {
-			value = "Disposé mais à réparer";
+			value = "Fonctionnel mais à réparer";
 		} else if (4 == id) {
-			value = "En panne et à réparer";
+			value = "Hors service mais à réparer";
 		} else if (5 == id) {
-			value = "Transféré";
-		}
+			value = "A remplacer";
+		} else if (6 == id) {
+			value = "Existance d'un SAV";
+		} 
 		return value;
 	}
 	
@@ -279,14 +281,12 @@ public class Equipment extends BaseOpenmrsData implements java.io.Serializable {
 	public String getManualsDisplay(Integer id) {
 		String value = "";
 		if ("1".equals(id + "")) {
-			value = "Manuels d'utilisation";
+			value = "Manuel d'utilisation & d'entretien";
 		} else if ("2".equals(id + "")) {
-			value = "Manuels d'entretien";
+			value = "Manuel de maintenance";
 		} else if ("3".equals(id + "")) {
-			value = "Inconnue";
-		} else if ("4".equals(id + "")) {
 			value = "Autre";
-		}
+		} 
 		return value;
 	}
 	
