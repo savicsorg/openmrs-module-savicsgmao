@@ -20,6 +20,7 @@ import org.openmrs.module.webservices.rest.web.response.IllegalPropertyException
 import org.openmrs.module.webservices.rest.web.response.ResponseException;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.openmrs.module.savicsgmao.api.entity.Equipment;
@@ -163,7 +164,7 @@ public class MaintenanceRequestRequestResource extends DelegatingCrudResource<Ma
 	
 	private MaintenanceRequest constructAgent(String uuid, SimpleObject properties) throws ParseException {
 		MaintenanceRequest maintenanceRequest;
-		DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
 		
 		Equipment equipment = null;
 		if (properties.get("equipment") != null) {

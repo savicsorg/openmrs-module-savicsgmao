@@ -20,6 +20,7 @@ import org.openmrs.module.webservices.rest.web.response.IllegalPropertyException
 import org.openmrs.module.webservices.rest.web.response.ResponseException;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.openmrs.module.savicsgmao.api.entity.Equipment;
@@ -57,6 +58,7 @@ public class MouvementRequestResource extends DelegatingCrudResource<Mouvement> 
 			description.addProperty("localapprover");
 			description.addProperty("centralapproval");
 			description.addProperty("centralapprover");
+			description.addProperty("status");
 			description.addProperty("creation");
 			description.addProperty("lastmodified");
 			description.addLink("ref", ".?v=" + RestConstants.REPRESENTATION_REF);
@@ -76,6 +78,7 @@ public class MouvementRequestResource extends DelegatingCrudResource<Mouvement> 
 			description.addProperty("localapprover");
 			description.addProperty("centralapproval");
 			description.addProperty("centralapprover");
+			description.addProperty("status");
 			description.addProperty("creation");
 			description.addProperty("lastmodified");
 			description.addLink("full", ".?v=" + RestConstants.REPRESENTATION_FULL);
@@ -96,6 +99,7 @@ public class MouvementRequestResource extends DelegatingCrudResource<Mouvement> 
 			description.addProperty("localapprover");
 			description.addProperty("centralapproval");
 			description.addProperty("centralapprover");
+			description.addProperty("status");
 			description.addProperty("creation");
 			description.addProperty("lastmodified");
 			description.addSelfLink();
@@ -156,6 +160,13 @@ public class MouvementRequestResource extends DelegatingCrudResource<Mouvement> 
 		try {
 			Mouvement mouvement = this.constructMouvement(uuid, propertiesToUpdate);
 			Context.getService(GmaoService.class).upsert(mouvement);
+			
+			if ("VALID".equals(mouvement.getStatus())) {//If a validation
+				Equipment equipment = (Equipment) Context.getService(GmaoService.class).getEntityByUuid(Equipment.class,
+				    mouvement.getEquipment().getUuid());
+				equipment.setSite(mouvement.getSiteByDestinationId());
+				Context.getService(GmaoService.class).upsert(equipment);
+			}
 			return ConversionUtil.convertToRepresentation(mouvement, context.getRepresentation());
 		}
 		catch (ParseException ex) {
@@ -177,7 +188,7 @@ public class MouvementRequestResource extends DelegatingCrudResource<Mouvement> 
 	private Mouvement constructMouvement(String uuid, SimpleObject properties) throws ParseException {
 		Healthcenter healthcenter = null;
 		Mouvement mouvement;
-		DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
 		
 		Site siteByDestination = null;
 		if (properties.get("siteByDestination") != null) {
@@ -234,6 +245,10 @@ public class MouvementRequestResource extends DelegatingCrudResource<Mouvement> 
 		
 		if (properties.get("centralapprover") != null) {
 			mouvement.setLocalapprover(properties.get("centralapprover").toString());
+		}
+		
+		if (properties.get("status") != null) {
+			mouvement.setStatus(properties.get("status").toString());
 		}
 		
 		if (properties.get("motif") != null) {

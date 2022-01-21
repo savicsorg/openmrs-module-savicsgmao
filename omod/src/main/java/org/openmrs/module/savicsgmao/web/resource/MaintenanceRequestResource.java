@@ -202,14 +202,14 @@ public class MaintenanceRequestResource extends DelegatingCrudResource<Maintenan
 			if (maintenance == null) {
 				throw new IllegalPropertyException("Maintenance not exist");
 			}
-                        maintenance.setLastmodified(new Date());
+			maintenance.setLastmodified(new Date());
 		} else {
 			maintenance = new Maintenance();
 			if (properties.get("maintenanceType") == null || properties.get("name") == null) {
 				throw new IllegalPropertyException("Required parameters: maintenanceType, name");
 			}
-                        maintenance.setCreation(new Date());
-                        maintenance.setLastmodified(new Date());
+			maintenance.setCreation(new Date());
+			maintenance.setLastmodified(new Date());
 		}
 		if (properties.get("maintenanceType") != null) {
 			maintenance.setMaintenanceType(maintenanceType);
