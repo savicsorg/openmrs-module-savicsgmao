@@ -200,7 +200,7 @@ public class Equipment extends BaseOpenmrsData implements java.io.Serializable {
 	
 	public String getAftersaleserviceDisplay(Boolean as) {
 		String value = "";
-		if (as == true) {
+		if (as != null && as == true) {
 			value = "Oui";
 		} else {
 			value = "Non";
