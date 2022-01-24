@@ -87,6 +87,7 @@ public class AddressHierarchyRequestResource extends DelegatingCrudResource<Addr
 	protected PageableResult doSearch(RequestContext context) {
 		String level = context.getParameter("level");
 		String parent = context.getParameter("parent");
+		String addressHierarchyEntryId = context.getParameter("addressHierarchyEntryId");
 		int l = 0;
 		int p = 0;
 		if (level != null) {
@@ -107,10 +108,13 @@ public class AddressHierarchyRequestResource extends DelegatingCrudResource<Addr
 			} else if (parent != null && entry != null && entry.getParent() != null
 			        && p == entry.getParent().getAddressHierarchyLevel().getLevelId()) {
 				agentListFiltered.add(entry);
+			} else if (addressHierarchyEntryId != null && entry != null
+			        && entry.getAddressHierarchyEntryId() == Integer.valueOf(addressHierarchyEntryId)) {
+				agentListFiltered.add(entry);
 			}
 		}
 		
-		if (level == null && parent == null) {
+		if (level == null && parent == null && addressHierarchyEntryId == null) {
 			return new AlreadyPaged<AddressHierarchyEntry>(context, agentList, false);
 		}
 		return new AlreadyPaged<AddressHierarchyEntry>(context, agentListFiltered, false);

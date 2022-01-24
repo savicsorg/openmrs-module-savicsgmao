@@ -111,6 +111,16 @@ public class Mouvement extends BaseOpenmrsData implements java.io.Serializable {
 		return this.type;
 	}
 	
+	public String getTypeDisplay() {
+		String value = "";
+		if ("1".equals(getType() + "")) {
+			value = "Sortie";
+		} else if ("2".equals(getType() + "")) {
+			value = "Transfert";
+		}
+		return value;
+	}
+	
 	public void setType(int type) {
 		this.type = type;
 	}

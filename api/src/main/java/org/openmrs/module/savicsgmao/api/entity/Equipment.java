@@ -238,7 +238,7 @@ public class Equipment extends BaseOpenmrsData implements java.io.Serializable {
 			value = "A remplacer";
 		} else if (6 == id) {
 			value = "Existance d'un SAV";
-		} 
+		}
 		return value;
 	}
 	
@@ -286,7 +286,7 @@ public class Equipment extends BaseOpenmrsData implements java.io.Serializable {
 			value = "Manuel de maintenance";
 		} else if ("3".equals(id + "")) {
 			value = "Autre";
-		} 
+		}
 		return value;
 	}
 	

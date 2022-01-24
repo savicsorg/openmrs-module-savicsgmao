@@ -10,6 +10,10 @@
 package org.openmrs.module.savicsgmao.web.controller;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
@@ -18,6 +22,7 @@ import org.openmrs.api.context.Context;
 import org.openmrs.module.savicsgmao.api.entity.Mouvement;
 import org.springframework.stereotype.Controller;
 import org.openmrs.module.savicsgmao.api.service.GmaoService;
+import org.openmrs.module.savicsgmao.export.MovementExport;
 import org.openmrs.module.savicsgmao.rest.v1_0.resource.GmaoRest;
 import org.openmrs.module.webservices.rest.web.RestConstants;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,5 +48,28 @@ public class MouvementController {
 		response.setContentType("application/json");
 		response.setContentLength(content.length());
 		response.getWriter().write(content);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/rest/" + RestConstants.VERSION_1 + GmaoRest.GMAO_NAMESPACE
+	        + "/mouvement/export")
+	public void exportToExcel(HttpServletResponse response, HttpServletRequest request) throws IOException, Exception {
+		response.setContentType("application/octet-stream");
+		DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+		String currentDateTime = dateFormatter.format(new Date());
+		
+		String headerKey = "Content-Disposition";
+		String headerValue = "attachment; filename=Movement_" + currentDateTime + ".xlsx";
+		response.setHeader(headerKey, headerValue);
+		
+		Boolean movementValidated = false;
+		if (request.getParameter("movementValidated") != null) {
+			movementValidated = Boolean.valueOf(request.getParameter("movementValidated"));
+		}
+		
+		List<Mouvement> ecs = gmaoService.getAll(Mouvement.class);
+		
+		MovementExport excelExporter = new MovementExport(ecs, movementValidated);
+		
+		excelExporter.export(response);
 	}
 }
