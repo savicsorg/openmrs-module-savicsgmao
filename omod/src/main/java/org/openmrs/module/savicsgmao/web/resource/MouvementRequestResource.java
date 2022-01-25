@@ -188,7 +188,7 @@ public class MouvementRequestResource extends DelegatingCrudResource<Mouvement> 
 	private Mouvement constructMouvement(String uuid, SimpleObject properties) throws ParseException {
 		Healthcenter healthcenter = null;
 		Mouvement mouvement;
-		DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
+		DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
 		
 		Site siteByDestination = null;
 		if (properties.get("siteByDestination") != null) {
