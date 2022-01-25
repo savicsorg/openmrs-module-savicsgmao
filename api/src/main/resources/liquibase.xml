@@ -372,4 +372,13 @@
         </addColumn>  
     </changeSet>
     
+    <changeSet author="anatoleabe" id="1639051760881-37">
+        <sql>
+            ALTER TABLE gmao_maintenance MODIFY COLUMN description TEXT ;
+        </sql>
+        <sql>
+            ALTER TABLE gmao_maintenance MODIFY COLUMN reason VARCHAR(255) ;
+        </sql>
+    </changeSet>
+    
 </databaseChangeLog>
