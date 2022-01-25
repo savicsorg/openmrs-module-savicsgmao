@@ -141,11 +141,13 @@ public class MouvementRequestResource extends DelegatingCrudResource<Mouvement> 
 	@Override
 	public Object create(SimpleObject propertiesToCreate, RequestContext context) throws ResponseException {
 		try {
+			System.out.println("--------------> propertiesToCreate " + propertiesToCreate.toString());
 			if (propertiesToCreate.get("siteBySource") == null) {
 				throw new ConversionException("Required properties: siteBySource");
 			}
 			
 			Mouvement mouvement = this.constructMouvement(null, propertiesToCreate);
+			System.out.println("Mouvement Apres save " + mouvement.toString());
 			Context.getService(GmaoService.class).upsert(mouvement);
 			return ConversionUtil.convertToRepresentation(mouvement, context.getRepresentation());
 		}
@@ -188,7 +190,8 @@ public class MouvementRequestResource extends DelegatingCrudResource<Mouvement> 
 	private Mouvement constructMouvement(String uuid, SimpleObject properties) throws ParseException {
 		Healthcenter healthcenter = null;
 		Mouvement mouvement;
-		DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+		DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                DateFormat simpleDateFormatApprove = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
 		
 		Site siteByDestination = null;
 		if (properties.get("siteByDestination") != null) {
@@ -232,7 +235,7 @@ public class MouvementRequestResource extends DelegatingCrudResource<Mouvement> 
 		}
 		
 		if (properties.get("localapproval") != null) {
-			mouvement.setLocalapproval(simpleDateFormat.parse(properties.get("localapproval").toString()));
+			mouvement.setLocalapproval(simpleDateFormatApprove.parse(properties.get("localapproval").toString()));
 		}
 		
 		if (properties.get("localapprover") != null) {
@@ -240,7 +243,7 @@ public class MouvementRequestResource extends DelegatingCrudResource<Mouvement> 
 		}
 		
 		if (properties.get("centralapproval") != null) {
-			mouvement.setLocalapproval(simpleDateFormat.parse(properties.get("centralapproval").toString()));
+			mouvement.setLocalapproval(simpleDateFormatApprove.parse(properties.get("centralapproval").toString()));
 		}
 		
 		if (properties.get("centralapprover") != null) {
