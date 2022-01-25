@@ -6,7 +6,10 @@
 package org.openmrs.module.savicsgmao.export;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.poi.ss.usermodel.BorderStyle;
@@ -124,6 +127,7 @@ public class MovementExport {
 			} else if (!movementValidated) {
 				row = sheet.createRow(rowCount++);
 			}
+			DateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
 			
 			if (row != null) {
 				
@@ -138,7 +142,7 @@ public class MovementExport {
 				int columnCount = 0;
 				
 				createCell(row, columnCount++, item.getTypeDisplay(), style);
-				createCell(row, columnCount++, item.getDate() + "", style);
+				createCell(row, columnCount++, simpleDateFormat.format(item.getDate()) + "", style);
 				createCell(row, columnCount++, item.getMotif(), style);
 				createCell(row, columnCount++, item.getEquipment().getName(), style);
 				createCell(row, columnCount++, item.getEquipment().getSerialNumber(), style);
@@ -160,7 +164,7 @@ public class MovementExport {
 				    style);
 				createCell(row, columnCount++, item.getSiteByDestinationId().getService().getName() + "", style);
 				createCell(row, columnCount++, item.getSiteByDestinationId().getName() + "", style);
-				createCell(row, columnCount++, item.getStatus()!=null?item.getStatus():"" + "", style);
+				createCell(row, columnCount++, item.getStatus() != null ? item.getStatus() : "" + "", style);
 			}
 			
 		}
