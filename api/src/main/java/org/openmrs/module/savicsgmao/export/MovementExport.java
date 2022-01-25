@@ -23,11 +23,9 @@ import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openmrs.api.context.Context;
-import org.openmrs.messagesource.MessageSourceService;
 import org.openmrs.module.addresshierarchy.AddressHierarchyEntry;
 import org.openmrs.module.savicsgmao.api.entity.Mouvement;
 import org.openmrs.module.savicsgmao.api.service.GmaoService;
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author anatoleabe
@@ -41,9 +39,6 @@ public class MovementExport {
 	private List<Mouvement> listMouvements;
 	
 	private Boolean movementValidated;
-	
-	@Autowired
-	private MessageSourceService messageSourceService;
 	
 	public MovementExport(List<Mouvement> listMouvements, Boolean movementValidated) {
 		this.listMouvements = listMouvements;

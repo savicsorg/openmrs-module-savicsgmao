@@ -19,9 +19,7 @@ import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.openmrs.messagesource.MessageSourceService;
 import org.openmrs.module.savicsgmao.api.entity.Equipment;
-import org.springframework.beans.factory.annotation.Autowired;
 //import net.sf.json.JSONObject;
 //import net.sf.json.JSONSerializer;
 
@@ -35,9 +33,6 @@ public class EquipmentExport {
 	private XSSFSheet sheet;
 	
 	private List<Equipment> equipments;
-	
-	@Autowired
-	private MessageSourceService messageSourceService;
 	
 	public EquipmentExport(List<Equipment> equipments) {
 		this.equipments = equipments;

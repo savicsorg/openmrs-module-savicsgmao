@@ -9,23 +9,18 @@ import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.List;
 import org.hibernate.Criteria;
-import org.hibernate.Session;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.openmrs.api.APIException;
 import org.openmrs.api.db.hibernate.DbSession;
 import org.openmrs.api.db.hibernate.DbSessionFactory;
-import org.openmrs.module.addresshierarchy.AddressHierarchyEntry;
-import org.openmrs.module.addresshierarchy.AddressHierarchyLevel;
 import org.openmrs.module.savicsgmao.api.dao.GmaoDao;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class GmaoDaoImpl<T extends Serializable> implements GmaoDao<T> {
 	
-	@Autowired
 	DbSessionFactory dbSessionFactory;
 	
 	public void setDbSessionFactory(DbSessionFactory dbSessionFactory) {
@@ -39,10 +34,6 @@ public class GmaoDaoImpl<T extends Serializable> implements GmaoDao<T> {
 	 */
 	private DbSession getSession() {
 		try {
-			System.out.println(">>>>>> getSession = sessionFactory = " + dbSessionFactory);
-			System.out.println(">>>>>> getSession = sessionFactory.getCurrentSession() = "
-			        + dbSessionFactory.getCurrentSession());
-			
 			return dbSessionFactory.getCurrentSession();
 		}
 		catch (NoSuchMethodError ex) {
@@ -67,9 +58,7 @@ public class GmaoDaoImpl<T extends Serializable> implements GmaoDao<T> {
 	
 	@Override
 	public List getAll(Class t) {
-		System.out.println(">>>>> Dao get all, class = " + t);
 		List entityList = getSession().createCriteria(t).list();
-		System.out.println(">>>>> List= " + entityList);
 		return entityList;
 	}
 	
@@ -85,7 +74,6 @@ public class GmaoDaoImpl<T extends Serializable> implements GmaoDao<T> {
 			}
 		}
 		List entityList = criteria.list();
-		System.out.println(">>>>> List 2= " + entityList);
 		return criteria.list();
 	}
 	

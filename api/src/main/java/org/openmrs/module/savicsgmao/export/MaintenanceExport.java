@@ -19,9 +19,7 @@ import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.openmrs.messagesource.MessageSourceService;
 import org.openmrs.module.savicsgmao.api.entity.Maintenance;
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author anatoleabe
@@ -33,9 +31,6 @@ public class MaintenanceExport {
 	private XSSFSheet sheet;
 	
 	private List<Maintenance> listMaintenance;
-	
-	@Autowired
-	private MessageSourceService messageSourceService;
 	
 	public MaintenanceExport(List<Maintenance> listMaintenance) {
 		this.listMaintenance = listMaintenance;

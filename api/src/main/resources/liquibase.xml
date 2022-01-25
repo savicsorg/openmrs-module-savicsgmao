@@ -380,5 +380,10 @@
             ALTER TABLE gmao_maintenance MODIFY COLUMN reason VARCHAR(255) ;
         </sql>
     </changeSet>
+    <changeSet author="anatoleabe" id="1639051760881-38">
+        <sql>
+            ALTER TABLE gmao_mouvement MODIFY COLUMN motif TEXT ;
+        </sql>
+    </changeSet>
     
 </databaseChangeLog>
