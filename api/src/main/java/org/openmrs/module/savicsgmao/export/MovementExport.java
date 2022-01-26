@@ -84,7 +84,7 @@ public class MovementExport {
 		createCell(row, index++, "HD/CSI destination", cellStyle);
 		createCell(row, index++, "Departement HD/CSI destination", cellStyle);
 		createCell(row, index++, "Site destination", cellStyle);
-		createCell(row, index++, "Statut", cellStyle);
+		createCell(row, index++, "Validation du mouvement", cellStyle);
 	}
 	
 	private void createCell(Row row, int columnCount, Object value, CellStyle style) {
@@ -159,7 +159,7 @@ public class MovementExport {
 				    style);
 				createCell(row, columnCount++, item.getSiteByDestinationId().getService().getName() + "", style);
 				createCell(row, columnCount++, item.getSiteByDestinationId().getName() + "", style);
-				createCell(row, columnCount++, item.getStatus() != null ? item.getStatus() : "" + "", style);
+				createCell(row, columnCount++, item.getStatus() != null ? ("VALID".equals(item.getStatus())?"Oui":"REJECT".equals(item.getStatus())?"Non":"") : "", style);
 			}
 			
 		}
