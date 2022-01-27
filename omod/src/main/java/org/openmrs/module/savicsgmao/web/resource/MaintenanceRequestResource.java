@@ -243,6 +243,8 @@ public class MaintenanceRequestResource extends DelegatingCrudResource<Maintenan
 		if (properties.get("enddate") != null) {
 			Date enddate = simpleDateFormat.parse(properties.get("enddate").toString());
 			maintenance.setEnddate(enddate);
+		} else if (properties.get("enddate") == null || properties.get("enddate").equals("")) {
+			maintenance.setEnddate(null);
 		}
 		
 		if (properties.get("status") != null) {
