@@ -159,7 +159,8 @@ public class MovementExport {
 				    style);
 				createCell(row, columnCount++, item.getSiteByDestinationId().getService().getName() + "", style);
 				createCell(row, columnCount++, item.getSiteByDestinationId().getName() + "", style);
-				createCell(row, columnCount++, item.getStatus() != null ? ("VALID".equals(item.getStatus())?"Oui":"REJECT".equals(item.getStatus())?"Non":"") : "", style);
+				createCell(row, columnCount++, item.getStatus() != null ? ("VALID".equals(item.getStatus()) ? "Oui"
+				        : "REJECT".equals(item.getStatus()) ? "Non" : "") : "", style);
 			}
 			
 		}
