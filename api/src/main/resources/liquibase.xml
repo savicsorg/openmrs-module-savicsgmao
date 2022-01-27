@@ -349,12 +349,12 @@
             <sqlCheck expectedResult="0">select count(*) from gmao_maintenance_type;</sqlCheck>
         </preConditions>
         <insert tableName="gmao_maintenance_type">
-            <column name="name" value="Préventive"/>
+            <column name="name" value="Préventif"/>
             <column name="id" value="1"/>
             <column name="uuid" value="b0000001-d22b-493e-98e8-4d1de0621a8v"/>
         </insert>
         <insert tableName="gmao_maintenance_type">
-            <column name="name" value="Curative"/>
+            <column name="name" value="Curatif"/>
             <column name="id" value="2"/>
             <column name="uuid" value="b0000002-d22b-493e-98e8-4d1de0621a8v"/>
         </insert>
