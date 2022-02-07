@@ -6,7 +6,10 @@
 package org.openmrs.module.savicsgmao.export;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.poi.ss.usermodel.BorderStyle;
@@ -32,8 +35,11 @@ public class MaintenanceRequestsExport {
 	
 	private List<MaintenanceRequest> listMaintenanceRequests;
 	
-	public MaintenanceRequestsExport(List<MaintenanceRequest> listMaintenanceRequests) {
+	private Boolean requestValidated;
+	
+	public MaintenanceRequestsExport(List<MaintenanceRequest> listMaintenanceRequests, Boolean requestValidated) {
 		this.listMaintenanceRequests = listMaintenanceRequests;
+		this.requestValidated = requestValidated;
 		workbook = new XSSFWorkbook();
 	}
 	
@@ -64,6 +70,7 @@ public class MaintenanceRequestsExport {
 		createCell(row, index++, "Equipement", cellStyle);
 		createCell(row, index++, "Raison", cellStyle);
 		createCell(row, index++, "Date", cellStyle);
+		createCell(row, index++, "Validation du mouvement", cellStyle);
 	}
 	
 	private void createCell(Row row, int columnCount, Object value, CellStyle style) {
@@ -94,17 +101,26 @@ public class MaintenanceRequestsExport {
 		style.setBorderLeft(BorderStyle.THIN);
 		
 		for (MaintenanceRequest item : listMaintenanceRequests) {
-			Row row = sheet.createRow(rowCount++);
-			int columnCount = 0;
+			Row row = null;
+			if (requestValidated && ("VALID".equals(item.getStatus()))) {
+                            row = sheet.createRow(rowCount++);
+				
+			} else if (!requestValidated) {
+                            row = sheet.createRow(rowCount++);
+			}
 			
-			createCell(row, columnCount++, item.getRegisterNumber(), style);
-			createCell(row, columnCount++, item.getNatureOfWorkDisplay(item.getNatureOfWork()), style);
-			createCell(row, columnCount++, item.getRequestedby(), style);
-			createCell(row, columnCount++, item.getPriorityDisplay(item.getPriority()), style);
-			createCell(row, columnCount++, item.getEquipment().getName(), style);
-			createCell(row, columnCount++, item.getMotif(), style);
-			createCell(row, columnCount++, item.getCreation() + "", style);
-			
+			if (row != null) {
+				int columnCount = 0;
+				createCell(row, columnCount++, item.getRegisterNumber(), style);
+				createCell(row, columnCount++, item.getNatureOfWorkDisplay(item.getNatureOfWork()), style);
+				createCell(row, columnCount++, item.getRequestedby(), style);
+				createCell(row, columnCount++, item.getPriorityDisplay(item.getPriority()), style);
+				createCell(row, columnCount++, item.getEquipment().getName(), style);
+				createCell(row, columnCount++, item.getMotif(), style);
+				createCell(row, columnCount++, item.getCreation() + "", style);
+				createCell(row, columnCount++, item.getStatus() != null ? ("VALID".equals(item.getStatus()) ? "Oui"
+				        : "REJECT".equals(item.getStatus()) ? "Non" : "") : "", style);
+			}
 		}
 	}
 	

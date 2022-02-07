@@ -23,9 +23,11 @@ import org.openmrs.module.savicsgmao.api.entity.Equipment;
 import org.openmrs.module.savicsgmao.api.entity.Maintenance;
 import org.springframework.stereotype.Controller;
 import org.openmrs.module.savicsgmao.api.entity.MaintenanceRequest;
+import org.openmrs.module.savicsgmao.api.entity.Mouvement;
 import org.openmrs.module.savicsgmao.api.service.GmaoService;
 import org.openmrs.module.savicsgmao.export.MaintenanceExport;
 import org.openmrs.module.savicsgmao.export.MaintenanceRequestsExport;
+import org.openmrs.module.savicsgmao.export.MovementExport;
 import org.openmrs.module.savicsgmao.rest.v1_0.resource.GmaoRest;
 import org.openmrs.module.webservices.rest.web.RestConstants;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +47,7 @@ public class MaintenanceController {
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/rest/" + RestConstants.VERSION_1 + GmaoRest.GMAO_NAMESPACE
 	        + "/maintenancerequests/export")
-	public void exportToExcel(HttpServletResponse response) throws IOException {
+	public void exportToExcel(HttpServletResponse response, HttpServletRequest request) throws IOException {
 		response.setContentType("application/octet-stream");
 		DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
 		String currentDateTime = dateFormatter.format(new Date());
@@ -54,9 +56,14 @@ public class MaintenanceController {
 		String headerValue = "attachment; filename=Maintenance_Requests_" + currentDateTime + ".xlsx";
 		response.setHeader(headerKey, headerValue);
 		
+		Boolean requestValidated = false;
+		if (request.getParameter("requestValidated") != null) {
+			requestValidated = Boolean.valueOf(request.getParameter("requestValidated"));
+		}
+		
 		List<MaintenanceRequest> maintenanceRequestList = gmaoService.getAll(MaintenanceRequest.class);
 		
-		MaintenanceRequestsExport excelExporter = new MaintenanceRequestsExport(maintenanceRequestList);
+		MaintenanceRequestsExport excelExporter = new MaintenanceRequestsExport(maintenanceRequestList, requestValidated);
 		
 		excelExporter.export(response);
 	}

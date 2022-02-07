@@ -54,6 +54,9 @@ public class MaintenanceRequestRequestResource extends DelegatingCrudResource<Ma
 			description.addProperty("lastmodified");
 			description.addProperty("creation");
 			description.addProperty("equipment");
+			description.addProperty("approval");
+			description.addProperty("approver");
+			description.addProperty("status");
 			description.addLink("ref", ".?v=" + RestConstants.REPRESENTATION_REF);
 			description.addSelfLink();
 			return description;
@@ -69,6 +72,9 @@ public class MaintenanceRequestRequestResource extends DelegatingCrudResource<Ma
 			description.addProperty("lastmodified");
 			description.addProperty("creation");
 			description.addProperty("equipment");
+			description.addProperty("approval");
+			description.addProperty("approver");
+			description.addProperty("status");
 			description.addLink("full", ".?v=" + RestConstants.REPRESENTATION_FULL);
 			description.addLink("ref", ".?v=" + RestConstants.REPRESENTATION_REF);
 			description.addSelfLink();
@@ -85,6 +91,9 @@ public class MaintenanceRequestRequestResource extends DelegatingCrudResource<Ma
 			description.addProperty("lastmodified");
 			description.addProperty("creation");
 			description.addProperty("equipment");
+			description.addProperty("approval");
+			description.addProperty("approver");
+			description.addProperty("status");
 			description.addSelfLink();
 			return description;
 		}
@@ -165,6 +174,7 @@ public class MaintenanceRequestRequestResource extends DelegatingCrudResource<Ma
 	private MaintenanceRequest constructAgent(String uuid, SimpleObject properties) throws ParseException {
 		MaintenanceRequest maintenanceRequest;
 		DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
+		DateFormat simpleDateFormatApprove = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
 		
 		Equipment equipment = null;
 		if (properties.get("equipment") != null) {
@@ -210,6 +220,18 @@ public class MaintenanceRequestRequestResource extends DelegatingCrudResource<Ma
 		
 		if (properties.get("creation") != null) {
 			maintenanceRequest.setCreation(simpleDateFormat.parse(properties.get("creation").toString()));
+		}
+		
+		if (properties.get("approval") != null) {
+			maintenanceRequest.setApproval(simpleDateFormatApprove.parse(properties.get("approval").toString()));
+		}
+		
+		if (properties.get("approver") != null) {
+			maintenanceRequest.setApprover(properties.get("approver").toString());
+		}
+		
+		if (properties.get("status") != null) {
+			maintenanceRequest.setStatus(properties.get("status").toString());
 		}
 		
 		maintenanceRequest.setLastmodified(new Date());

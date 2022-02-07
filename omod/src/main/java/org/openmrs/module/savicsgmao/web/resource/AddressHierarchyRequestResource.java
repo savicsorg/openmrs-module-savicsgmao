@@ -78,8 +78,7 @@ public class AddressHierarchyRequestResource extends DelegatingCrudResource<Addr
 	
 	@Override
 	protected PageableResult doGetAll(RequestContext context) throws ResponseException {
-		List<AddressHierarchyEntry> agentList = Context.getService(GmaoService.class).getAll(AddressHierarchyEntry.class,
-		    context.getLimit(), context.getStartIndex());
+		List<AddressHierarchyEntry> agentList = Context.getService(GmaoService.class).getAll(AddressHierarchyEntry.class);
 		return new AlreadyPaged<AddressHierarchyEntry>(context, agentList, false);
 	}
 	
@@ -97,8 +96,7 @@ public class AddressHierarchyRequestResource extends DelegatingCrudResource<Addr
 			p = new Integer(parent);
 		}
 		
-		List<AddressHierarchyEntry> agentList = Context.getService(GmaoService.class).getAll(AddressHierarchyEntry.class,
-		    context.getLimit(), context.getStartIndex());
+		List<AddressHierarchyEntry> agentList = Context.getService(GmaoService.class).getAll(AddressHierarchyEntry.class);
 		List<AddressHierarchyEntry> agentListFiltered = new ArrayList<AddressHierarchyEntry>();
 		
 		for (AddressHierarchyEntry entry : agentList) {
