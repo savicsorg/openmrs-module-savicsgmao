@@ -393,4 +393,26 @@
             <column name="approver" type="VARCHAR(32)"/>
         </addColumn>  
     </changeSet>
+    
+    <changeSet id="enokby-20220103-1" author="enokby">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">select count(*) from role where role like '%GMAO%';</sqlCheck>
+        </preConditions>
+        <insert tableName="role">
+            <column name="role" value="GMAO: Administrateur"/>
+            <column name="description" value="Savics GMAO: Administrateur"/>
+            <column name="uuid" value="b92a0ddd-d22b-493e-98e8-000000000001"/>
+        </insert>
+        <insert tableName="role">
+            <column name="role" value="GMAO: Gestionnaire"/>
+            <column name="description" value="Savics GMAO: Le gestionnaire"/>
+            <column name="uuid" value="b92a0ddd-d22b-493e-98e8-000000000002"/>
+        </insert>
+        <insert tableName="role">
+            <column name="role" value="GMAO: Responsable"/>
+            <column name="description" value="Savics GMAO: Le responsable"/>
+            <column name="uuid" value="b92a0ddd-d22b-493e-98e8-000000000003"/>
+        </insert>
+    </changeSet>
+    
 </databaseChangeLog>
