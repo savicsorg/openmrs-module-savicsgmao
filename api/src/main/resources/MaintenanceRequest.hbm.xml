@@ -35,6 +35,15 @@
         <property name="creation" type="timestamp">
             <column name="creation" length="19" />
         </property>
+         <property name="approval" type="timestamp">
+            <column name="approval" length="19" />
+        </property>
+        <property name="approver" type="string">
+            <column name="approver" length="32" />
+        </property>
+        <property name="status" type="string">
+            <column name="status" length="10" />
+        </property>
         <set name="maintenances" table="gmao_maintenance" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="maintenance_requested_id" />

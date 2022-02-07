@@ -386,4 +386,11 @@
         </sql>
     </changeSet>
     
+    <changeSet author="anatoleabe" id="1639051760881-39"> 
+        <addColumn tableName="gmao_maintenance_request" >
+            <column name="status" type="VARCHAR(10)"/>
+            <column name="approval" type="datetime"/>
+            <column name="approver" type="VARCHAR(32)"/>
+        </addColumn>  
+    </changeSet>
 </databaseChangeLog>

@@ -33,6 +33,12 @@ public class MaintenanceRequest extends BaseOpenmrsData implements java.io.Seria
 	
 	private Date creation;
 	
+	private Date approval;
+	
+	private String approver;
+	
+	private String status;
+	
 	private Set maintenances = new HashSet(0);
 	
 	public MaintenanceRequest() {
@@ -171,4 +177,27 @@ public class MaintenanceRequest extends BaseOpenmrsData implements java.io.Seria
 		this.maintenances = Maintenances;
 	}
 	
+	public Date getApproval() {
+		return approval;
+	}
+	
+	public void setApproval(Date approval) {
+		this.approval = approval;
+	}
+	
+	public String getApprover() {
+		return approver;
+	}
+	
+	public void setApprover(String approver) {
+		this.approver = approver;
+	}
+	
+	public String getStatus() {
+		return status;
+	}
+	
+	public void setStatus(String status) {
+		this.status = status;
+	}
 }
