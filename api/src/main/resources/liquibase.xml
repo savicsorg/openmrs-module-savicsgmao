@@ -415,4 +415,10 @@
         </insert>
     </changeSet>
     
+    <changeSet author="anatoleabe" id="1639051760881-40"> 
+        <addColumn tableName="gmao_maintenance_request" >
+            <column name="maintenanceDate" type="datetime"/>
+        </addColumn>  
+    </changeSet>
+    
 </databaseChangeLog>

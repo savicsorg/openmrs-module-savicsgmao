@@ -57,6 +57,7 @@ public class MaintenanceRequestRequestResource extends DelegatingCrudResource<Ma
 			description.addProperty("approval");
 			description.addProperty("approver");
 			description.addProperty("status");
+			description.addProperty("maintenanceDate");
 			description.addLink("ref", ".?v=" + RestConstants.REPRESENTATION_REF);
 			description.addSelfLink();
 			return description;
@@ -75,6 +76,7 @@ public class MaintenanceRequestRequestResource extends DelegatingCrudResource<Ma
 			description.addProperty("approval");
 			description.addProperty("approver");
 			description.addProperty("status");
+			description.addProperty("maintenanceDate");
 			description.addLink("full", ".?v=" + RestConstants.REPRESENTATION_FULL);
 			description.addLink("ref", ".?v=" + RestConstants.REPRESENTATION_REF);
 			description.addSelfLink();
@@ -94,6 +96,7 @@ public class MaintenanceRequestRequestResource extends DelegatingCrudResource<Ma
 			description.addProperty("approval");
 			description.addProperty("approver");
 			description.addProperty("status");
+			description.addProperty("maintenanceDate");
 			description.addSelfLink();
 			return description;
 		}
@@ -111,10 +114,30 @@ public class MaintenanceRequestRequestResource extends DelegatingCrudResource<Ma
 	
 	@Override
 	protected PageableResult doSearch(RequestContext context) {
-		String value = context.getParameter("registerNumber");
-		List<MaintenanceRequest> maintenanceRequestList = Context.getService(GmaoService.class).doSearch(
-		    MaintenanceRequest.class, "registerNumber", value, context.getLimit(), context.getStartIndex());
-		Long count = Context.getService(GmaoService.class).doCount(MaintenanceRequest.class, "registerNumber", value);
+		String registerNumber = context.getParameter("registerNumber");
+		String status = context.getParameter("status");
+		String id = context.getParameter("id");
+		List<MaintenanceRequest> maintenanceRequestList;
+		Long count;
+		if (registerNumber != null) {
+			maintenanceRequestList = Context.getService(GmaoService.class).doSearch(MaintenanceRequest.class,
+			    "registerNumber", registerNumber, context.getLimit(), context.getStartIndex());
+			count = Context.getService(GmaoService.class)
+			        .doCount(MaintenanceRequest.class, "registerNumber", registerNumber);
+		} else if (status != null) {
+			maintenanceRequestList = Context.getService(GmaoService.class).doSearch(MaintenanceRequest.class, "status",
+			    status, context.getLimit(), context.getStartIndex());
+			count = Context.getService(GmaoService.class).doCount(MaintenanceRequest.class, "status", status);
+		} else if (id != null) {
+			maintenanceRequestList = Context.getService(GmaoService.class).doSearch(MaintenanceRequest.class, "id", id,
+			    context.getLimit(), context.getStartIndex());
+			count = Context.getService(GmaoService.class).doCount(MaintenanceRequest.class, "id", id);
+		} else {
+			maintenanceRequestList = Context.getService(GmaoService.class).getAll(MaintenanceRequest.class,
+			    context.getLimit(), context.getStartIndex());
+			count = Context.getService(GmaoService.class).doCount(MaintenanceRequest.class);
+		}
+		
 		Boolean hasMore = count > context.getStartIndex() + context.getLimit();
 		return new AlreadyPaged<MaintenanceRequest>(context, maintenanceRequestList, hasMore, count);
 	}
@@ -220,6 +243,10 @@ public class MaintenanceRequestRequestResource extends DelegatingCrudResource<Ma
 		
 		if (properties.get("creation") != null) {
 			maintenanceRequest.setCreation(simpleDateFormat.parse(properties.get("creation").toString()));
+		}
+		
+		if (properties.get("maintenanceDate") != null) {
+			maintenanceRequest.setMaintenanceDate(simpleDateFormat.parse(properties.get("maintenanceDate").toString()));
 		}
 		
 		if (properties.get("approval") != null) {

@@ -44,6 +44,9 @@
         <property name="status" type="string">
             <column name="status" length="10" />
         </property>
+         <property name="maintenanceDate" type="timestamp">
+            <column name="maintenanceDate" length="19" />
+        </property>
         <set name="maintenances" table="gmao_maintenance" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="maintenance_requested_id" />

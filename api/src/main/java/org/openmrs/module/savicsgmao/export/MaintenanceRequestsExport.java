@@ -103,10 +103,10 @@ public class MaintenanceRequestsExport {
 		for (MaintenanceRequest item : listMaintenanceRequests) {
 			Row row = null;
 			if (requestValidated && ("VALID".equals(item.getStatus()))) {
-                            row = sheet.createRow(rowCount++);
+				row = sheet.createRow(rowCount++);
 				
 			} else if (!requestValidated) {
-                            row = sheet.createRow(rowCount++);
+				row = sheet.createRow(rowCount++);
 			}
 			
 			if (row != null) {

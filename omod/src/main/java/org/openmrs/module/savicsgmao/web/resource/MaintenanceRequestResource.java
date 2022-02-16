@@ -144,7 +144,21 @@ public class MaintenanceRequestResource extends DelegatingCrudResource<Maintenan
 			}
 			
 			Maintenance maintenance = this.constructMaintenance(null, propertiesToCreate);
-			Context.getService(GmaoService.class).upsert(maintenance);
+			Object maintenanceSerial = Context.getService(GmaoService.class).upsert(maintenance);
+			
+			MaintenanceRequest maintenanceRequest = null;
+			if (propertiesToCreate.get("maintenanceRequest") != null) {
+				DateFormat simpleDateFormatApprove = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+				Integer id = propertiesToCreate.get("maintenanceRequest");
+				maintenanceRequest = (MaintenanceRequest) Context.getService(GmaoService.class).getEntityByid(
+				    MaintenanceRequest.class, "id", id);
+				maintenanceRequest.setStatus("DONE");
+				maintenanceRequest.setMaintenanceDate(new Date());
+				maintenanceRequest.setCreation(simpleDateFormatApprove.parse(maintenanceRequest.getCreation().toString()));
+				maintenanceRequest.setApproval(simpleDateFormatApprove.parse(maintenanceRequest.getApproval().toString()));
+				maintenanceRequest.setLastmodified(new Date());
+				Context.getService(GmaoService.class).upsert(maintenanceRequest);
+			}
 			return ConversionUtil.convertToRepresentation(maintenance, context.getRepresentation());
 		}
 		catch (ParseException ex) {
@@ -158,6 +172,23 @@ public class MaintenanceRequestResource extends DelegatingCrudResource<Maintenan
 		try {
 			Maintenance maintenance = this.constructMaintenance(uuid, propertiesToUpdate);
 			Context.getService(GmaoService.class).upsert(maintenance);
+			
+			Object maintenanceSerial = Context.getService(GmaoService.class).upsert(maintenance);
+			
+			MaintenanceRequest maintenanceRequest = null;
+			if (propertiesToUpdate.get("maintenanceRequest") != null) {
+				DateFormat simpleDateFormatApprove = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+				Integer id = propertiesToUpdate.get("maintenanceRequest");
+				maintenanceRequest = (MaintenanceRequest) Context.getService(GmaoService.class).getEntityByid(
+				    MaintenanceRequest.class, "id", id);
+				maintenanceRequest.setStatus("DONE");
+				maintenanceRequest.setMaintenanceDate(new Date());
+				maintenanceRequest.setCreation(simpleDateFormatApprove.parse(maintenanceRequest.getCreation().toString()));
+				maintenanceRequest.setApproval(simpleDateFormatApprove.parse(maintenanceRequest.getApproval().toString()));
+				maintenanceRequest.setLastmodified(new Date());
+				Context.getService(GmaoService.class).upsert(maintenanceRequest);
+			}
+			
 			return ConversionUtil.convertToRepresentation(maintenance, context.getRepresentation());
 		}
 		catch (ParseException ex) {
