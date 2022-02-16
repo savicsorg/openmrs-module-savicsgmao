@@ -199,7 +199,26 @@ public class MaintenanceRequestResource extends DelegatingCrudResource<Maintenan
 	
 	@Override
 	protected void delete(Maintenance maintenance, String reason, RequestContext context) throws ResponseException {
+		
 		Context.getService(GmaoService.class).delete(maintenance);
+		
+		if (maintenance.getMaintenanceRequest() != null) {
+			try {
+				DateFormat simpleDateFormatApprove = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+				MaintenanceRequest maintenanceRequest = maintenance.getMaintenanceRequest();
+				
+				maintenanceRequest.setStatus("VALID");
+				maintenanceRequest.setMaintenanceDate(null);
+				maintenanceRequest.setCreation(simpleDateFormatApprove.parse(maintenanceRequest.getCreation().toString()));
+				maintenanceRequest.setApproval(simpleDateFormatApprove.parse(maintenanceRequest.getApproval().toString()));
+				maintenanceRequest.setLastmodified(new Date());
+				
+				Context.getService(GmaoService.class).upsert(maintenanceRequest);
+			}
+			catch (ParseException ex) {
+				Logger.getLogger(MaintenanceRequestResource.class.getName()).log(Level.SEVERE, null, ex);
+			}
+		}
 	}
 	
 	@Override
