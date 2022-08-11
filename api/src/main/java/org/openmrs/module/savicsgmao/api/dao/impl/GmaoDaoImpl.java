@@ -32,7 +32,7 @@ public class GmaoDaoImpl<T extends Serializable> implements GmaoDao<T> {
 	 * 
 	 * @return the current hibernate session.
 	 */
-	private DbSession getSession() {
+	public DbSession getSession() {
 		try {
 			return dbSessionFactory.getCurrentSession();
 		}
