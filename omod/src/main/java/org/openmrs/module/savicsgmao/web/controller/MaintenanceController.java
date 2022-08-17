@@ -38,6 +38,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openmrs.api.context.Context;
 import org.openmrs.api.db.hibernate.DbSession;
+import org.openmrs.module.savicsgmao.SavicsGmaoModuleActivator;
 import org.openmrs.module.savicsgmao.api.dto.EquipmentFailureRate;
 import org.openmrs.module.savicsgmao.api.entity.Maintenance;
 import org.springframework.stereotype.Controller;
@@ -186,17 +187,30 @@ public class MaintenanceController {
 		List<List<Object>> results = Context.getAdministrationService().executeSQL(failureRate, true);
 		List<EquipmentFailureRate> equipmentFailureRates1 = new ArrayList<EquipmentFailureRate>();
 		
+		Double globalRate = 60.0;
+		String gpRate = Context.getAdministrationService().getGlobalProperty(
+		    SavicsGmaoModuleActivator.GLOBAL_PROPERTY_EQUIPMENT_FAILURE_RATE);
+		if (gpRate != null && gpRate != "") {
+			globalRate = new Double(gpRate);
+		}
+		
 		for (List<Object> temp : results) {
 			EquipmentFailureRate efr = new EquipmentFailureRate();
+			
 			if (temp.get(0) != null && temp.get(1) != null) {
 				efr.setEquipmentId(new Integer(temp.get(0).toString()));
 				efr.setName(temp.get(1).toString());
 				efr.setSerial(temp.get(2).toString());
 				efr.setInactiveDays(new Integer(temp.get(3).toString()));
 				efr.setCountMaintenance(new Integer(temp.get(4).toString()));
-				efr.setRate((days_difference == 0) ? 0.0 : (efr.getInactiveDays() + 0.0) / (days_difference + 0.0));
-				equipmentFailureRates1.add(efr);
+				Double rowRate = ((days_difference == 0) ? 0.0 : (efr.getInactiveDays() + 0.0) / (days_difference + 0.0)) * 100;
+				
+				efr.setRate(rowRate);
+				if (rowRate >= globalRate) {
+					equipmentFailureRates1.add(efr);
+				}
 			}
+			
 		}
 		
 		XSSFWorkbook workbook = new XSSFWorkbook();
@@ -223,7 +237,7 @@ public class MaintenanceController {
 		int index = 0;
 		sheet.addMergedRegion(CellRangeAddress.valueOf("A1:E1"));
 		
-		createCell(sheet, row, index++, "Taux de pannes par equipement", cellStyle);
+		createCell(sheet, row, index++, "Taux de pannes par equipement (>="+globalRate+"%)", cellStyle);
 		/*--------0--------- Table Header rows ----------------------*/
 		row = sheet.createRow(1);
 		font = workbook.createFont();
@@ -290,7 +304,7 @@ public class MaintenanceController {
 			createCell(sheet, row, columnCount++, item.getSerial(), style);
 			createCell(sheet, row, columnCount++, item.getCountMaintenance(), style);
 			createCell(sheet, row, columnCount++, item.getInactiveDays(), style);
-			createCell(sheet, row, columnCount++, new DecimalFormat("#.##").format(item.getRate() * 100) + "%", style);
+			createCell(sheet, row, columnCount++, new DecimalFormat("#.##").format(item.getRate()) + "%", style);
 		}
 		
 		ServletOutputStream outputStream = response.getOutputStream();

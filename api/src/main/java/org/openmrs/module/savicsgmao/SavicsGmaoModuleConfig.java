@@ -19,5 +19,4 @@ public class SavicsGmaoModuleConfig {
 	
 	public final static String MODULE_PRIVILEGE = "Savics Gmao Module Privilege";
 	
-	public static final String GLOBAL_PROPERTY_EQUIPMENT_FAILURE_RATE = "savics.gmao.tasks.autoCloseExternalVisitAfter";
 }
