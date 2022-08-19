@@ -237,7 +237,7 @@ public class MaintenanceController {
 		int index = 0;
 		sheet.addMergedRegion(CellRangeAddress.valueOf("A1:E1"));
 		
-		createCell(sheet, row, index++, "Taux de pannes par equipement (>="+globalRate+"%)", cellStyle);
+		createCell(sheet, row, index++, "Taux de pannes par equipement (>=" + globalRate + "%)", cellStyle);
 		/*--------0--------- Table Header rows ----------------------*/
 		row = sheet.createRow(1);
 		font = workbook.createFont();
