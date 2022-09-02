@@ -60,10 +60,10 @@
             Equipment.hbm.xml
             EquipmentType.hbm.xml
             Maintenance.hbm.xml
+            MaintenanceEvent.hbm.xml
             MaintenanceRequest.hbm.xml
             MaintenanceType.hbm.xml
             Mouvement.hbm.xml
-            
             Site.hbm.xml
         </mappingFiles>
 	

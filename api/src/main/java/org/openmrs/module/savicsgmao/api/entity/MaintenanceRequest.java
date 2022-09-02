@@ -1,8 +1,6 @@
 package org.openmrs.module.savicsgmao.api.entity;
 
 // Generated Dec 9, 2021 11:58:16 AM by Hibernate Tools 4.3.1
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;

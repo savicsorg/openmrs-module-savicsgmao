@@ -421,4 +421,79 @@
         </addColumn>  
     </changeSet>
     
+    
+    <changeSet author="anatoleabe" id="1639051760881-41">
+        <createTable tableName="gmao_maintenance_event">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="equipment_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="uuid" type="CHAR(38)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(250)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(250)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="startdate" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="enddate" type="datetime"/>
+            
+            <column name="frequency" type="VARCHAR(250)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="priority" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="SMALLINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="lastmodified" type="datetime"/>
+            <column name="creation" type="datetime"/>
+        </createTable>
+        
+        <createIndex indexName="FKpharm_maintenanceEvent581237" tableName="gmao_maintenance_event">
+            <column name="equipment_id"/>
+        </createIndex>
+        <addForeignKeyConstraint baseColumnNames="equipment_id" baseTableName="gmao_maintenance_event" constraintName="FKpharm_maintenanceEvent581237" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="gmao_equipment" />
+        
+    </changeSet>
+    
+    <changeSet author="anatoleabe" id="1639051760881-42">
+        <addColumn tableName="gmao_maintenance" >
+            <column  name="maintenance_event_id" type="INT"/> 
+        </addColumn> 
+        <createIndex indexName="FKgmao_maintenanceevent_id591233" tableName="gmao_maintenance">
+            <column name="maintenance_event_id"/>
+        </createIndex>
+        <addForeignKeyConstraint baseColumnNames="maintenance_event_id" baseTableName="gmao_maintenance" constraintName="FKgmao_maintenanceevent_id591233" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="gmao_maintenance_event" />
+    </changeSet>
+    
+     <changeSet author="anatoleabe" id="1639051760881-44">
+        <addColumn tableName="gmao_maintenance_event" >
+            <column  name="last_execution_time" type="datetime"/> 
+        </addColumn> 
+        
+        <addColumn tableName="gmao_maintenance_event" >
+            <column  name="repeat_interval" type="INT"/> 
+        </addColumn> 
+    </changeSet>
+    
+     <changeSet author="anatoleabe" id="1639051760881-46">
+        <addColumn tableName="gmao_maintenance" >
+            <column  name="due_date" type="date"/> 
+        </addColumn> 
+    </changeSet>
+    
+    <changeSet  author="anatoleabe"  id="1639051760881-47">  
+        <dropNotNullConstraint  columnDataType="datetime" columnName="startdate" tableName="gmao_maintenance"/>  
+        <dropNotNullConstraint  columnDataType="datetime" columnName="startdate" tableName="gmao_maintenance"/>  
+    </changeSet>
+    
+    
 </databaseChangeLog>

@@ -1,7 +1,6 @@
 package org.openmrs.module.savicsgmao.api.entity;
 
 // Generated Dec 9, 2021 11:58:16 AM by Hibernate Tools 4.3.1
-
 import java.util.Date;
 import org.openmrs.BaseOpenmrsData;
 
@@ -16,6 +15,8 @@ public class Maintenance extends BaseOpenmrsData implements java.io.Serializable
 	
 	private MaintenanceRequest maintenanceRequest;
 	
+	private MaintenanceEvent maintenanceEvent;
+	
 	private MaintenanceType maintenanceType;
 	
 	private String uuid;
@@ -27,6 +28,8 @@ public class Maintenance extends BaseOpenmrsData implements java.io.Serializable
 	private Date startdate;
 	
 	private Date enddate;
+	
+	private Date dueDate;
 	
 	private short status;
 	
@@ -98,6 +101,14 @@ public class Maintenance extends BaseOpenmrsData implements java.io.Serializable
 		this.maintenanceRequest = MaintenanceRequest;
 	}
 	
+	public MaintenanceEvent getMaintenanceEvent() {
+		return maintenanceEvent;
+	}
+	
+	public void setMaintenanceEvent(MaintenanceEvent maintenanceEvent) {
+		this.maintenanceEvent = maintenanceEvent;
+	}
+	
 	public MaintenanceType getMaintenanceType() {
 		return this.maintenanceType;
 	}
@@ -143,10 +154,13 @@ public class Maintenance extends BaseOpenmrsData implements java.io.Serializable
 	}
 	
 	public String getStatusDisplay(short s) {
-		if (s == 1) {
-			return "En cours";
-		} else {
-			return "Terminé";
+		switch (s) {
+			case 0:
+				return "En attente";
+			case 1:
+				return "En cours";
+			default:
+				return "Terminée";
 		}
 		
 	}
@@ -177,6 +191,14 @@ public class Maintenance extends BaseOpenmrsData implements java.io.Serializable
 	
 	public void setCreation(Date creation) {
 		this.creation = creation;
+	}
+	
+	public Date getDueDate() {
+		return dueDate;
+	}
+	
+	public void setDueDate(Date dueDate) {
+		this.dueDate = dueDate;
 	}
 	
 	public String getReason() {

@@ -28,6 +28,7 @@ import org.openmrs.module.savicsgmao.api.entity.Equipment;
 import org.openmrs.module.savicsgmao.api.entity.Healthcenter;
 import org.openmrs.module.savicsgmao.api.service.GmaoService;
 import org.openmrs.module.savicsgmao.api.entity.Maintenance;
+import org.openmrs.module.savicsgmao.api.entity.MaintenanceEvent;
 import org.openmrs.module.savicsgmao.api.entity.MaintenanceRequest;
 import org.openmrs.module.savicsgmao.api.entity.MaintenanceType;
 import org.openmrs.module.savicsgmao.rest.v1_0.resource.GmaoRest;
@@ -51,11 +52,13 @@ public class MaintenanceRequestResource extends DelegatingCrudResource<Maintenan
 			description.addProperty("uuid");
 			description.addProperty("maintenanceType");
 			description.addProperty("maintenanceRequest");
+			description.addProperty("maintenanceEvent");
 			description.addProperty("name");
 			description.addProperty("reason");
 			description.addProperty("description");
 			description.addProperty("startdate");
 			description.addProperty("enddate");
+			description.addProperty("dueDate");
 			description.addProperty("status");
 			description.addProperty("doneby");
 			description.addProperty("equipment");
@@ -70,11 +73,13 @@ public class MaintenanceRequestResource extends DelegatingCrudResource<Maintenan
 			description.addProperty("uuid");
 			description.addProperty("maintenanceType");
 			description.addProperty("maintenanceRequest");
+			description.addProperty("maintenanceEvent");
 			description.addProperty("name");
 			description.addProperty("reason");
 			description.addProperty("description");
 			description.addProperty("startdate");
 			description.addProperty("enddate");
+			description.addProperty("dueDate");
 			description.addProperty("status");
 			description.addProperty("doneby");
 			description.addProperty("equipment");
@@ -90,8 +95,10 @@ public class MaintenanceRequestResource extends DelegatingCrudResource<Maintenan
 			description.addProperty("uuid");
 			description.addProperty("maintenanceType");
 			description.addProperty("maintenanceRequest");
+			description.addProperty("maintenanceEvent");
 			description.addProperty("startdate");
 			description.addProperty("enddate");
+			description.addProperty("dueDate");
 			description.addProperty("status");
 			description.addProperty("doneby");
 			description.addProperty("name");
@@ -247,6 +254,13 @@ public class MaintenanceRequestResource extends DelegatingCrudResource<Maintenan
 			    MaintenanceRequest.class, "id", id);
 		}
 		
+		MaintenanceEvent maintenanceEvent = null;
+		if (properties.get("maintenanceEvent") != null) {
+			Integer id = properties.get("maintenanceEvent");
+			maintenanceEvent = (MaintenanceEvent) Context.getService(GmaoService.class).getEntityByid(
+			    MaintenanceEvent.class, "id", id);
+		}
+		
 		if (uuid != null) {
 			maintenance = (Maintenance) Context.getService(GmaoService.class).getEntityByUuid(Maintenance.class, uuid);
 			if (maintenance == null) {
@@ -273,6 +287,10 @@ public class MaintenanceRequestResource extends DelegatingCrudResource<Maintenan
 			maintenance.setMaintenanceRequest(maintenanceRequest);
 		}
 		
+		if (properties.get("maintenanceEvent") != null) {
+			maintenance.setMaintenanceEvent(maintenanceEvent);
+		}
+		
 		if (properties.get("description") != null) {
 			maintenance.setDescription((String) properties.get("description"));
 		}
@@ -295,6 +313,13 @@ public class MaintenanceRequestResource extends DelegatingCrudResource<Maintenan
 			maintenance.setEnddate(enddate);
 		} else if (properties.get("enddate") == null || properties.get("enddate").equals("")) {
 			maintenance.setEnddate(null);
+		}
+		
+		if (properties.get("dueDate") != null) {
+			Date dueDate = simpleDateFormat.parse(properties.get("dueDate").toString());
+			maintenance.setDueDate(dueDate);
+		} else if (properties.get("dueDate") == null || properties.get("dueDate").equals("")) {
+			maintenance.setDueDate(null);
 		}
 		
 		if (properties.get("status") != null) {
