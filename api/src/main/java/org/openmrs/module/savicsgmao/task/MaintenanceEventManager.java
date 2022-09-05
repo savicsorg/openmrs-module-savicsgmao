@@ -16,7 +16,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.joda.time.DateTime;
 import org.openmrs.api.APIException;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.savicsgmao.api.entity.Equipment;
@@ -69,7 +68,6 @@ public class MaintenanceEventManager extends AbstractTask {
 						me.setDescription(temp.get(4).toString());//4
 						
 						Date myDate;
-						log.info("temp.get(col++) startdate = " + temp.get(5).toString());//5
 						if (temp.get(5) != null) {
 							myDate = simpleDateFormat.parse(temp.get(5).toString());
 							me.setStartdate(myDate);
@@ -103,8 +101,7 @@ public class MaintenanceEventManager extends AbstractTask {
 						
 						if (temp.get(12) != null) {//12
 							myDate = simpleDateFormat.parse(temp.get(12).toString());
-							DateTime d = new DateTime(myDate);
-							me.setLastExecutionTime(new DateTime(myDate));
+							me.setLastExecutionTime(myDate);
 						} else {
 							me.setLastExecutionTime(null);
 						}
@@ -137,12 +134,12 @@ public class MaintenanceEventManager extends AbstractTask {
 						maintenance.setMaintenanceType(maintenanceType);
 						maintenance.setMaintenanceEvent(me);
 						
-						Date duDate = Date.from(me.getLastExecutionTime().toDate().toInstant()
+						Date duDate = Date.from(me.getLastExecutionTime().toInstant()
 						        .plus(me.getRepeatInterval() + 5, ChronoUnit.DAYS));
 						
 						maintenance.setDueDate(duDate);
 						Context.getService(GmaoService.class).upsert(maintenance);
-						me.setLastExecutionTime(new DateTime());
+						me.setLastExecutionTime(new Date());
 						Context.getService(GmaoService.class).upsert(me);
 					}
 				}

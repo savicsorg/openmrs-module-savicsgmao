@@ -32,6 +32,9 @@
         <property name="reason" type="string">
             <column name="reason" length="250" not-null="true" />
         </property>
+        <property name="dueDate" type="timestamp">
+            <column name="due_date" length="19"/>
+        </property>
         <property name="startdate" type="timestamp">
             <column name="startdate" length="19"/>
         </property>

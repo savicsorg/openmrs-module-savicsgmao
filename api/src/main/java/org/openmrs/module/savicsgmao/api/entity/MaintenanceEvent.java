@@ -26,7 +26,7 @@ public class MaintenanceEvent extends BaseOpenmrsData implements java.io.Seriali
 	
 	private Date enddate;
 	
-	private DateTime lastExecutionTime;
+	private Date lastExecutionTime;
 	
 	private short status;
 	
@@ -217,11 +217,11 @@ public class MaintenanceEvent extends BaseOpenmrsData implements java.io.Seriali
 		this.numberOfPassDays = numberOfPassDays;
 	}
 	
-	public DateTime getLastExecutionTime() {
+	public Date getLastExecutionTime() {
 		return lastExecutionTime;
 	}
 	
-	public void setLastExecutionTime(DateTime lastExecutionTime) {
+	public void setLastExecutionTime(Date lastExecutionTime) {
 		this.lastExecutionTime = lastExecutionTime;
 	}
 	
