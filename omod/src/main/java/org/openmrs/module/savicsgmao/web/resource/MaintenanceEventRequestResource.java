@@ -53,6 +53,7 @@ public class MaintenanceEventRequestResource extends DelegatingCrudResource<Main
 			description.addProperty("creation");
 			description.addProperty("status");
 			description.addProperty("frequency");
+			description.addProperty("repeatInterval");
 			description.addProperty("startdate");
 			description.addProperty("enddate");
 			description.addLink("ref", ".?v=" + RestConstants.REPRESENTATION_REF);
@@ -70,6 +71,7 @@ public class MaintenanceEventRequestResource extends DelegatingCrudResource<Main
 			description.addProperty("creation");
 			description.addProperty("status");
 			description.addProperty("frequency");
+                        description.addProperty("repeatInterval");
 			description.addProperty("startdate");
 			description.addProperty("enddate");
 			description.addLink("full", ".?v=" + RestConstants.REPRESENTATION_FULL);
@@ -88,6 +90,7 @@ public class MaintenanceEventRequestResource extends DelegatingCrudResource<Main
 			description.addProperty("creation");
 			description.addProperty("status");
 			description.addProperty("frequency");
+                        description.addProperty("repeatInterval");
 			description.addProperty("startdate");
 			description.addProperty("enddate");
 			description.addSelfLink();
@@ -244,6 +247,10 @@ public class MaintenanceEventRequestResource extends DelegatingCrudResource<Main
 		
 		if (properties.get("status") != null) {
 			maintenanceEvent.setStatus((new Short(properties.get("status").toString())));
+		}
+		
+		if (properties.get("repeatInterval") != null) {
+			maintenanceEvent.setRepeatInterval((new Long(properties.get("repeatInterval").toString())));
 		}
 		
 		maintenanceEvent.setLastmodified(new Date());
