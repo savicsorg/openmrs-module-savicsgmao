@@ -11,6 +11,9 @@ package org.openmrs.module.savicsgmao;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.openmrs.GlobalProperty;
+import org.openmrs.api.AdministrationService;
+import org.openmrs.api.context.Context;
 import org.openmrs.module.BaseModuleActivator;
 
 /**
@@ -20,11 +23,24 @@ public class SavicsGmaoModuleActivator extends BaseModuleActivator {
 	
 	private Log log = LogFactory.getLog(this.getClass());
 	
+	public static final String GLOBAL_PROPERTY_EQUIPMENT_FAILURE_RATE = "savics.gmao.failure.rate";
+	
+	private AdministrationService administrationService;
+	
 	/**
 	 * @see #started()
 	 */
 	public void started() {
 		log.info("Started Savics Gmao Module");
+		administrationService = Context.getAdministrationService();
+		GlobalProperty gp;
+		
+		String property2 = administrationService.getGlobalProperty(GLOBAL_PROPERTY_EQUIPMENT_FAILURE_RATE);
+		if (property2 == null || property2.isEmpty()) {
+			gp = new GlobalProperty(GLOBAL_PROPERTY_EQUIPMENT_FAILURE_RATE, "60");
+			gp.setDescription("GMAO : taux de pannes des équipements");
+			administrationService.saveGlobalProperty(gp);
+		}
 	}
 	
 	/**

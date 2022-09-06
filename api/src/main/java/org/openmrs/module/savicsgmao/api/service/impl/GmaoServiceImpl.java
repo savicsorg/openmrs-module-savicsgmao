@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.List;
 import org.openmrs.api.APIException;
 import org.openmrs.api.LocationService;
+import org.openmrs.api.db.hibernate.DbSession;
 import org.openmrs.api.impl.BaseOpenmrsService;
 import org.openmrs.module.savicsgmao.api.dao.GmaoDao;
 import org.openmrs.module.savicsgmao.api.service.GmaoService;
@@ -73,6 +74,11 @@ public class GmaoServiceImpl<T extends Serializable> extends BaseOpenmrsService 
 	@Override
 	public void delete(Serializable entity) {
 		this.dao.delete(entity);
+	}
+	
+	@Override
+	public DbSession getSession() {
+		return this.dao.getSession();
 	}
 	
 	@Override

@@ -17,6 +17,7 @@ import java.io.Serializable;
 import java.util.List;
 import org.openmrs.api.APIException;
 import org.openmrs.api.OpenmrsService;
+import org.openmrs.api.db.hibernate.DbSession;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
@@ -39,6 +40,9 @@ public interface GmaoService<T extends Serializable> extends OpenmrsService {
 	
 	@Transactional(readOnly = true)
 	T getEntityByid(Class<T> t, String idName, Integer id) throws APIException;
+	
+	@Transactional(readOnly = true)
+	public DbSession getSession();
 	
 	@Transactional
 	T upsert(T entity) throws APIException;

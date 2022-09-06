@@ -18,4 +18,5 @@ import org.springframework.stereotype.Component;
 public class SavicsGmaoModuleConfig {
 	
 	public final static String MODULE_PRIVILEGE = "Savics Gmao Module Privilege";
+	
 }
