@@ -71,7 +71,7 @@ public class MaintenanceEventRequestResource extends DelegatingCrudResource<Main
 			description.addProperty("creation");
 			description.addProperty("status");
 			description.addProperty("frequency");
-                        description.addProperty("repeatInterval");
+			description.addProperty("repeatInterval");
 			description.addProperty("startdate");
 			description.addProperty("enddate");
 			description.addLink("full", ".?v=" + RestConstants.REPRESENTATION_FULL);
@@ -90,7 +90,7 @@ public class MaintenanceEventRequestResource extends DelegatingCrudResource<Main
 			description.addProperty("creation");
 			description.addProperty("status");
 			description.addProperty("frequency");
-                        description.addProperty("repeatInterval");
+			description.addProperty("repeatInterval");
 			description.addProperty("startdate");
 			description.addProperty("enddate");
 			description.addSelfLink();
