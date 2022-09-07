@@ -462,7 +462,6 @@ public class MaintenanceController {
 			current.setTime(e.getStartdate());
 			current.add(Calendar.DATE, repeatAfter.intValue());
 			
-			
 			while (current.getTime().before(e.getEnddate())) {
 				createCell(sheet, row, current.get(Calendar.WEEK_OF_YEAR), "x", cellStyle);
 				current.add(Calendar.DATE, repeatAfter.intValue());
