@@ -15,6 +15,7 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -29,6 +30,7 @@ import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
@@ -41,6 +43,7 @@ import org.openmrs.api.db.hibernate.DbSession;
 import org.openmrs.module.savicsgmao.SavicsGmaoModuleActivator;
 import org.openmrs.module.savicsgmao.api.dto.EquipmentFailureRate;
 import org.openmrs.module.savicsgmao.api.entity.Maintenance;
+import org.openmrs.module.savicsgmao.api.entity.MaintenanceEvent;
 import org.springframework.stereotype.Controller;
 import org.openmrs.module.savicsgmao.api.entity.MaintenanceRequest;
 import org.openmrs.module.savicsgmao.api.service.GmaoService;
@@ -233,6 +236,7 @@ public class MaintenanceController {
 		cellStyle.setBorderRight(BorderStyle.THIN);
 		cellStyle.setBorderLeft(BorderStyle.THIN);
 		cellStyle.setFont(font);
+		cellStyle.setAlignment(HorizontalAlignment.CENTER);
 		
 		int index = 0;
 		sheet.addMergedRegion(CellRangeAddress.valueOf("A1:E1"));
@@ -254,6 +258,7 @@ public class MaintenanceController {
 		cellStyle.setBorderRight(BorderStyle.THIN);
 		cellStyle.setBorderLeft(BorderStyle.THIN);
 		cellStyle.setFont(font);
+		cellStyle.setAlignment(HorizontalAlignment.CENTER);
 		
 		index = 0;
 		createCell(sheet, row, index++, "Période:", cellStyle);
@@ -305,6 +310,163 @@ public class MaintenanceController {
 			createCell(sheet, row, columnCount++, item.getCountMaintenance(), style);
 			createCell(sheet, row, columnCount++, item.getInactiveDays(), style);
 			createCell(sheet, row, columnCount++, new DecimalFormat("#.##").format(item.getRate()) + "%", style);
+		}
+		
+		ServletOutputStream outputStream = response.getOutputStream();
+		workbook.write(outputStream);
+		workbook.close();
+		outputStream.close();
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/rest/" + RestConstants.VERSION_1 + GmaoRest.GMAO_NAMESPACE
+	        + "/maintenances/planning")
+	public void exportMaintenancePlanning(HttpServletResponse response, HttpServletRequest request) throws IOException {
+		response.setContentType("application/octet-stream");
+		DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+		String currentDateTime = dateFormatter.format(new Date());
+		
+		String headerKey = "Content-Disposition";
+		String headerValue = "attachment; filename=Planning_annuel_des maintenances_" + currentDateTime + ".xlsx";
+		response.setHeader(headerKey, headerValue);
+		
+		DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		DateFormat simpleDateFormat2 = new SimpleDateFormat("dd-MM-yyyy");
+		List<Maintenance> maintenances = new ArrayList<Maintenance>();
+		Date toDate = null;
+		Date fromDate = null;
+		String periodicity = "Semaine";
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		
+		String fromDateString = "";
+		String toDateString = "";
+		
+		try {
+			if (request.getParameter("to") != null) {
+				toDate = simpleDateFormat.parse(request.getParameter("to"));
+				toDateString = formatter.format(toDate);
+			}
+			if (request.getParameter("from") != null) {
+				fromDate = simpleDateFormat.parse(request.getParameter("from"));
+				fromDateString = formatter.format(fromDate);
+				;
+			}
+		}
+		catch (ParseException ex) {
+			Logger.getLogger(MaintenanceController.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		
+		DbSession session = Context.getService(GmaoService.class).getSession();
+		
+		List<MaintenanceEvent> maintenanceEvents = gmaoService.getAll(MaintenanceEvent.class);
+		
+		XSSFWorkbook workbook = new XSSFWorkbook();
+		XSSFSheet sheet;
+		
+		sheet = workbook.createSheet("Planning des opérations d'entretien");
+		/*--------0--------- Table Header rows ----------------------*/
+		Row row = sheet.createRow(0);
+		XSSFFont font = workbook.createFont();
+		font.setBold(true);
+		font.setFontHeight(16);
+		
+		XSSFColor color = new XSSFColor(new java.awt.Color(232, 232, 232), null);
+		XSSFCellStyle cellStyle = workbook.createCellStyle();
+		
+		cellStyle.setFillForegroundColor(color);
+		cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+		cellStyle.setBorderBottom(BorderStyle.THIN);
+		cellStyle.setBorderTop(BorderStyle.THIN);
+		cellStyle.setBorderRight(BorderStyle.THIN);
+		cellStyle.setBorderLeft(BorderStyle.THIN);
+		cellStyle.setFont(font);
+		cellStyle.setAlignment(HorizontalAlignment.CENTER);
+		
+		int index = 0;
+		sheet.addMergedRegion(CellRangeAddress.valueOf("A1:BA1"));
+		
+		createCell(sheet, row, index++, "PLANNING DES OPERATIONS D'ENTRETIEN", cellStyle);
+		
+		/*--------1--------- Table Header rows ----------------------*/
+		row = sheet.createRow(1);
+		font = workbook.createFont();
+		font.setBold(true);
+		font.setFontHeight(16);
+		
+		color = new XSSFColor(new java.awt.Color(232, 232, 232), null);
+		cellStyle = workbook.createCellStyle();
+		
+		cellStyle.setFillForegroundColor(color);
+		cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+		cellStyle.setBorderBottom(BorderStyle.THIN);
+		cellStyle.setBorderTop(BorderStyle.THIN);
+		cellStyle.setBorderRight(BorderStyle.THIN);
+		cellStyle.setBorderLeft(BorderStyle.THIN);
+		cellStyle.setFont(font);
+		cellStyle.setAlignment(HorizontalAlignment.CENTER);
+		
+		index = 0;
+		
+		sheet.addMergedRegion(CellRangeAddress.valueOf("A2:BA2"));
+		
+		createCell(sheet, row, 0, "ANNUEL", cellStyle);
+		
+		/*--------1--------- Table Header rows ----------------------*/
+		/*--------2--------- Table Header rows ----------------------*/
+		row = sheet.createRow(2);
+		font = workbook.createFont();
+		font.setBold(true);
+		font.setFontHeight(16);
+		
+		color = new XSSFColor(new java.awt.Color(232, 232, 232), null);
+		cellStyle = workbook.createCellStyle();
+		
+		cellStyle.setFillForegroundColor(color);
+		cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+		cellStyle.setBorderBottom(BorderStyle.THIN);
+		cellStyle.setBorderTop(BorderStyle.THIN);
+		cellStyle.setBorderRight(BorderStyle.THIN);
+		cellStyle.setBorderLeft(BorderStyle.THIN);
+		cellStyle.setFont(font);
+		
+		index = 0;
+		createCell(sheet, row, 0, "Equipement", cellStyle);
+		createCell(sheet, row, 1, "Tâche", cellStyle);
+		for (int k = 1; k < 54; k++) {
+			createCell(sheet, row, k + 1, k, cellStyle);
+		}
+		
+		/*--------2--------- Table Header rows ----------------------*/
+		/*--------3--------- Data rows ----------------------*/
+		int rowCount = 3;
+		CellStyle style = workbook.createCellStyle();
+		font = workbook.createFont();
+		font.setFontHeight(14);
+		style.setFont(font);
+		style.setBorderBottom(BorderStyle.THIN);
+		style.setBorderTop(BorderStyle.THIN);
+		style.setBorderRight(BorderStyle.THIN);
+		style.setBorderLeft(BorderStyle.THIN);
+		
+		for (MaintenanceEvent e : maintenanceEvents) {
+			row = sheet.createRow(rowCount++);
+			createCell(sheet, row, 0, e.getEquipment().getName(), cellStyle);
+			createCell(sheet, row, 1, e.getName(), cellStyle);
+			
+			for (int columnCount = 1; columnCount < 54; columnCount++) {
+				createCell(sheet, row, columnCount + 1, "", cellStyle);
+			}
+			
+			Long repeatAfter = e.getIntervalInDays();
+			
+			final Calendar current = Calendar.getInstance();
+			current.setTime(e.getStartdate());
+			current.add(Calendar.DATE, repeatAfter.intValue());
+			
+			
+			while (current.getTime().before(e.getEnddate())) {
+				createCell(sheet, row, current.get(Calendar.WEEK_OF_YEAR), "x", cellStyle);
+				current.add(Calendar.DATE, repeatAfter.intValue());
+			}
 		}
 		
 		ServletOutputStream outputStream = response.getOutputStream();
