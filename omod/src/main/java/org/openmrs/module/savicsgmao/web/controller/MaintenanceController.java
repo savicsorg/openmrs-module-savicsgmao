@@ -29,6 +29,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Row;
@@ -447,6 +448,13 @@ public class MaintenanceController {
 		style.setBorderRight(BorderStyle.THIN);
 		style.setBorderLeft(BorderStyle.THIN);
 		
+		Calendar calandarDate = Calendar.getInstance();
+		calandarDate.set(Calendar.DAY_OF_YEAR, 1);
+		Date yearStartDate = calandarDate.getTime();
+		
+		calandarDate.set(Calendar.DAY_OF_YEAR, calandarDate.getActualMaximum(Calendar.DAY_OF_YEAR));
+		Date yearEndDate = calandarDate.getTime();
+		
 		for (MaintenanceEvent e : maintenanceEvents) {
 			row = sheet.createRow(rowCount++);
 			createCell(sheet, row, 0, e.getEquipment().getName(), cellStyle);
@@ -462,9 +470,21 @@ public class MaintenanceController {
 			current.setTime(e.getStartdate());
 			current.add(Calendar.DATE, repeatAfter.intValue());
 			
-			while (current.getTime().before(e.getEnddate())) {
-				createCell(sheet, row, current.get(Calendar.WEEK_OF_YEAR), "x", cellStyle);
+			while (repeatAfter.intValue() != 0 && current.getTime().after(yearStartDate)
+			        && current.getTime().before(e.getEnddate())) {
+				if (current.getTime().after(yearEndDate)) {
+                                        Cell c = row.getCell(current.get(Calendar.WEEK_OF_YEAR) + 1);
+                                        if (c == null || c.getCellType() == CellType.BLANK) {
+                                           createCell(sheet, row, current.get(Calendar.WEEK_OF_YEAR) + 1, "x+1", cellStyle);
+                                        }
+				} else {
+					createCell(sheet, row, current.get(Calendar.WEEK_OF_YEAR) + 1, "x", cellStyle);
+				}
 				current.add(Calendar.DATE, repeatAfter.intValue());
+			}
+			
+			if (repeatAfter.intValue() == 0) {
+				createCell(sheet, row, current.get(Calendar.WEEK_OF_YEAR) + 1, "x", cellStyle);
 			}
 		}
 		

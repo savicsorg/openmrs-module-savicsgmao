@@ -43,12 +43,13 @@ public class MaintenanceEventManager extends AbstractTask {
 			try {
 				DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
 				
-				String activeEvents = "select *,  (remainingDays - 5) as remainingDaysBeforeExecution from \n"
-				        + "(select *,  (repeat_interval - passedDays) as remainingDays from \n" + "(\n"
-				        + "select *, DATEDIFF(now(), IFNULL(`last_execution_time`, `startdate`)) AS passedDays\n"
+				String activeEvents = "select * from (select *,  if ((`frequency` = '1' and remainingDays < 5), remainingDays - 1, remainingDays - 5) as remainingDaysBeforeExecution from \n"
+				        + "(select *,  (repeat_interval_days - passedDays) as remainingDays from (\n"
+				        + "select *, DATEDIFF(now(), IFNULL(`last_execution_time`, `startdate`)) AS passedDays, IF (`frequency` = '2', repeat_interval * 7, IF (`frequency` = '3', repeat_interval * 30, IF (`frequency` = '4', repeat_interval * 365, repeat_interval))) as repeat_interval_days\n"
 				        + "from `gmao_maintenance_event`\n"
 				        + "where status = 0 and startdate <= now() and (enddate >=now() or enddate is null) ) as events )\n"
-				        + "as events2\n";
+				        + "as events2) as event3\n"
+				        + "where ((frequency <> 0 && `repeat_interval` <> 0) or (frequency = 0 && `last_execution_time` is  null))";
 				
 				List<List<Object>> results = Context.getAdministrationService().executeSQL(activeEvents, true);
 				for (List<Object> temp : results) {
@@ -106,7 +107,7 @@ public class MaintenanceEventManager extends AbstractTask {
 							me.setLastExecutionTime(null);
 						}
 						
-						me.setRepeatInterval((new Integer(temp.get(13).toString())));//13
+						me.setRepeatInterval(me.getIntervalInDays());//13
 						Logger.getLogger(MaintenanceEventManager.class.getName()).log(Level.INFO,
 						    "temp.get(14).toString() = {0}", temp.get(15).toString());
 						me.setNumberOfPassDays((new Integer(temp.get(15).toString())));//14
@@ -134,8 +135,18 @@ public class MaintenanceEventManager extends AbstractTask {
 						maintenance.setMaintenanceType(maintenanceType);
 						maintenance.setMaintenanceEvent(me);
 						
-						Date duDate = Date.from(me.getLastExecutionTime().toInstant()
-						        .plus(me.getRepeatInterval() + 5, ChronoUnit.DAYS));
+						Date duDate = Date.from(new Date().toInstant().plus(me.getRepeatInterval(), ChronoUnit.DAYS));
+						
+						if (me.getLastExecutionTime() != null) {
+							if (!me.getFrequency().equals("1") && !me.getFrequency().equals("0")) {
+								duDate = Date.from(me.getLastExecutionTime().toInstant()
+								        .plus(me.getRepeatInterval() + 5, ChronoUnit.DAYS));
+							} else {
+								duDate = Date.from(me.getLastExecutionTime().toInstant()
+								        .plus(me.getRepeatInterval() + 1, ChronoUnit.DAYS));
+							}
+							
+						}
 						
 						maintenance.setDueDate(duDate);
 						Context.getService(GmaoService.class).upsert(maintenance);
