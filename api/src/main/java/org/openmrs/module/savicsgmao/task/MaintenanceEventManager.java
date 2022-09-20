@@ -107,7 +107,8 @@ public class MaintenanceEventManager extends AbstractTask {
 							me.setLastExecutionTime(null);
 						}
 						
-						me.setRepeatInterval(me.getIntervalInDays());//13
+						me.setRepeatInterval(new Integer(temp.get(13).toString()));//13
+						//me.setRepeatInterval(me.getIntervalInDays());//13
 						Logger.getLogger(MaintenanceEventManager.class.getName()).log(Level.INFO,
 						    "temp.get(14).toString() = {0}", temp.get(15).toString());
 						me.setNumberOfPassDays((new Integer(temp.get(15).toString())));//14
@@ -135,15 +136,15 @@ public class MaintenanceEventManager extends AbstractTask {
 						maintenance.setMaintenanceType(maintenanceType);
 						maintenance.setMaintenanceEvent(me);
 						
-						Date duDate = Date.from(new Date().toInstant().plus(me.getRepeatInterval(), ChronoUnit.DAYS));
+						Date duDate = Date.from(new Date().toInstant().plus(me.getIntervalInDays(), ChronoUnit.DAYS));
 						
 						if (me.getLastExecutionTime() != null) {
 							if (!me.getFrequency().equals("1") && !me.getFrequency().equals("0")) {
 								duDate = Date.from(me.getLastExecutionTime().toInstant()
-								        .plus(me.getRepeatInterval() + 5, ChronoUnit.DAYS));
+								        .plus(me.getIntervalInDays() + 5, ChronoUnit.DAYS));
 							} else {
 								duDate = Date.from(me.getLastExecutionTime().toInstant()
-								        .plus(me.getRepeatInterval() + 1, ChronoUnit.DAYS));
+								        .plus(me.getIntervalInDays() + 1, ChronoUnit.DAYS));
 							}
 							
 						}

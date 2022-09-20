@@ -338,22 +338,13 @@ public class MaintenanceController {
 		String periodicity = "Semaine";
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		
-		String fromDateString = "";
-		String toDateString = "";
+		final Calendar currentYearDate = Calendar.getInstance();
+		currentYearDate.setTime(new Date());
 		
-		try {
-			if (request.getParameter("to") != null) {
-				toDate = simpleDateFormat.parse(request.getParameter("to"));
-				toDateString = formatter.format(toDate);
-			}
-			if (request.getParameter("from") != null) {
-				fromDate = simpleDateFormat.parse(request.getParameter("from"));
-				fromDateString = formatter.format(fromDate);
-				;
-			}
-		}
-		catch (ParseException ex) {
-			Logger.getLogger(MaintenanceController.class.getName()).log(Level.SEVERE, null, ex);
+		Integer selectedYear = currentYearDate.get(Calendar.YEAR);
+		
+		if (request.getParameter("year") != null) {
+			selectedYear = new Integer(request.getParameter("year"));
 		}
 		
 		DbSession session = Context.getService(GmaoService.class).getSession();
@@ -449,7 +440,9 @@ public class MaintenanceController {
 		style.setBorderLeft(BorderStyle.THIN);
 		
 		Calendar calandarDate = Calendar.getInstance();
+		calandarDate.set(Calendar.YEAR, selectedYear);
 		calandarDate.set(Calendar.DAY_OF_YEAR, 1);
+		
 		Date yearStartDate = calandarDate.getTime();
 		
 		calandarDate.set(Calendar.DAY_OF_YEAR, calandarDate.getActualMaximum(Calendar.DAY_OF_YEAR));
@@ -470,13 +463,17 @@ public class MaintenanceController {
 			current.setTime(e.getStartdate());
 			current.add(Calendar.DATE, repeatAfter.intValue());
 			
+			while (current.getTime().before(yearStartDate)) {
+				current.add(Calendar.DATE, repeatAfter.intValue());
+			}
+			
 			while (repeatAfter.intValue() != 0 && current.getTime().after(yearStartDate)
-			        && current.getTime().before(e.getEnddate())) {
+			        && current.getTime().before(e.getEnddate()) && current.getTime().before(yearEndDate)) {
 				if (current.getTime().after(yearEndDate)) {
-                                        Cell c = row.getCell(current.get(Calendar.WEEK_OF_YEAR) + 1);
-                                        if (c == null || c.getCellType() == CellType.BLANK) {
-                                           createCell(sheet, row, current.get(Calendar.WEEK_OF_YEAR) + 1, "x+1", cellStyle);
-                                        }
+					Cell c = row.getCell(current.get(Calendar.WEEK_OF_YEAR) + 1);
+					if (c == null || c.getCellType() == CellType.BLANK) {
+						createCell(sheet, row, current.get(Calendar.WEEK_OF_YEAR) + 1, "x+1", cellStyle);
+					}
 				} else {
 					createCell(sheet, row, current.get(Calendar.WEEK_OF_YEAR) + 1, "x", cellStyle);
 				}

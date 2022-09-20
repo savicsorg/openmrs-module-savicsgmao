@@ -243,7 +243,7 @@ public class MaintenanceEvent extends BaseOpenmrsData implements java.io.Seriali
 	
 	public long getIntervalInDays() {
 		if ("1".equals(frequency)) {
-			return 1;
+			return repeatInterval;
 		} else if ("2".equals(frequency)) {//week
 			return DAYS_PER_WEEK * repeatInterval;
 		} else if ("3".equals(frequency)) {//week
